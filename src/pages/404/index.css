@@ -1,0 +1,17 @@
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+
+  & h2 {
+    margin-right: 1rem;
+  }
+
+  & p {
+    margin-left: 1rem;
+  }
+}
