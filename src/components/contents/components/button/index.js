@@ -1,20 +1,32 @@
 import './index.css';
+import { useRef, forwardRef, useImperativeHandle } from 'react';
 import Icon from '../icon';
 
-export default function Button ({ title = '', icon, onClick = () => {} }) {
+export default forwardRef(function Button ({ title = '', tag, icon, onClick = () => {} }, ref) {
+  const buttonRef = useRef(null);
+  function setSelected (isSelected = false) {
+    if (isSelected) {
+      buttonRef.current.setAttribute('isSelected', 'true');
+    } else {
+      buttonRef.current.removeAttribute('isSelected');
+    }
+  }
+  useImperativeHandle(ref, () => {
+    return {
+      setSelected
+    }
+  });
   return (
-    <button className='content-button' onClick={(e) => {
-      e.setSelected = (isSelected = false) => {
-        if (isSelected) {
-          e.target.setAttribute('isSelected','true')
-        } else {
-          e.target.setAttribute('isSelected','false')
-        }
-      }
-      onClick(e);
-    }}>
-      {title}
+    <button
+      ref={buttonRef}
+      className='content-button'
+      onClick={(e) => {
+        e.setSelected = setSelected;
+        onClick(e);
+      }}
+    >
+      <span>{title}{tag ? <i className='button-tag'>{tag}</i> : null}</span>
       {icon && <Icon name={icon} />}
     </button>
   );
-}
+});

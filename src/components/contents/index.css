@@ -5,12 +5,25 @@
   justify-content: left;
   background-color: rgb(66, 66, 66);
   box-sizing: border-box;
-  padding: 20px 20px 0 0;
+  padding: 20px 12px 0 0;
   overflow-y: scroll;
 
   & h1 {
     margin: 0;
     padding: 0 0 20px 20px;
     color: #ffffff;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff88;
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #ffffff22;
   }
 }
