@@ -2,7 +2,20 @@ import './index.css';
 import Content from './components/content';
 
 export default function Contents ({ title = '目录', contents = [], onChange = () => {} }) {
+  /**
+   * 计算目录的宽度
+   */
   const width = ((() => {
+    /**
+     * 获取目录的最深层级
+     * @param {{
+     *   component: any | null | undefined,
+     *   children: contents | undefined,
+     *   label: string,
+     *   tag: string | undefined
+     * }[]} contents
+     * @returns 
+     */
     function getDeepestLayer (contents) {
       let layer = 1;
       const childLayers = [];
@@ -18,7 +31,7 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
       }
       return layer;
     }
-    console.log(getDeepestLayer(contents));
+    // 每深一层，增加28px
     return 150 + 44 + 28 * getDeepestLayer(contents) - 1 + 'px';
   })());
   return (
