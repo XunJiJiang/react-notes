@@ -2,7 +2,7 @@ import './index.css';
 import { useRef, forwardRef, useImperativeHandle } from 'react';
 import Icon from '../icon';
 
-export default forwardRef(function Button ({ title = '', tag, icon, onClick = () => {} }, ref) {
+export default forwardRef(function Button ({ title = '', tag, icon, isBold = false, onClick = () => {} }, ref) {
   const buttonRef = useRef(null);
   function setSelected (isSelected = false) {
     if (isSelected) {
@@ -20,7 +20,7 @@ export default forwardRef(function Button ({ title = '', tag, icon, onClick = ()
   return (
     <button
       ref={buttonRef}
-      className='content-button'
+      className={`content-button ${isBold ? 'bold-button' : ''}`}
       onClick={(e) => {
         e.setSelected = setSelected;
         onClick(e);
