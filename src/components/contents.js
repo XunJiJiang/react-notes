@@ -3,11 +3,10 @@ import UseCallback from '../pages/study/react/useCallback/index';
 
 const contents = [{
   label: 'react@18.2.0',
-  component: () => {
-    return <h1>react@18.2.0</h1>
-  },
+  component: () => <h1>react@18.2.0</h1>,
   children: [{
     label: 'Hook',
+    component: () => <h1>react Hook</h1>,
     children: [{
       label: 'use',
       component: Use
@@ -59,6 +58,7 @@ const contents = [{
     }]
   }, {
     label: '组件',
+    component: () => <h1>react 组件</h1>,
     children: [{
       label: '<Fragment>(<>)',
       component: null
@@ -74,6 +74,7 @@ const contents = [{
     }]
   }, {
     label: 'API',
+    component: () => <h1>react API</h1>,
     children: [{
       label: 'cache',
       component: null
@@ -103,6 +104,7 @@ const contents = [{
     }]
   }, {
     label: '指示符',
+    component: () => <h1>react 指示符</h1>,
     tag: 'experiment',
     children: [{
       label: 'use client',
@@ -114,6 +116,7 @@ const contents = [{
   }]
 }, {
   label: 'react-dom@18.2.0',
+  component: () => <h1>react-dom@18.2.0</h1>,
   children: [{
     label: 'test1',
     component: null
