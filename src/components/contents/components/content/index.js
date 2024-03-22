@@ -68,7 +68,6 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
       deepHeightList[index] = child;
     })
     setDeepHeightList([...deepHeightList]);
-    console.log(deepHeightList)
   }
 
   return (
@@ -130,7 +129,6 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
                     }
                   }
                   if (layer !== 0 && contentRefList[index]) {
-                    console.log(deepHeightList);
                     changeFatherDeepList([...deepHeightList]);
                     setDeepHeightList([...deepHeightList]);
                   }
