@@ -24,7 +24,7 @@ function findComponent (content) {
   }
 }
 
-const Content = forwardRef(({ contents = [], visible = false, onChange }, ref) => {
+const Content = forwardRef(({ contents = [], visible = false, layer, onChange }, ref) => {
 
   // 用于存储每个选项的可见状态
   const [stateList, setStateList] = useState(new Array(contents.length).fill(false));
@@ -119,6 +119,7 @@ const Content = forwardRef(({ contents = [], visible = false, onChange }, ref) =
                   }}
                   contents={content.children}
                   visible={childVisible}
+                  layer={layer - 1}
                   onChange={onChange}
                 />
               }

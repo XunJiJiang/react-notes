@@ -38,7 +38,12 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
       width
     }}>
       <h1>{title}</h1>
-      <Content contents={contents} onChange={onChange} visible={true} />
+      <Content
+        contents={contents}
+        visible={true}
+        layer={getDeepestLayer(contents)}
+        onChange={onChange}
+      />
     </div>
   );
 }
