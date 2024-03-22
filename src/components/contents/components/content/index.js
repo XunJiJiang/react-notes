@@ -59,6 +59,10 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
     }
   });
 
+  /**
+   * 给子菜单提供的函数，用于在父菜单的高度信息中修改子菜单的高度信息
+   * @param {Array<number>} childList 
+   */
   function _changeFatherDeepList (childList) {
     childList.forEach((child, index) => {
       deepHeightList[index] = child;
@@ -66,6 +70,7 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
     setDeepHeightList([...deepHeightList]);
     console.log(deepHeightList)
   }
+
   return (
     <>
       {
