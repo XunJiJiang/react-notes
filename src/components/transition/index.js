@@ -56,7 +56,7 @@ export default function Transition ({ mode = 'out-in', children, keyframe = _key
       setTimeout(() => {
         isVisible.current = children;
       }, duration);
-    }, duration);
+    }, duration - 10);
   }, [children]);
 
   return (
