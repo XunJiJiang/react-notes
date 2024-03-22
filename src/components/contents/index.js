@@ -41,7 +41,7 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
       <Content
         contents={contents}
         visible={true}
-        layer={getDeepestLayer(contents)}
+        layer={getDeepestLayer(contents) - 1}
         onChange={onChange}
       />
     </div>

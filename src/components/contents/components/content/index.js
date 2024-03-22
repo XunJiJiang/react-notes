@@ -24,7 +24,7 @@ function findComponent (content) {
   }
 }
 
-const Content = forwardRef(({ contents = [], visible = false, layer, onChange }, ref) => {
+const Content = forwardRef(({ contents = [], visible = false, layer, onChange, changeFatherDeepList = () => {} }, ref) => {
 
   // 用于存储每个选项的可见状态
   const [stateList, setStateList] = useState(new Array(contents.length).fill(false));
@@ -34,6 +34,9 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange },
 
   // 用于存储每个选项的内容的引用
   const contentRefList = [];
+
+  // 用于储存每个子选项的深度展开的高度信息
+  const [deepHeightList, setDeepHeightList] = useState(new Array(layer).fill(0));
 
   useImperativeHandle(ref, () => {
     return {
@@ -56,6 +59,13 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange },
     }
   });
 
+  function _changeFatherDeepList (childList) {
+    childList.forEach((child, index) => {
+      deepHeightList[index] = child;
+    })
+    setDeepHeightList([...deepHeightList]);
+    console.log(deepHeightList)
+  }
   return (
     <>
       {
@@ -67,7 +77,7 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange },
           const childVisible = stateList[index];
           return (
             <div
-              className={`content ${visible ? 'visible' : 'invisible'}`}
+              className={`content`}
               key={content.label + index}
             >
               <Button
@@ -87,6 +97,10 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange },
                     setSelected(false);
                     // 将当前的选项的子内容设置为不可见
                     contentRefList[index] && contentRefList[index].inVisible();
+                    // 修改当前的高度信息
+                    if (layer !== 0 && contentRefList[index]) {
+                      deepHeightList.forEach((_, i) => deepHeightList[i] = 0)
+                    }
                   }
                   // 如果当前点击项未被选中
                   else if (!childVisible) {
@@ -109,20 +123,40 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange },
                       content,
                       component: <Components />
                     })
+                    // 修改当前的高度信息
+                    if (layer !== 0 && contentRefList[index]) {
+                      deepHeightList.forEach((_, i) => deepHeightList[i] = 0)
+                      deepHeightList[layer - 1] = contentRefList[index].buttonHeight;
+                    }
+                  }
+                  if (layer !== 0 && contentRefList[index]) {
+                    console.log(deepHeightList);
+                    changeFatherDeepList([...deepHeightList]);
+                    setDeepHeightList([...deepHeightList]);
                   }
                 }}
               />
               {
                 hasChildren &&
-                <Content
-                  ref={(node) => {
-                    contentRefList[index] = node;
+                <div
+                  className='content-children'
+                  style={{
+                    height: (childVisible ? deepHeightList.reduce((previousValue, currentValue) => {
+                      return previousValue + currentValue;
+                    }, 0) : 0) + 'px'
                   }}
-                  contents={content.children}
-                  visible={childVisible}
-                  layer={layer - 1}
-                  onChange={onChange}
-                />
+                >
+                  <Content
+                    ref={(node) => {
+                      contentRefList[index] = node;
+                    }}
+                    contents={content.children}
+                    visible={childVisible}
+                    layer={layer - 1}
+                    onChange={onChange}
+                    changeFatherDeepList={_changeFatherDeepList}
+                  />
+                </div>
               }
             </div>
           )

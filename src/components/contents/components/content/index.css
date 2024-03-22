@@ -12,6 +12,10 @@
     padding-bottom: 0;
   }
 
+  & .content-children {
+    transition: height 0.2s;
+  }
+
   /* &::-webkit-scrollbar {
     width: 2px;
   }
