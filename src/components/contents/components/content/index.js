@@ -123,11 +123,6 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
                     // 将当前的按钮设置为选中
                     setSelected(true);
                     // 获取当前的组件
-                    const Components = findComponent(content);
-                    onChange({
-                      content,
-                      component: <Components />
-                    })
                     // 修改当前的高度信息
                     if (layer !== 0 && contentRefList[index]) {
                       deepHeightList.forEach((_, i) => deepHeightList[i] = 0)
@@ -139,6 +134,11 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
                     changeFatherDeepList([...deepHeightList]);
                     setDeepHeightList([...deepHeightList]);
                   }
+                  const Components = findComponent(content);
+                  onChange({
+                    content,
+                    component: <Components />
+                  })
                 }}
               />
               {
