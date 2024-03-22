@@ -7,7 +7,6 @@ export default function Components () {
   const [mainNode, setMainNode] = useState(null);
 
   function changeHandler (context) {
-    console.log(context)
     setMainNode(context.component);
   }
 

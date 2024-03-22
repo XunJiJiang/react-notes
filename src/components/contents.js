@@ -3,6 +3,9 @@ import UseCallback from '../pages/study/react/useCallback/index';
 
 const contents = [{
   label: 'react@18.2.0',
+  component: () => {
+    return <h1>react@18.2.0</h1>
+  },
   children: [{
     label: 'Hook',
     children: [{

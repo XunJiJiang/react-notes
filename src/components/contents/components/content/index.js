@@ -66,7 +66,7 @@ const Content = forwardRef(({ contents = [], visible = false, onChange }, ref) =
                     isBranch && setStateList([...stateList]);
                     setSelected(false);
                     buttonRefList[index].setSelected(false);
-                    contentRefList[index] && contentRefList[index].inVisible();
+                    // contentRefList[index] && contentRefList[index].inVisible();
                   } else {
                     stateList.forEach((_, i) => {
                       stateList[i] = false;
