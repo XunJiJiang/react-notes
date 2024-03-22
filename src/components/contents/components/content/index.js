@@ -77,6 +77,7 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange },
                 title={content.label ?? '该子目录不存在'}
                 tag={content.tag ?? null}
                 icon={isBranch ? 'right' : null}
+                isBold={isBranch}
                 onClick={({ setSelected }) => {
                   // 如果当前点击项已被选中且是有子目录的
                   if (childVisible && isBranch) {
