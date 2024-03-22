@@ -4,28 +4,7 @@
   padding: 8px 8px 0 20px;
   overflow: hidden;
 
-  &.invisible {
-    height: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
   & .content-children {
     transition: height 0.2s;
   }
-
-  /* &::-webkit-scrollbar {
-    width: 2px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #ffffff33;
-    border-radius: 1px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: #ffffff22;
-  } */
 }
