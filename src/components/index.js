@@ -2,6 +2,7 @@ import './index.css';
 import { useState } from 'react';
 import contents from './contents.js';
 import Contents from './contents/index.js';
+import Transition from './transition/index.js';
 
 export default function Components () {
   // 当前展示的组件
@@ -20,7 +21,9 @@ export default function Components () {
   return (
     <div className='body'>
       <Contents title="React" contents={contents} onChange={changeHandler} />
-      <div className='main'>{mainNode}</div>
+      <Transition>
+        <div className='main' id='main-page'>{mainNode}</div>
+      </Transition>
     </div>
   );
 }
