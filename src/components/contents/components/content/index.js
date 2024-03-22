@@ -25,10 +25,14 @@ function findComponent (content) {
 }
 
 const Content = forwardRef(({ contents = [], visible = false, onChange }, ref) => {
+
+  // 用于存储每个选项的可见状态
   const [stateList, setStateList] = useState(new Array(contents.length).fill(false));
 
+  // 用于存储每个选项的按钮的引用
   const buttonRefList = [];
 
+  // 用于存储每个选项的内容的引用
   const contentRefList = [];
 
   useImperativeHandle(ref, () => {
@@ -44,7 +48,11 @@ const Content = forwardRef(({ contents = [], visible = false, onChange }, ref) =
         contentRefList.forEach((content) => {
           content && content.inVisible();
         });
-      }
+      },
+      // 当前组件全部直接子按钮的高度和
+      buttonHeight: buttonRefList.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.clientHeight + 8;
+      }, 0)
     }
   });
 

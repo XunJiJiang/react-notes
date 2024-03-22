@@ -12,7 +12,7 @@
     padding-bottom: 0;
   }
 
-  &::-webkit-scrollbar {
+  /* &::-webkit-scrollbar {
     width: 2px;
   }
 
@@ -23,5 +23,5 @@
 
   &::-webkit-scrollbar-track {
     background-color: #ffffff22;
-  }
+  } */
 }

@@ -13,7 +13,8 @@ export default forwardRef(function Button ({ title = '', tag, icon, onClick = ()
   }
   useImperativeHandle(ref, () => {
     return {
-      setSelected
+      setSelected,
+      clientHeight: buttonRef.current.clientHeight
     }
   });
   return (
