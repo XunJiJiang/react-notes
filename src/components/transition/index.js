@@ -1,4 +1,3 @@
-import './index.css';
 import { useState, useRef, useEffect } from 'react';
 import runAnimate, { _keyframes } from './hooks/useTransition';
 
