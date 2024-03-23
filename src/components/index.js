@@ -21,7 +21,7 @@ export default function Components () {
   return (
     <div className='body'>
       <Contents title="React" contents={contents} onChange={changeHandler} />
-      <Transition>
+      <Transition mode='out-in'>
         <div className='main' id='main-page'>{mainNode}</div>
       </Transition>
     </div>
