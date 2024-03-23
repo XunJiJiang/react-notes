@@ -18,6 +18,11 @@ export default function Transition ({ mode = 'out-in', children, keyframe = _key
       setNowChild,
       isVisible
     );
+    // 这里仅在 children 发生变化时执行动画逻辑
+    // 但是编译器非要我把 mode, keyframe, duration, easing 放到依赖里
+    // 但是这样会导致每次都会重新执行动画逻辑
+    // 所以这里禁用 eslint 的 exhaustive-deps 规则
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [children]);
 
   return (
