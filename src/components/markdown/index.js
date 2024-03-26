@@ -1,8 +1,9 @@
 import './index.css';
 import { forwardRef, useImperativeHandle } from 'react';
+import APopover from './components/a-popover';
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-// import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 
 function MarkdownComponent ({ markdown }, ref) {
@@ -22,22 +23,36 @@ function MarkdownComponent ({ markdown }, ref) {
           return !inline && match ? (
             <SyntaxHighlighter
               children={String(children).replace(/\n$/, '')}
-              style={undefined}
+              style={StyleHighlighter}
+              className={`markdown-code markdown-long-code`}
               language={match[1]}
               PreTag='div'
               {...props}
             />
           ) : (
-            <code className={`markdown-short-code ${className ?? ''}`} {...props}>
+            <code className={`markdown-code markdown-short-code ${className ?? ''}`} {...props}>
               {children}
             </code>
           )
         },
-        a ({ node, inline, className, children, ...props }) {
+        a ({ className, children, ...props }) {
           return (
-            <a className={`markdown-link ${className ?? ''}`} {...props}>
+            <APopover
+              className={`markdown-link ${className ?? ''}`}
+              {...props}
+            >
               {children}
-            </a>
+            </APopover>
+          )
+        },
+        pre ({ node, inline, className, children, ...props }) {
+          return (
+            <pre
+              className={`markdown-pre ${className ?? ''}`}
+              {...props}
+            >
+              {children}
+            </pre>
           )
         },
         h1 ({ node, inline, className, children, id = children.split(' ').join('-').toLowerCase(), ...props }) {
