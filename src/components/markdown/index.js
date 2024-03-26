@@ -46,8 +46,12 @@ function MarkdownComponent ({ markdown }, ref) {
           )
         },
         pre ({ node, inline, className, children, ...props }) {
+          const match = /language-(\w+)/.exec(children.props.className ?? '');
           return (
             <pre
+              ref={(node) => {
+                node && node.children && node.children[0] && node.children[0].setAttribute('data-language', match ? match[1] : '');
+              }}
               className={`markdown-pre ${className ?? ''}`}
               {...props}
             >

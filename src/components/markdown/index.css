@@ -27,7 +27,17 @@
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
-/* .markdown-long-code {} */
+.markdown-long-code {
+  position: relative;
+
+  &::before {
+    content: attr(data-language);
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+    color: #a3a3a3;
+  }
+}
 
 a:has(.markdown-short-code) {
   text-decoration-color: #ec8000;
