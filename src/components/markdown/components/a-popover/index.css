@@ -1,0 +1,17 @@
+.a-link {
+  position: relative;
+}
+
+.a-popover {
+  position: absolute;
+  z-index: 1000;
+  background-color: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: none;
+  opacity: 0;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
