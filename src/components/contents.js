@@ -1,7 +1,15 @@
+import Learn from '../pages/study/learn/index';
 import Use from '../pages/study/react/use/index';
 import UseCallback from '../pages/study/react/useCallback/index';
 
 const contents = [{
+  label: 'react learn',
+  component: () => <h1>react learn</h1>,
+  children: [{
+    label: 'react',
+    component: () => <Learn />,
+  }]
+}, {
   label: 'react@18.2.0',
   component: () => <h1>react@18.2.0</h1>,
   children: [{
