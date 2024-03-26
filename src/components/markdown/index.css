@@ -1,3 +1,23 @@
+/* .markdown-code {} */
+
+.markdown-code::selection,
+.markdown-code ::selection {
+  background: #d3d3d3;
+  color: #555;
+}
+
+.markdown-code::-moz-selection,
+.markdown-code ::-moz-selection {
+  background: #d3d3d3;
+  color: #555;
+}
+
+.markdown-code::-webkit-selection,
+.markdown-code ::-webkit-selection {
+  background: #d3d3d3;
+  color: #555;
+}
+
 .markdown-short-code {
   padding: 4px;
   background-color: #f5f5f5;
@@ -7,6 +27,8 @@
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
+/* .markdown-long-code {} */
+
 a:has(.markdown-short-code) {
   text-decoration-color: #ec8000;
 }
@@ -14,4 +36,11 @@ a:has(.markdown-short-code) {
 .markdown-link {
   color: #42b983;
   /* text-decoration: none; */
+}
+
+.markdown-pre {
+  & div {
+    border-radius: 10px;
+    /* box-shadow: 0 0 8px #44444477; */
+  }
 }
