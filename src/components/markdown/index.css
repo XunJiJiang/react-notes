@@ -1,0 +1,17 @@
+.markdown-short-code {
+  padding: 4px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  color: #ec8000;
+  font-weight: bold;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+a:has(.markdown-short-code) {
+  text-decoration-color: #ec8000;
+}
+
+.markdown-link {
+  color: #42b983;
+  /* text-decoration: none; */
+}
