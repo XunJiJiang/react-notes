@@ -80,7 +80,7 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
           // 本项的子项的可见状态
           const childVisible = stateList[index];
           return (
-            <div
+            <li
               className={`content`}
               key={content.label + index}
             >
@@ -141,7 +141,7 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
               />
               {
                 hasChildren &&
-                <div
+                <ul
                   className='content-children'
                   style={{
                     height: (childVisible ? deepHeightList.reduce((previousValue, currentValue) => {
@@ -159,9 +159,9 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
                     onChange={onChange}
                     changeFatherDeepList={_changeFatherDeepList}
                   />
-                </div>
+                </ul>
               }
-            </div>
+            </li>
           )
         })
       }

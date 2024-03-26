@@ -38,12 +38,14 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
       width
     }}>
       <h1>{title}</h1>
-      <Content
-        contents={contents}
-        visible={true}
-        layer={getDeepestLayer(contents) - 1}
-        onChange={onChange}
-      />
+      <ul>
+        <Content
+          contents={contents}
+          visible={true}
+          layer={getDeepestLayer(contents) - 1}
+          onChange={onChange}
+        />
+      </ul>
     </div>
   );
 }
