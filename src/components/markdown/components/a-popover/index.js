@@ -25,10 +25,10 @@ export default function APopover ({ node, inline, className, children, ...props 
       }}
     >
       {children}
-      <div
+      <span
         ref={popoverRef}
         className='a-popover'
-      >{props.href}</div>
+      >{props.href}</span>
     </a>
   )
 }
