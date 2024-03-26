@@ -40,42 +40,39 @@ function MarkdownComponent ({ markdown }, ref) {
             </a>
           )
         },
-        h1 ({ node, inline, className, children, ...props }) {
-          const id = children.split(' ').join('-').toLowerCase();
-          contents.set(id, {
-            label: children,
-            level: 1,
-            node: null,
-          });
+        h1 ({ node, inline, className, children, id = children.split(' ').join('-').toLowerCase(), ...props }) {
+          contents.set(id, { id, label: children, level: 1, node: null });
           return (
             <h1
-              ref={(node) => {
-                contents.get(id).node = node;
-              }}
+              ref={(node) => (contents.get(id).node = node)}
               className={`markdown-h1 ${className ?? ''}`} {...props}
             >
               {children}
             </h1>
           )
         },
-        h2 ({ node, inline, className, children, ...props }) {
-          const id = children.split(' ').join('-').toLowerCase();
-          contents.set(id, {
-            label: children,
-            level: 2,
-            node: null,
-          });
+        h2 ({ node, inline, className, children, id = children.split(' ').join('-').toLowerCase(), ...props }) {
+          contents.set(id, { id, label: children, level: 2, node: null });
           return (
             <h2
-              ref={(node) => {
-                contents.get(id).node = node;
-              }}
+              ref={(node) => (contents.get(id).node = node)}
               className={`markdown-h2 ${className ?? ''}`} {...props}
             >
               {children}
             </h2>
           )
         },
+        h3 ({ node, inline, className, children, id = children.split(' ').join('-').toLowerCase(), ...props }) {
+          contents.set(id, { id, label: children, level: 3, node: null });
+          return (
+            <h3
+              ref={(node) => (contents.get(id).node = node)}
+              className={`markdown-h3 ${className ?? ''}`} {...props}
+            >
+              {children}
+            </h3>
+          )
+        }
       }}
     />
   )
