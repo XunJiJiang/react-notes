@@ -2,7 +2,7 @@ import './index.css';
 import { useEffect, useRef } from 'react';
 import MarkdownComponent from '../markdown';
 
-export default function PageTemplate ({ children, markdown }) {
+export default function PageTemplate ({ children, markdown = '> 没有 markdown 文本' }) {
   const ref = useRef(null);
   useEffect(() => {
   }, []);
@@ -14,9 +14,9 @@ export default function PageTemplate ({ children, markdown }) {
           markdown={markdown}
         />
       </div>
-      <div className='page-template-render'>
+      {children && <div className='page-template-render'>
         {children}
-      </div>
+      </div>}
     </div>
   )
 }
