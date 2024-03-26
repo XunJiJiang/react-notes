@@ -5,6 +5,7 @@ import MarkdownComponent from '../markdown';
 export default function PageTemplate ({ children, markdown = '> 没有 markdown 文本' }) {
   const ref = useRef(null);
   useEffect(() => {
+    // console.log(ref.current)
   }, []);
   return (
     <div className='page-template'>
@@ -14,6 +15,7 @@ export default function PageTemplate ({ children, markdown = '> 没有 markdown 
           markdown={markdown}
         />
       </div>
+      <nav></nav>
       {children && <div className='page-template-render'>
         {children}
       </div>}

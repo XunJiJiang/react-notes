@@ -34,9 +34,12 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
     return 150 + 44 + 28 * getDeepestLayer(contents) - 1 + 'px';
   })());
   return (
-    <div className='contents' style={{
-      width
-    }}>
+    <div
+      className='contents'
+      style={{
+        width
+      }}
+    >
       <h1>{title}</h1>
       <nav>
         <ul>

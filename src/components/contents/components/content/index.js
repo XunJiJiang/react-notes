@@ -92,6 +92,7 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
                 tag={content.tag ?? null}
                 icon={isBranch ? 'right' : null}
                 isBold={isBranch}
+                visible={visible}
                 onClick={({ setSelected }) => {
                   // 如果当前点击项已被选中且是有子目录的
                   if (childVisible && isBranch) {
