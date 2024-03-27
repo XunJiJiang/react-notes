@@ -99,8 +99,8 @@ const Content = forwardRef(({
                 }}
                 title={content.label ?? '该子目录不存在'}
                 tag={content.tag ?? null}
-                icon={isBranch ? 'right' : null}
-                isBold={isBranch}
+                icon={content.icon ?? null}
+                isBranch={isBranch}
                 visible={visible}
                 onClick={({ setSelected }) => {
                   // 如果当前点击项已被选中且是有子目录的

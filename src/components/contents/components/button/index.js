@@ -2,7 +2,7 @@ import './index.css';
 import { useRef, forwardRef, useImperativeHandle } from 'react';
 import Icon from '../icon';
 
-export default forwardRef(function Button ({ title = '', tag, icon, isBold = false, visible = false, onClick = () => {} }, ref) {
+export default forwardRef(function Button ({ title = '', tag, icon, isBranch = false, visible = false, onClick = () => {} }, ref) {
   const buttonRef = useRef(null);
   function setSelected (isSelected = false) {
     if (isSelected) {
@@ -20,15 +20,19 @@ export default forwardRef(function Button ({ title = '', tag, icon, isBold = fal
   return (
     <button
       ref={buttonRef}
-      className={`content-button ${isBold ? 'bold-button' : ''}`}
+      className={`content-button ${isBranch ? 'bold-button' : ''}`}
       tabIndex={visible ? 0 : -1}
       onClick={(e) => {
         e.setSelected = setSelected;
         onClick(e);
       }}
     >
-      <span>{title}{tag ? <i className='button-tag'>{tag}</i> : null}</span>
-      {icon && <Icon name={icon} />}
+      {icon && <>
+        <Icon name={icon} className='button-left-icon' />
+        <span className='button-left-icon-right-margin' />
+      </>}
+      <span className='button-main'>{title}{tag ? <i className='button-tag'>{tag}</i> : null}</span>
+      {isBranch && <Icon name='right' className='button-right-icon' />}
     </button>
   );
 });

@@ -19,7 +19,11 @@
     font-weight: bold;
   }
 
-  & i.icon {
+  & .button-left-icon-right-margin {
+    margin: 0 10px 0 0;
+  }
+
+  & i.button-right-icon {
     position: relative;
     transition: all 0.2s;
     height: 100%;
@@ -31,7 +35,7 @@
     }
   }
 
-  & span {
+  & span.button-main {
     width: calc(100% - 16px);
     word-wrap: break-word;
 
@@ -59,7 +63,7 @@
   &[isSelected='true'] {
     background-color: #ffffff22;
 
-    & i.icon {
+    & i.button-right-icon {
       transform: rotate(90deg);
     }
   }
