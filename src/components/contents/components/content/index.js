@@ -1,5 +1,6 @@
 import './index.css';
-import { useState, forwardRef, useImperativeHandle } from 'react';
+import { useState, useContext, forwardRef, useImperativeHandle } from 'react';
+import PathList from '../../context/pathList';
 import Button from '../button';
 import NotFound from '../../../../pages/404';
 
@@ -24,7 +25,15 @@ function findComponent (content) {
   }
 }
 
-const Content = forwardRef(({ contents = [], visible = false, layer, onChange, changeFatherDeepList = () => {} }, ref) => {
+const Content = forwardRef(({
+  contents = [],
+  visible = false,
+  layer,
+  onChange,
+  changeFatherDeepList = () => {}
+}, ref) => {
+
+  const pathList = useContext(PathList);
 
   // 用于存储每个选项的可见状态
   const [stateList, setStateList] = useState(new Array(contents.length).fill(false));
@@ -102,9 +111,12 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
                     setSelected(false);
                     // 将当前的选项的子内容设置为不可见
                     contentRefList[index] && contentRefList[index].inVisible();
-                    // 修改当前的高度信息
                     if (layer !== 0 && contentRefList[index]) {
-                      deepHeightList.forEach((_, i) => deepHeightList[i] = 0)
+                      // 修改当前深度的高度信息
+                      deepHeightList.forEach((_, i) => deepHeightList[i] = 0);
+                    }
+                    if (layer !== 0) {
+                      pathList.current.forEach((_, i) => i <= layer ? pathList.current[i] = null : null);
                     }
                   }
                   // 如果当前点击项未被选中
@@ -123,19 +135,25 @@ const Content = forwardRef(({ contents = [], visible = false, layer, onChange, c
                     // 将当前的按钮设置为选中
                     setSelected(true);
                     // 获取当前的组件
-                    // 修改当前的高度信息
+                    // 修改当前深度的高度信息
                     if (layer !== 0 && contentRefList[index]) {
-                      deepHeightList.forEach((_, i) => deepHeightList[i] = 0)
+                      deepHeightList.forEach((_, i) => deepHeightList[i] = 0);
                       deepHeightList[layer - 1] = contentRefList[index].buttonHeight;
                     }
+                    pathList.current.forEach((_, i) => {
+                      pathList.current.forEach((_, i) => i <= layer ? pathList.current[i] = null : null);
+                    });
+                    pathList.current[layer] = content.path;
                   }
                   if (layer !== 0 && contentRefList[index]) {
+                    // 将当前的高度信息传递给父组件
                     changeFatherDeepList([...deepHeightList]);
                     setDeepHeightList([...deepHeightList]);
                   }
                   const Components = findComponent(content);
                   onChange({
                     content,
+                    path: pathList.current,
                     component: <Components />
                   })
                 }}

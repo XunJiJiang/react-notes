@@ -1,4 +1,6 @@
 import './index.css';
+import { useRef } from 'react';
+import PathList from './context/pathList';
 import Content from './components/content';
 
 /**
@@ -28,11 +30,23 @@ function getDeepestLayer (contents) {
 }
 
 export default function Contents ({ title = '目录', contents = [], onChange = () => {} }) {
+
+  const pathList = useRef(new Array(getDeepestLayer(contents)).fill(null));
+
   /** 目录的宽度 */
   const width = ((() => {
     // 每深一层，增加28px
     return 150 + 44 + 28 * getDeepestLayer(contents) - 1 + 'px';
   })());
+
+  function _changeHandler (e) {
+    const _e = {
+      ...e,
+      path: e.path.reduce((p, c) => c ? c + p : p, '')
+    }
+    onChange(_e);
+  }
+
   return (
     <div
       className='contents'
@@ -43,12 +57,14 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
       <h1>{title}</h1>
       <nav>
         <ul>
-          <Content
-            contents={contents}
-            visible={true}
-            layer={getDeepestLayer(contents) - 1}
-            onChange={onChange}
-          />
+          <PathList.Provider value={pathList}>
+            <Content
+              contents={contents}
+              visible={true}
+              layer={getDeepestLayer(contents) - 1}
+              onChange={_changeHandler}
+            />
+          </PathList.Provider>
         </ul>
       </nav>
     </div>
