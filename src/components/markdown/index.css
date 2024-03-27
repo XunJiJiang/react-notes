@@ -1,22 +1,58 @@
+/* markdown start */
+
+/* .markdown {} */
+
+.markdown ::selection,
+.markdown ::selection {
+  background: #d3d3d3;
+  color: #555;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+}
+
+.markdown ::-moz-selection,
+.markdown ::-moz-selection {
+  background: #d3d3d3;
+  color: #555;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+}
+
+.markdown ::-webkit-selection,
+.markdown ::-webkit-selection {
+  background: #d3d3d3;
+  color: #555;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+}
+
+/* markdown end */
+
+/* markdown-code start */
+
 /* .markdown-code {} */
 
-.markdown-code::selection,
-.markdown-code ::selection {
+.markdown .markdown-code::selection,
+.markdown .markdown-code ::selection {
   background: #d3d3d3;
   color: #555;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
 }
 
-.markdown-code::-moz-selection,
-.markdown-code ::-moz-selection {
+.markdown .markdown-code::-moz-selection,
+.markdown .markdown-code ::-moz-selection {
   background: #d3d3d3;
   color: #555;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
 }
 
-.markdown-code::-webkit-selection,
-.markdown-code ::-webkit-selection {
+.markdown .markdown-code::-webkit-selection,
+.markdown .markdown-code ::-webkit-selection {
   background: #d3d3d3;
   color: #555;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
 }
+
+/* markdown-code end */
+
+/* markdown-short-code start */
 
 .markdown-short-code {
   padding: 4px;
@@ -26,6 +62,14 @@
   font-weight: bold;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
+
+a:has(.markdown-short-code) {
+  text-decoration-color: #ec8000;
+}
+
+/* markdown-short-code end */
+
+/* markdown-long-code start */
 
 .markdown-long-code {
   position: relative;
@@ -39,14 +83,30 @@
   }
 }
 
-a:has(.markdown-short-code) {
-  text-decoration-color: #ec8000;
-}
+/* markdown-long-code end */
+
+/* markdown-link start */
 
 .markdown-link {
   color: #42b983;
   /* text-decoration: none; */
 }
+
+/* markdown-link end */
+
+/* markdown-blockquote start */
+
+.markdown-blockquote {
+  padding: 0.5em 1em;
+  margin: 0;
+  background-color: #42b98322;
+  border-left: 0.25em solid #42b983;
+  color: #797a7c;
+}
+
+/* markdown-blockquote end */
+
+/* markdown-pre start */
 
 .markdown-pre {
   & div {
@@ -54,3 +114,5 @@ a:has(.markdown-short-code) {
     /* box-shadow: 0 0 8px #44444477; */
   }
 }
+
+/* markdown-pre end */

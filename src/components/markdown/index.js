@@ -17,6 +17,7 @@ function MarkdownComponent ({ markdown }, ref) {
     <Markdown
       children={markdown}
       remarkPlugins={[remarkGfm]}
+      className='markdown'
       components={{
         code ({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className ?? '');
@@ -43,6 +44,16 @@ function MarkdownComponent ({ markdown }, ref) {
             >
               {children}
             </APopover>
+          )
+        },
+        blockquote ({ node, inline, className, children, ...props }) {
+          return (
+            <blockquote
+              className={`markdown-blockquote ${className ?? ''}`}
+              {...props}
+            >
+              {children}
+            </blockquote>
           )
         },
         pre ({ node, inline, className, children, ...props }) {
