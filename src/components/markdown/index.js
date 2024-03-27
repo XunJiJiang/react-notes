@@ -58,6 +58,7 @@ function MarkdownComponent ({ markdown }, ref) {
         },
         pre ({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(children.props.className ?? '');
+          // console.log(node, inline, className, children, props)
           return (
             <pre
               ref={(node) => {
@@ -67,6 +68,17 @@ function MarkdownComponent ({ markdown }, ref) {
               {...props}
             >
               {children}
+              <i
+                className={`markdown-pre-copy`}
+                onClick={(e) => {
+                  const text = e.target.previousSibling.innerText;
+                  navigator.clipboard.writeText(text).then(() => {
+                    console.log('copy success')
+                  }).catch(() => {
+                    console.log('copy fail')
+                  });
+                }}
+              >copy</i>
             </pre>
           )
         },

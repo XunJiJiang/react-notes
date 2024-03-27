@@ -15,7 +15,9 @@ export default function PageTemplate ({ children, markdown = '> 没有 markdown 
           markdown={markdown}
         />
       </div>
-      <nav></nav>
+      <div>
+        <nav></nav>
+      </div>
       {children && <div className='page-template-render'>
         {children}
       </div>}
