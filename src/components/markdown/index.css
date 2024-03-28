@@ -118,11 +118,11 @@ a:has(.markdown-short-code) {
 
   & .markdown-pre-copy {
     position: absolute;
-    top: 1px;
-    right: 1px;
+    top: 0;
+    right: 0;
     color: #a3a3a3;
     background-color: #00000010;
-    padding: 2px 5px 4px 4px;
+    padding: 2px 6px 4px 6px;
     border-radius: 5px 10px 5px 5px;
     font-style: normal;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
