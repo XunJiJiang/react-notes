@@ -73,9 +73,9 @@ function MarkdownComponent ({ markdown }, ref) {
                 onClick={(e) => {
                   const text = e.target.previousSibling.innerText;
                   navigator.clipboard.writeText(text).then(() => {
-                    console.log('copy success')
+                    // console.log('copy success');
                   }).catch(() => {
-                    console.log('copy fail')
+                    console.warn('copy fail')
                   });
                 }}
               >copy</i>
