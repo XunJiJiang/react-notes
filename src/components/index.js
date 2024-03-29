@@ -17,7 +17,7 @@ export default function Components () {
    * @param {object} context.component 当前展示的组件
    */
   function changeHandler (context) {
-    if (context.content === lastContext.current) return;
+    if (context.content === lastContext.current || !context.component) return;
     setMainNode(context.component);
     lastContext.current = context.content;
   }
