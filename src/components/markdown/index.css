@@ -1,6 +1,8 @@
 /* markdown start */
 
-/* .markdown {} */
+.markdown {
+  font-size: 16px;
+}
 
 .markdown ::selection,
 .markdown ::selection {
@@ -80,6 +82,7 @@ a:has(.markdown-short-code) {
     bottom: 3px;
     right: 5px;
     color: #a3a3a3;
+    /* user-select: none; */
   }
 }
 
@@ -126,7 +129,8 @@ a:has(.markdown-short-code) {
     border-radius: 5px 10px 5px 5px;
     font-style: normal;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 12px;
+    font-size: 14px;
+    user-select: none;
     cursor: pointer;
     transition: all 0.2s;
     z-index: 1;
