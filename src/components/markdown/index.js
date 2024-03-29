@@ -7,7 +7,55 @@ import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/sty
 import remarkGfm from 'remark-gfm';
 
 function MarkdownComponent ({ markdown }, ref) {
-  const contents = new Map();
+  const contents = [];
+
+  const contentsMap = new Map();
+
+  /**
+   * 设置 contentsMap
+   * 检查 id 是否已存在，如果存在则将内容放入数组，同时警告
+   * @param {Array} content 
+   */
+  function setContents (content) {
+    contents.push(content);
+    const id = content.id;
+    if (contentsMap.has(id)) {
+        console.warn(`id: ${id} 已存在`);
+        const oldContent = contentsMap.get(id);
+        if (Array.isArray(oldContent)) {
+          oldContent.push(content);
+        } else {
+          contentsMap.set(id, [oldContent, content]);
+        }
+      } else {
+        contentsMap.set(id, content);
+      }
+  }
+
+  // 记录每个标题的 id 的，由空格分割的字符串对应的 key
+  const idSliceMap = new Map();
+  // 下一个分割字符串的 key
+  let keyIndex = 1;
+
+  /**
+   * 创建标题的 id
+   * @param {string} children 
+   * @returns 
+   */
+  function createId (children) {
+    const idSlices = children.split(' ');
+    let id = '';
+    idSlices.forEach((slice) => {
+      const key = idSliceMap.get(slice);
+      if (key) {
+        id += `-${key}`;
+      } else {
+        id += `-${keyIndex}`;
+        idSliceMap.set(slice, keyIndex++);
+      }
+    });
+    return 'markdown-title' + id;
+  }
 
   useImperativeHandle(ref, () => ({
     contents
@@ -58,7 +106,6 @@ function MarkdownComponent ({ markdown }, ref) {
         },
         pre ({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(children.props.className ?? '');
-          // console.log(node, inline, className, children, props)
           return (
             <pre
               ref={(node) => {
@@ -82,33 +129,42 @@ function MarkdownComponent ({ markdown }, ref) {
             </pre>
           )
         },
-        h1 ({ node, inline, className, children, id = children.split(' ').join('-').toLowerCase(), ...props }) {
-          contents.set(id, { id, label: children, level: 1, node: null });
+        h1 ({ node, inline, className, children, id = createId(children), ...props }) {
+          const content = { id, label: children, level: 1, node: null };
           return (
             <h1
-              ref={(node) => (contents.get(id).node = node)}
+              ref={(node) => {
+                content.node = node;
+                node && setContents(content);
+              }}
               className={`markdown-h1 ${className ?? ''}`} {...props}
             >
               {children}
             </h1>
           )
         },
-        h2 ({ node, inline, className, children, id = children.split(' ').join('-').toLowerCase(), ...props }) {
-          contents.set(id, { id, label: children, level: 2, node: null });
+        h2 ({ node, inline, className, children, id = createId(children), ...props }) {
+          const content = { id, label: children, level: 2, node: null };
           return (
             <h2
-              ref={(node) => (contents.get(id).node = node)}
+              ref={(node) => {
+                content.node = node;
+                node && setContents(content);
+              }}
               className={`markdown-h2 ${className ?? ''}`} {...props}
             >
               {children}
             </h2>
           )
         },
-        h3 ({ node, inline, className, children, id = children.split(' ').join('-').toLowerCase(), ...props }) {
-          contents.set(id, { id, label: children, level: 3, node: null });
+        h3 ({ node, inline, className, children, id = createId(children), ...props }) {
+          const content = { id, label: children, level: 3, node: null };
           return (
             <h3
-              ref={(node) => (contents.get(id).node = node)}
+              ref={(node) => {
+                content.node = node;
+                node && setContents(content);
+              }}
               className={`markdown-h3 ${className ?? ''}`} {...props}
             >
               {children}
