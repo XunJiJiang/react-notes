@@ -68,12 +68,12 @@ export default function PageTemplate ({ children, markdown = '> 没有 markdown 
             markdown={markdown}
           />
         </div>
-        <div className='page-template-contents'>
+        {markdownContents.filter((c) => c.level !== 1).length > 0 && <div className='page-template-contents'>
           <Contents
             ref={markdownContentsRef}
             contents={markdownContents}
           />
-        </div>
+        </div>}
         {children && <div className='page-template-render'>
           {children}
         </div>}
