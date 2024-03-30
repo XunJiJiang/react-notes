@@ -1,8 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 import runAnimate, { _keyframes } from './hooks/useTransition';
 
-export default function Transition ({ mode = 'out-in', children, keyframe = _keyframes[mode], duration = 300, easing = 'ease-in-out'}) {
-  if (Array.isArray(children)) {
+export default function Transition ({
+  mode = 'out-in',
+  children,
+  keyframe = _keyframes[mode],
+  duration = 300,
+  easing = 'ease-in-out'
+}) {
+
+  if (!children) {
+    throw new Error('Transition 组件必须有一个子元素');
+  };
+
+  if (Array.isArray(children) && children.length > 1) {
     throw new Error('Transition 组件只能接收一个子元素');
   }
 

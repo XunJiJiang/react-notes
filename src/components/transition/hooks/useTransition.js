@@ -33,8 +33,10 @@ export default function runAnimate (children, { mode, keyframe, duration, easing
 
   const mainPage = document.getElementById(children.props.id);
   if (!mainPage) {
-    flushSync(() => {
-      setNowChild(null);
+    Promise.resolve().then(() => {
+      flushSync(() => {
+        setNowChild(children);
+      });
     });
     isVisible.current = children;
     return;
@@ -58,9 +60,7 @@ export default function runAnimate (children, { mode, keyframe, duration, easing
 
   if (mode === 'in') {
     // 将flushSync放入Promise中，在下一次渲染前执行
-    new Promise((resolve) => {
-      resolve()
-    }).then(() => {
+    Promise.resolve().then(() => {
       flushSync(() => {
         setNowChild(children);
       });
