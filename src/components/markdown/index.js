@@ -1,5 +1,5 @@
 import './index.css';
-import { forwardRef, useImperativeHandle } from 'react';
+import { forwardRef, useImperativeHandle, useEffect } from 'react';
 import APopover from './components/a-popover';
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -10,6 +10,15 @@ function MarkdownComponent ({ markdown }, ref) {
   const contents = [];
 
   const contentsMap = new Map();
+
+  useEffect(() => {
+    contents.forEach((content) => {
+      const { node, id } = content;
+      if (!node) return;
+      const offsetTop = node.offsetTop;
+      content.offsetTop = offsetTop;
+    });
+  });
 
   /**
    * 设置 contentsMap
@@ -137,6 +146,7 @@ function MarkdownComponent ({ markdown }, ref) {
                 content.node = node;
                 node && setContents(content);
               }}
+              id={id}
               className={`markdown-h1 ${className ?? ''}`} {...props}
             >
               {children}
@@ -151,6 +161,7 @@ function MarkdownComponent ({ markdown }, ref) {
                 content.node = node;
                 node && setContents(content);
               }}
+              id={id}
               className={`markdown-h2 ${className ?? ''}`} {...props}
             >
               {children}
@@ -165,6 +176,7 @@ function MarkdownComponent ({ markdown }, ref) {
                 content.node = node;
                 node && setContents(content);
               }}
+              id={id}
               className={`markdown-h3 ${className ?? ''}`} {...props}
             >
               {children}
