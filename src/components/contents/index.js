@@ -29,7 +29,7 @@ function getDeepestLayer (contents) {
   return layer;
 }
 
-export default function Contents ({ title = '目录', contents = [], onChange = () => {} }) {
+export default function Contents ({ title = '目录', contents = [], onChange = () => {}, onWidthLoad = () => {} }) {
 
   const pathList = useRef(new Array(getDeepestLayer(contents)).fill(null));
 
@@ -38,6 +38,8 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
     // 每深一层，增加28px
     return 150 + 44 + 28 * getDeepestLayer(contents) - 1 + 'px';
   })());
+
+  onWidthLoad(width);
 
   function _changeHandler (e) {
     const _e = {

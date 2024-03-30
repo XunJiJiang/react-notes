@@ -8,7 +8,10 @@ export default function Components () {
   // 当前展示的组件
   const [mainNode, setMainNode] = useState(null);
 
+  // 上一次点击的菜单上下文
   const lastContext = useRef(null);
+  
+  const mainRef = useRef(null);
 
   /**
    * 组件切换事件处理
@@ -24,9 +27,21 @@ export default function Components () {
 
   return (
     <div className='body'>
-      <Contents title="React" contents={contents} onChange={changeHandler} />
+      <Contents
+        title="React"
+        contents={contents}
+        onChange={changeHandler} onWidthLoad={(width) => {
+          if (mainRef.current) {
+            mainRef.current.style.setProperty('--leaveWidthBlank', width);
+          }
+        }}
+      />
       <Transition mode='out-in'>
-        <div className='main' id='main-page'>{mainNode}</div>
+        <div
+          className='main'
+          id='main-page'
+          ref={mainRef}
+        >{mainNode}</div>
       </Transition>
     </div>
   );

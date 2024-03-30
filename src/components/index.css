@@ -1,11 +1,13 @@
 .body {
   height: 100vh;
   width: 100vw;
-  display: flex;
+  position: relative;
+  overflow: auto;
 
   & .main {
-    width: calc(100% - 250px);
-    height: 100%;
-    overflow: auto;
+    width: calc(100% - var(--leaveWidthBlank));
+    box-sizing: content-box;
+    position: relative;
+    margin-left: var(--leaveWidthBlank);
   }
 }
