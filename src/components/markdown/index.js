@@ -1,69 +1,59 @@
 import './index.css';
-import { forwardRef, useImperativeHandle, useEffect } from 'react';
+import { forwardRef, useImperativeHandle, useEffect, useRef } from 'react';
 import APopover from './components/a-popover';
+import { H1, H2, H3 } from './components/title';
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
+import { deepCopy } from '../../utils';
 
 function MarkdownComponent ({ markdown }, ref) {
-  const contents = [];
+  const contents = useRef([]);
 
   const contentsMap = new Map();
 
+  let setContentsIndex = useRef(0);
+
+  let getContentIndex = useRef(0);
+
   useEffect(() => {
-    contents.forEach((content) => {
-      const { node, id } = content;
+    contents.current.forEach((content) => {
+      const { node } = content;
       if (!node) return;
       const offsetTop = node.offsetTop;
-      content.offsetTop = offsetTop;
+      const marginTop = parseInt(window.getComputedStyle(node).marginTop);
+      content.offsetTop = offsetTop + marginTop;
     });
+    console.log(contents.current);
+    setContentsIndex.current = 0;
+    getContentIndex.current = 0;
   });
 
   /**
-   * 设置 contentsMap
-   * 检查 id 是否已存在，如果存在则将内容放入数组，同时警告
+   * 设置 contents
    * @param {Array} content 
    */
   function setContents (content) {
-    contents.push(content);
-    const id = content.id;
-    if (contentsMap.has(id)) {
-        console.warn(`id: ${id} 已存在`);
-        const oldContent = contentsMap.get(id);
-        if (Array.isArray(oldContent)) {
-          oldContent.push(content);
-        } else {
-          contentsMap.set(id, [oldContent, content]);
-        }
-      } else {
-        contentsMap.set(id, content);
-      }
+    if (contents.current[setContentsIndex.current] && content.node) {
+      contents.current[setContentsIndex.current].node = content.node;
+    }
+    
+    if (!contents.current[setContentsIndex.current]) {
+      contents.current[setContentsIndex.current] = content;
+    }
+
+    if (content.node) {
+      setContentsIndex.current++;
+    }
   }
 
-  // 记录每个标题的 id 的，由空格分割的字符串对应的 key
-  const idSliceMap = new Map();
-  // 下一个分割字符串的 key
-  let keyIndex = 1;
+  function getContent (id) {
+    if (contentsMap.has(id)) {
+      return deepCopy(contentsMap.get(id));
+    }
 
-  /**
-   * 创建标题的 id
-   * @param {string} children 
-   * @returns 
-   */
-  function createId (children) {
-    const idSlices = children.split(' ');
-    let id = '';
-    idSlices.forEach((slice) => {
-      const key = idSliceMap.get(slice);
-      if (key) {
-        id += `-${key}`;
-      } else {
-        id += `-${keyIndex}`;
-        idSliceMap.set(slice, keyIndex++);
-      }
-    });
-    return 'markdown-title' + id;
+    return null;
   }
 
   useImperativeHandle(ref, () => ({
@@ -138,50 +128,26 @@ function MarkdownComponent ({ markdown }, ref) {
             </pre>
           )
         },
-        h1 ({ node, inline, className, children, id = createId(children), ...props }) {
-          const content = { id, label: children, level: 1, node: null };
-          return (
-            <h1
-              ref={(node) => {
-                content.node = node;
-                node && setContents(content);
-              }}
-              id={id}
-              className={`markdown-h1 ${className ?? ''}`} {...props}
-            >
-              {children}
-            </h1>
-          )
+        h1 ({ ...props }) {
+          return <H1
+            {...props}
+            setContents={setContents}
+            getContent={getContent}
+          />
         },
-        h2 ({ node, inline, className, children, id = createId(children), ...props }) {
-          const content = { id, label: children, level: 2, node: null };
-          return (
-            <h2
-              ref={(node) => {
-                content.node = node;
-                node && setContents(content);
-              }}
-              id={id}
-              className={`markdown-h2 ${className ?? ''}`} {...props}
-            >
-              {children}
-            </h2>
-          )
+        h2 ({ ...props }) {
+          return <H2
+            {...props}
+            setContents={setContents}
+            getContent={getContent}
+          />
         },
-        h3 ({ node, inline, className, children, id = createId(children), ...props }) {
-          const content = { id, label: children, level: 3, node: null };
-          return (
-            <h3
-              ref={(node) => {
-                content.node = node;
-                node && setContents(content);
-              }}
-              id={id}
-              className={`markdown-h3 ${className ?? ''}`} {...props}
-            >
-              {children}
-            </h3>
-          )
+        h3 ({ ...props }) {
+          return <H3
+            {...props}
+            setContents={setContents}
+            getContent={getContent}
+          />
         }
       }}
     />

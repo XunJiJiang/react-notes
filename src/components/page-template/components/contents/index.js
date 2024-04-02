@@ -44,7 +44,8 @@ function ContentsINPage ({ contents }, ref) {
                 key={index}
                 onClick={() => {
                   const id = content.id;
-                  const node = document.getElementById(id);
+                  console.log(content);
+                  const node = content.node;
                   if (id && node) {
                     node.scrollIntoView({ behavior: 'smooth' });
                   } else {

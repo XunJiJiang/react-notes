@@ -22,16 +22,15 @@ export default function PageTemplate ({ children, markdown = '> 没有 markdown 
    */
   function scrollHandler () {
     if (markdownContentsRef.current && markdownContentsRef.current.changeLocation) {
-      // 视口高度
       const viewHeight = window.innerHeight;
       const inView = [];
       for (let i = markdownContents.length - 1; i >= 0; i--) {
         const content = markdownContents[i]; 
         if (content.offsetTop <= scrollRef.current.scrollTop + viewHeight / 2 && 
-          content.offsetTop >= scrollRef.current.scrollTop - 50) {
+          content.offsetTop >= scrollRef.current.scrollTop - 16) {
           inView.push(content);
         }
-        if (content.offsetTop < scrollRef.current.scrollTop - 50) {
+        if (content.offsetTop < scrollRef.current.scrollTop - 16) {
           if (inView.length === 0) {
             markdownContentsRef.current.changeLocation(content);
           } else {
@@ -60,8 +59,8 @@ export default function PageTemplate ({ children, markdown = '> 没有 markdown 
           <MarkdownComponent
             ref={(node) => {
               console.log('渲染次数', a++);
-              if (node && node.contents && markdownContents.length === 0) {
-                setMarkdownContents(node.contents);
+              if (node && node.contents.current && markdownContents.length === 0) {
+                setMarkdownContents(node.contents.current);
               }
               return markdownRef;
             }}
