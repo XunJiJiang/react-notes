@@ -55,7 +55,7 @@ function ContentsINPage ({ contents }, ref) {
                 }}
               >
                 <a
-                  href={`#${content.id}`}
+                  href={`#${content.label}`}
                   className={`contents-in-page-item contents-in-page-item-${content.level}`}
                 >
                   {content.label}

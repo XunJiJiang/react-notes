@@ -18,13 +18,18 @@
     padding-left: 0;
 
     & li.contents-in-page-item-box {
-      padding: 8px;
+      padding: 0;
       border-radius: 10px 0 0 10px;
+      height: 36px;
       cursor: pointer;
 
       & a.contents-in-page-item {
+        display: block;
         font-size: 14px;
         line-height: 20px;
+        height: 36px;
+        margin: 0;
+        padding: 8px 8px 8px 0;
         color: #000000;
         text-decoration: none;
         white-space: nowrap;
