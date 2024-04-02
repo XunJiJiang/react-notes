@@ -3,8 +3,6 @@ import { useRef, useState } from 'react';
 import MarkdownComponent from '../markdown';
 import Contents from './components/contents';
 
-let a = 1;
-
 const scrollEvent = 'scroll';
 
 export default function PageTemplate ({ children, markdown = '> 没有 markdown 文本' }) {
@@ -58,7 +56,6 @@ export default function PageTemplate ({ children, markdown = '> 没有 markdown 
         <div className='page-template-markdown'>
           <MarkdownComponent
             ref={(node) => {
-              console.log('渲染次数', a++);
               if (node && node.contents.current && markdownContents.length === 0) {
                 setMarkdownContents(node.contents.current);
               }

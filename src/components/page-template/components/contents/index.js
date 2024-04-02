@@ -9,7 +9,7 @@ function ContentsINPage ({ contents }, ref) {
 
   function changeLocation (content) {
     const liNode = document.getElementById(`contents-in-page-${content.id}`);
-    const liNodes = ulRef.current.childNodes;
+    const liNodes = liList.current;
     for (let i = 0; i < liNodes.length; i++) {
       const li = liNodes[i];
       li.setAttribute('data-active', false);
@@ -18,8 +18,10 @@ function ContentsINPage ({ contents }, ref) {
   }
 
   useEffect(() => {
-    // changeLocation(contents[0])
-    // console.log(contents[0]);
+    const viewHeight = window.innerHeight;
+    if (liList.current[0] && contents[0].offsetTop <= viewHeight / 2) {
+      liList.current[0].setAttribute('data-active', true);
+    }
   });
 
   useImperativeHandle(ref, () => ({
@@ -38,13 +40,12 @@ function ContentsINPage ({ contents }, ref) {
               <li
                 id={`contents-in-page-${content.id}`}
                 className='contents-in-page-item-box'
-                ref={() => {
-                  liList.current.push(index);
+                ref={(node) => {
+                  liList.current.push(node);
                 }}
                 key={index}
                 onClick={() => {
                   const id = content.id;
-                  console.log(content);
                   const node = content.node;
                   if (id && node) {
                     node.scrollIntoView({ behavior: 'smooth' });

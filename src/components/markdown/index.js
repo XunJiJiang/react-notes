@@ -25,7 +25,6 @@ function MarkdownComponent ({ markdown }, ref) {
       const marginTop = parseInt(window.getComputedStyle(node).marginTop);
       content.offsetTop = offsetTop + marginTop;
     });
-    console.log(contents.current);
     setContentsIndex.current = 0;
     getContentIndex.current = 0;
   });
