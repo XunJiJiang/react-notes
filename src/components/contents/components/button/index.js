@@ -1,6 +1,6 @@
 import './index.css';
 import { useRef, forwardRef, useImperativeHandle } from 'react';
-import Icon from '../icon';
+import Icon from '@components/icon/index';
 
 export default forwardRef(function Button ({ title = '', tag, icon, isBranch = false, visible = false, onClick = () => {} }, ref) {
   const buttonRef = useRef(null);

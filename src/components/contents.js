@@ -1,6 +1,6 @@
-import Learn from '../pages/study/learn/index';
-import Use from '../pages/study/react/use/index';
-import UseCallback from '../pages/study/react/useCallback/index';
+import Learn from '@pages/study/learn/index';
+import Use from '@pages/study/react/use/index';
+import UseCallback from '@pages/study/react/useCallback/index';
 
 const contents = [{
   label: 'react learn',

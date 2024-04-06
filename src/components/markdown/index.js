@@ -6,7 +6,7 @@ import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
-import { deepCopy } from '../../utils';
+import { deepCopy } from '@utils/index';
 
 function MarkdownComponent ({ markdown }, ref) {
   const contents = useRef([]);

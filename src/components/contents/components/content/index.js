@@ -2,7 +2,7 @@ import './index.css';
 import { useState, useContext, forwardRef, useImperativeHandle } from 'react';
 import PathList from '../../context/pathList';
 import Button from '../button';
-import NotFound from '../../../../pages/404';
+import NotFound from '@pages/404';
 
 /**
  * 寻找组件
