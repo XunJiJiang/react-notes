@@ -4,11 +4,27 @@ import Icon from '@components/icon/index';
 
 export default forwardRef(function Button ({ title = '', tag, icon, isBranch = false, visible = false, onClick = () => {} }, ref) {
   const buttonRef = useRef(null);
+  /**
+   * 修改按钮样式
+   * @param {boolean | {
+   *  expand: boolean,
+   *  selected: boolean
+   * }} isSelected 
+   */
   function setSelected (isSelected = false) {
-    if (isSelected) {
-      buttonRef.current.setAttribute('isSelected', 'true');
-    } else {
-      buttonRef.current.removeAttribute('isSelected');
+    if (typeof isSelected === 'boolean') {
+      buttonRef.current.setAttribute('isExpand', isSelected);
+      buttonRef.current.setAttribute('isSelected', isSelected);
+    }
+
+    if (typeof isSelected === 'object') {
+      isSelected = {
+        expand: isSelected.expand ?? false,
+        selected: isSelected.selected ?? false
+      };
+
+      buttonRef.current.setAttribute('isExpand', isSelected.expand);
+      buttonRef.current.setAttribute('isSelected', isSelected.selected);
     }
   }
   useImperativeHandle(ref, () => {
