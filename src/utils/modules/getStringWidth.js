@@ -6,13 +6,13 @@
  * @param {String} style.fontFamily 字体
  * @returns {Number} 字符串长度(px)
 */
-export default function getStringWidth (
+const getStringWidth = (
   msg,
   style = {
     fontSize: 12,
     fontFamily: 'initial'
   }
-) {
+) => {
   style = {
     fontSize: style.fontSize ?? 12,
     fontFamily: style.fontFamily ?? 'initial'
@@ -30,3 +30,5 @@ export default function getStringWidth (
   document.body.removeChild(stringWidthDom);
   return width;
 };
+
+export default getStringWidth;

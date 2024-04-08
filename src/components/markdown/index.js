@@ -9,24 +9,27 @@ import remarkGfm from 'remark-gfm';
 import { deepCopy } from '@utils/index';
 
 function MarkdownComponent ({ markdown }, ref) {
+
+  // 保存目录项
   const contents = useRef([]);
 
+  // 保存目录项映射[id, content]
   const contentsMap = new Map();
 
-  let setContentsIndex = useRef(0);
-
-  let getContentIndex = useRef(0);
+  // 保存当前指向的目录项下标, 当且仅当目录项的节点成功渲染时, 下标指向下一个目录项
+  let contentsIndex = useRef(0);
 
   useEffect(() => {
     contents.current.forEach((content) => {
       const { node } = content;
       if (!node) return;
+      // 保存节点的占位高度
       const offsetTop = node.offsetTop;
       const marginTop = parseInt(window.getComputedStyle(node).marginTop);
       content.offsetTop = offsetTop + marginTop;
     });
-    setContentsIndex.current = 0;
-    getContentIndex.current = 0;
+    // 重置当前指向的目录项下标
+    contentsIndex.current = 0;
   });
 
   /**
@@ -34,19 +37,27 @@ function MarkdownComponent ({ markdown }, ref) {
    * @param {Array} content 
    */
   function setContents (content) {
-    if (contents.current[setContentsIndex.current] && content.node) {
-      contents.current[setContentsIndex.current].node = content.node;
+    // 当前目录项已经存入目录项列表时, 更新其对应的节点
+    if (contents.current[contentsIndex.current] && content.node) {
+      contents.current[contentsIndex.current].node = content.node;
     }
     
-    if (!contents.current[setContentsIndex.current]) {
-      contents.current[setContentsIndex.current] = content;
+    // 当前目录项未存入目录项列表时, 存入目录项列表
+    if (!contents.current[contentsIndex.current]) {
+      contents.current[contentsIndex.current] = content;
     }
 
+    // 若传入的目录项的节点成功渲染, 则成功存入目录项, 下标指向下一个目录项
     if (content.node) {
-      setContentsIndex.current++;
+      contentsIndex.current++;
     }
   }
 
+  /**
+   * 获取目录项
+   * @param {string} id 
+   * @returns 
+   */
   function getContent (id) {
     if (contentsMap.has(id)) {
       return deepCopy(contentsMap.get(id));

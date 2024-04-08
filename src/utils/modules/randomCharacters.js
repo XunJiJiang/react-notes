@@ -63,7 +63,7 @@ function getCharacters ({
  * @param {boolean} option.symbol
  * @returns 
  */
-export default function randomCharactersS (length = 6, option = {}) {
+const randomCharacters = (length = 6, option = {}) => {
   const [CHARACTERS, CHARACTERS_LENGTH] = getCharacters(option);
   let result = '';
   for (let i = 0; i < length; i++) {
@@ -71,3 +71,5 @@ export default function randomCharactersS (length = 6, option = {}) {
   }
   return result;
 }
+
+export default randomCharacters;

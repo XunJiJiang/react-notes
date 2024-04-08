@@ -11,7 +11,7 @@ export default forwardRef(function Button ({ title = '', tag, icon, isBranch = f
    *  selected: boolean
    * }} isSelected 
    */
-  function setSelected (isSelected = false) {
+  function setSelectedStyle (isSelected = false) {
     if (typeof isSelected === 'boolean') {
       buttonRef.current.setAttribute('isExpand', isSelected);
       buttonRef.current.setAttribute('isSelected', isSelected);
@@ -29,7 +29,7 @@ export default forwardRef(function Button ({ title = '', tag, icon, isBranch = f
   }
   useImperativeHandle(ref, () => {
     return {
-      setSelected,
+      setSelectedStyle,
       clientHeight: buttonRef.current.clientHeight
     }
   });
@@ -39,7 +39,7 @@ export default forwardRef(function Button ({ title = '', tag, icon, isBranch = f
       className={`content-button ${isBranch ? 'bold-button' : ''}`}
       tabIndex={visible ? 0 : -1}
       onClick={(e) => {
-        e.setSelected = setSelected;
+        e.setSelectedStyle = setSelectedStyle;
         onClick(e);
       }}
     >

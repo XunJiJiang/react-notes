@@ -1,4 +1,4 @@
-export default function deepCopy (obj) {
+const deepCopy = (obj) => {
   const map = new WeakMap();
 
   function _deepCopy (_obj) {
@@ -23,4 +23,6 @@ export default function deepCopy (obj) {
   }
 
   return _deepCopy(obj);
-}
+};
+
+export default deepCopy;

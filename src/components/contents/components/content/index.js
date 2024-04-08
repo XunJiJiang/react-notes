@@ -58,7 +58,7 @@ const Content = forwardRef(({
         setVisibleList(new Array(contents.length).fill(false));
         if (lastIndex !== -1) {
           // 将上次为选中状态的按钮设置为未选中
-          buttonRefList[lastIndex].setSelected(false);
+          buttonRefList[lastIndex].setSelectedStyle(false);
           // 递归调用, 将上次为选中状态的选项子内容设置为不可见
           contentRefList[lastIndex] && contentRefList[lastIndex].inVisible();
           setLastIndex(-1);
@@ -81,8 +81,7 @@ const Content = forwardRef(({
     })
     setDeepHeightList([...deepHeightList]);
     changeFatherDeepList([...deepHeightList]);
-    console.log(deepHeightList);
-    buttonRefList[lastIndex].setSelected({
+    buttonRefList[lastIndex].setSelectedStyle({
       expand: true,
       selected: false
     });
@@ -111,7 +110,7 @@ const Content = forwardRef(({
                 icon={content.icon ?? null}
                 isBranch={isBranch}
                 visible={visible}
-                onClick={({ setSelected }) => {
+                onClick={({ setSelectedStyle }) => {
                   // 如果当前点击项已被选中且是无子目录的
                   if (childVisible && !isBranch) {
                     return;
@@ -121,7 +120,7 @@ const Content = forwardRef(({
                     // 将当前的可见状态设置为false
                     visibleList[index] = false;
                     setVisibleList([...visibleList]);
-                    setSelected({
+                    setSelectedStyle({
                       expand: false,
                       selected: true
                     });
@@ -141,7 +140,7 @@ const Content = forwardRef(({
                       // 将上次选中的选项的可见状态设置为false
                       visibleList[lastIndex] = false;
                       // 将上次选中的选项的按钮设置为未选中
-                      buttonRefList[lastIndex].setSelected(false);
+                      buttonRefList[lastIndex].setSelectedStyle(false);
                       // 将上次选中的选项的子内容设置为不可见
                       contentRefList[lastIndex] && contentRefList[lastIndex].inVisible();
                     }
@@ -150,7 +149,7 @@ const Content = forwardRef(({
                     visibleList[index] = true;
                     setVisibleList([...visibleList]);
                     // 将当前的按钮设置为选中
-                    setSelected(true);
+                    setSelectedStyle(true);
                     // 获取当前的组件
                     // 修改当前深度的高度信息
                     // 当不为最深层, 且当前组件存在子选项
