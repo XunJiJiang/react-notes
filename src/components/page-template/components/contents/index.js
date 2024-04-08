@@ -7,14 +7,13 @@ function ContentsINPage ({ contents }, ref) {
 
   const liList = useRef([]);
 
+  const lastFocusLi = useRef(null);
+
   function changeLocation (content) {
     const liNode = document.getElementById(`contents-in-page-${content.id}`);
-    const liNodes = liList.current;
-    for (let i = 0; i < liNodes.length; i++) {
-      const li = liNodes[i];
-      li.setAttribute('data-active', false);
-    }
+    lastFocusLi.current && lastFocusLi.current.setAttribute('data-active', false);
     liNode.setAttribute('data-active', true);
+    lastFocusLi.current = liNode;
   }
 
   useEffect(() => {
