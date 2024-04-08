@@ -1,4 +1,4 @@
-// 记录每个标题的 id 的，由空格分割的字符串对应的 key
+// 记录每个标题的 id 的由空格分割的字符串对应的 key
 const idSliceMap = new Map();
 // 下一个分割字符串的 key
 let keyIndex = 1;

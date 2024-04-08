@@ -48,7 +48,7 @@ export default function runAnimate (children, { mode, keyframe, duration, easing
       duration: duration,
       easing: easing
     });
-    // 延迟执行载入新组件，如果已展示的组件为空，则立即执行
+    // 延迟执行载入新组件如果已展示的组件为空则立即执行
     setTimeout(() => {
       flushSync(() => {
         setNowChild(children);
@@ -59,7 +59,7 @@ export default function runAnimate (children, { mode, keyframe, duration, easing
   }
 
   if (mode === 'in') {
-    // 将flushSync放入Promise中，在下一次渲染前执行
+    // 将flushSync放入Promise中在下一次渲染前执行
     Promise.resolve().then(() => {
       flushSync(() => {
         setNowChild(children);

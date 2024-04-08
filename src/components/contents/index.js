@@ -35,7 +35,7 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
 
   /** 目录的宽度 */
   const width = ((() => {
-    // 每深一层，增加28px
+    // 每深一层,增加28px
     return 150 + 44 + 28 * getDeepestLayer(contents) - 1 + 'px';
   })());
 

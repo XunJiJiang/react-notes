@@ -6,7 +6,7 @@ import NotFound from '@pages/404';
 
 /**
  * 寻找组件
- * 返回最上级存在的第一个的组件
+ * 返回最上级存在的最近的组件
  * @param {{
  *   component: any | null | undefined,
  *   children: content[] | undefined,
@@ -33,33 +33,36 @@ const Content = forwardRef(({
   changeFatherDeepList = () => {}
 }, ref) => {
 
+  //  储存当前组件和每个子选项组件的路径信息. 下标高位为父组件的路径, 低位为子组件的路径.
   const pathList = useContext(PathList);
 
-  // 用于存储每个选项的可见状态
-  const [stateList, setStateList] = useState(new Array(contents.length).fill(false));
+  // 存储每个选项的可见状态
+  const [visibleList, setVisibleList] = useState(new Array(contents.length).fill(false));
 
-  // 用于存储每个选项的按钮的引用
+  // 记录上次选中的选项的索引
+  const [lastIndex, setLastIndex] = useState(-1);
+
+  // 存储每个选项的按钮的引用
   const buttonRefList = [];
 
-  // 用于存储每个选项的内容的引用
+  // 存储每个选项的内容的引用
   const contentRefList = [];
 
-  // 用于储存每个子选项的深度展开的高度信息
+  // 储存当前组件和每个子选项组件的深度展开的高度信息. 下标高位为父级的深度, 低位为子级的深度.
   const [deepHeightList, setDeepHeightList] = useState(new Array(layer).fill(0));
 
   useImperativeHandle(ref, () => {
     return {
       inVisible: () => {
         // 将全部的可见状态设置为false
-        setStateList(new Array(contents.length).fill(false));
-        // 将全部的按钮设置为未选中
-        buttonRefList.forEach((button) => {
-          button.setSelected(false);
-        });
-        // 递归调用，将全部的选项的子内容设置为不可见
-        contentRefList.forEach((content) => {
-          content && content.inVisible();
-        });
+        setVisibleList(new Array(contents.length).fill(false));
+        if (lastIndex !== -1) {
+          // 将上次为选中状态的按钮设置为未选中
+          buttonRefList[lastIndex].setSelected(false);
+          // 递归调用, 将上次为选中状态的选项子内容设置为不可见
+          contentRefList[lastIndex] && contentRefList[lastIndex].inVisible();
+          setLastIndex(-1);
+        }
       },
       // 当前组件全部直接子按钮的高度和
       buttonHeight: buttonRefList.reduce((accumulator, currentValue) => {
@@ -69,7 +72,7 @@ const Content = forwardRef(({
   });
 
   /**
-   * 给子菜单提供的函数，用于在父菜单的高度信息中修改子菜单的高度信息
+   * 给子菜单提供的函数修改父菜单组件的高度信息(deepHeightList)中子菜单的高度信息
    * @param {Array<number>} childList 
    */
   function _changeFatherDeepList (childList) {
@@ -77,6 +80,7 @@ const Content = forwardRef(({
       deepHeightList[index] = child;
     })
     setDeepHeightList([...deepHeightList]);
+    changeFatherDeepList([...deepHeightList]);
   }
 
   return (
@@ -87,7 +91,7 @@ const Content = forwardRef(({
           const isBranch = Array.isArray(content.children);
           const hasChildren = isBranch && content.children.length > 0;
           // 本项的子项的可见状态
-          const childVisible = stateList[index];
+          const childVisible = visibleList[index];
           return (
             <li
               className={`content`}
@@ -103,11 +107,15 @@ const Content = forwardRef(({
                 isBranch={isBranch}
                 visible={visible}
                 onClick={({ setSelected }) => {
+                  // 如果当前点击项已被选中且是无子目录的
+                  if (childVisible && !isBranch) {
+                    return;
+                  }
                   // 如果当前点击项已被选中且是有子目录的
                   if (childVisible && isBranch) {
                     // 将当前的可见状态设置为false
-                    stateList[index] = false;
-                    setStateList([...stateList]);
+                    visibleList[index] = false;
+                    setVisibleList([...visibleList]);
                     setSelected(false);
                     // 将当前的选项的子内容设置为不可见
                     contentRefList[index] && contentRefList[index].inVisible();
@@ -118,38 +126,42 @@ const Content = forwardRef(({
                     if (layer !== 0) {
                       pathList.current.forEach((_, i) => i <= layer ? pathList.current[i] = null : null);
                     }
+                    setLastIndex(-1);
                   }
                   // 如果当前点击项未被选中
-                  else if (!childVisible) {
-                    stateList.forEach((_, i) => {
-                      // 将全部的可见状态设置为false
-                      stateList[i] = false;
-                      // 将全部的按钮设置为未选中
-                      buttonRefList[i].setSelected(false);
-                      // 将全部的选项的子内容设置为不可见
-                      contentRefList[i] && contentRefList[i].inVisible();
-                    });
+                  if (!childVisible) {
+                    if (lastIndex !== -1) {
+                      // 将上次选中的选项的可见状态设置为false
+                      visibleList[lastIndex] = false;
+                      // 将上次选中的选项的按钮设置为未选中
+                      buttonRefList[lastIndex].setSelected(false);
+                      // 将上次选中的选项的子内容设置为不可见
+                      contentRefList[lastIndex] && contentRefList[lastIndex].inVisible();
+                    }
+                    setLastIndex(index);
                     // 将当前的可见状态设置为true
-                    stateList[index] = true;
-                    setStateList([...stateList]);
+                    visibleList[index] = true;
+                    setVisibleList([...visibleList]);
                     // 将当前的按钮设置为选中
                     setSelected(true);
                     // 获取当前的组件
                     // 修改当前深度的高度信息
+                    // 当不为最深层, 且当前组件存在子选项
                     if (layer !== 0 && contentRefList[index]) {
                       deepHeightList.forEach((_, i) => deepHeightList[i] = 0);
                       deepHeightList[layer - 1] = contentRefList[index].buttonHeight;
                     }
-                    pathList.current.forEach((_, i) => {
-                      pathList.current.forEach((_, i) => i <= layer ? pathList.current[i] = null : null);
-                    });
+                    // 当为任意层, 且当前组件不存在子选项
+                    else if (!contentRefList[index]) {
+                      deepHeightList.forEach((_, i) => deepHeightList[i] = 0);
+                    }
+                    pathList.current.forEach((_, i) => i <= layer ? pathList.current[i] = null : null);
                     pathList.current[layer] = content.path;
                   }
-                  if (layer !== 0 && contentRefList[index]) {
-                    // 将当前的高度信息传递给父组件
-                    changeFatherDeepList([...deepHeightList]);
-                    setDeepHeightList([...deepHeightList]);
-                  }
+                  // 将当前的高度信息传递给父组件
+                  changeFatherDeepList([...deepHeightList]);
+                  setDeepHeightList([...deepHeightList]);
+                  // 获取当前选中项对应的page组件
                   const Components = findComponent(content);
                   onChange({
                     content,

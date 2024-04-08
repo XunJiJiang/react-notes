@@ -22,7 +22,7 @@ export default function Transition ({
   const [nowChild, setNowChild] = useState(children);
 
   useEffect(() => {
-    // 当子元素发生变化时，执行动画逻辑
+    // 当子元素发生变化时执行动画逻辑
     runAnimate(
       children,
       { mode, keyframe, duration, easing },
