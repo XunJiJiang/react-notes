@@ -1,18 +1,32 @@
 /** 
  * 获取字符串长度(px)
  * @param {String} msg 字符串
- * @param {Number} fontSize 字体大小
+ * @param {Object} style 样式
+ * @param {Number} style.fontSize 字体大小
+ * @param {String} style.fontFamily 字体
  * @returns {Number} 字符串长度(px)
 */
-export default function getStringWidth(msg, fontSize = 12) {
-    const stringWidthDom = document.createElement('span');
-    stringWidthDom.innerHTML = msg;
-    stringWidthDom.style.position = 'absolute';
-    stringWidthDom.style.left = '-9999px';
-    if (fontSize) stringWidthDom.style.fontSize = fontSize + 'px';
-    else stringWidthDom.style.fontSize = 'initial';
-    document.body.appendChild(stringWidthDom);
-    const width = stringWidthDom.offsetWidth;
-    document.body.removeChild(stringWidthDom);
-    return width;
+export default function getStringWidth (
+  msg,
+  style = {
+    fontSize: 12,
+    fontFamily: 'initial'
+  }
+) {
+  style = {
+    fontSize: style.fontSize ?? 12,
+    fontFamily: style.fontFamily ?? 'initial'
+  };
+  const { fontSize, fontFamily } = style;
+  const stringWidthDom = document.createElement('span');
+  stringWidthDom.innerHTML = msg;
+  stringWidthDom.style.position = 'absolute';
+  stringWidthDom.style.left = '-9999px';
+  if (fontSize) stringWidthDom.style.fontSize = fontSize + 'px';
+  else stringWidthDom.style.fontSize = 'initial';
+  stringWidthDom.style.fontFamily = fontFamily;
+  document.body.appendChild(stringWidthDom);
+  const width = stringWidthDom.offsetWidth;
+  document.body.removeChild(stringWidthDom);
+  return width;
 };
