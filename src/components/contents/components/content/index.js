@@ -120,7 +120,6 @@ const Content = forwardRef(({
                       expand: false,
                       selected: true
                     });
-                    // setLastIndex(-1);
                     // 将当前的选项的子内容设置为不可见
                     contentRefList[index] && contentRefList[index].inVisible();
                     if (layer !== 0 && contentRefList[index]) {
