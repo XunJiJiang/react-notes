@@ -81,6 +81,11 @@ const Content = forwardRef(({
     })
     setDeepHeightList([...deepHeightList]);
     changeFatherDeepList([...deepHeightList]);
+    console.log(deepHeightList);
+    buttonRefList[lastIndex].setSelected({
+      expand: true,
+      selected: false
+    });
   }
 
   return (
