@@ -66,7 +66,7 @@ const Content = forwardRef(({
       },
       // 当前组件全部直接子按钮的高度和
       buttonHeight: buttonRefList.reduce((accumulator, currentValue) => {
-        return accumulator + currentValue.clientHeight + 8;
+        return accumulator + currentValue.clientHeight;
       }, 0)
     }
   });

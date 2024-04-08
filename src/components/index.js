@@ -30,7 +30,8 @@ export default function Components () {
       <Contents
         title="React"
         contents={contents}
-        onChange={changeHandler} onWidthLoad={(width) => {
+        onChange={changeHandler}
+        onWidthLoad={(width) => {
           if (mainRef.current) {
             mainRef.current.style.setProperty('--leaveWidthBlank', width);
           }

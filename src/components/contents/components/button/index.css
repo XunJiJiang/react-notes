@@ -3,7 +3,7 @@
   width: 100%;
   height: auto;
   background-color: #00000000;
-  color: #ffffff;
+  color: #000000;
   border: none;
   cursor: pointer;
   margin: 0;
@@ -53,20 +53,23 @@
     border-radius: 4px;
     margin: 0 4px;
     padding: 0 4px;
-    background-color: #ffffff66;
+    background-color: #99a1b359;
   }
 
   &:hover {
-    background-color: #ffffff22;
+    background-color: #f6f7f9;
   }
 
   &:active {
-    background-color: #ffffff33;
+    background-color: #ededee;
   }
 
   &[isSelected='true'] {
-    background-color: #ffffff22;
+    background-color: #e6f7ff;
+    color: #087ea4;
+  }
 
+  &[isExpand='true'] {
     & i.button-right-icon {
       transform: rotate(90deg);
     }

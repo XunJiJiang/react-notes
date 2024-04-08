@@ -2,6 +2,7 @@
 
 .markdown {
   font-size: 16px;
+  padding: 0 200px;
 }
 
 .markdown ::selection,

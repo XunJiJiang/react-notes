@@ -48,10 +48,10 @@
       }
 
       &[data-active='true'] {
-        background-color: #d2f4ffe0;
+        background-color: #e6f7ff;
 
         & a.contents-in-page-item {
-          color: #005272;
+          color: #087ea4;
         }
       }
     }
