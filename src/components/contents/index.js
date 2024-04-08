@@ -58,8 +58,10 @@ function getContentsWidthCache (contents, widthCache) {
       fontFamily: `Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑,
       Arial, sans-serif`
     })
-      // + 右侧箭头的宽度 + 字符与按钮内部左侧内边距 + 按钮左右侧padding + 图标宽度
-      + 16 + 8 + 12 + (content.icon ? 30 : 0);
+      + 16 // + 右侧箭头的宽度
+      + 26 // + 按钮左右侧padding
+      + (content.icon ? 30 : 0) // + 图标宽度
+      + 8; // + 预留冗余
     if (_stringWidth > maxStringWidth) {
       maxStringWidth = _stringWidth + 5 * (maxDeepestLayer - _deepestLayer);
     }
