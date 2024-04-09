@@ -23,6 +23,7 @@ export default function Components () {
     if (context.content === lastContext.current || !context.component) return;
     setMainNode(context.component);
     lastContext.current = context.content;
+    console.log(context)
   }
 
   return (
@@ -33,7 +34,10 @@ export default function Components () {
         onChange={changeHandler}
         onWidthLoad={(width) => {
           if (mainRef.current) {
-            mainRef.current.style.setProperty('--leaveWidthBlank', width);
+            const _width = parseInt(width);
+            width = Math.min(_width, 1024);
+            width = Math.max(_width, 256);
+            mainRef.current.style.setProperty('--leaveWidthBlank', width + 'px');
           }
         }}
       />

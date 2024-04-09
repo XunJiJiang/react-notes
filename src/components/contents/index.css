@@ -29,11 +29,16 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #ffffff88;
+    background-color: #d6d6d6;
     border-radius: 2px;
   }
 
   &::-webkit-scrollbar-track {
-    background-color: #ffffff22;
+    background-color: #00000000;
+  }
+
+  &::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
   }
 }
