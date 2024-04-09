@@ -1,10 +1,12 @@
 import './index.css';
 
-export default function NotFound () {
+export default function NotFound ({ info = '' }) {
   return (
     <div className='not-found'>
-      <h1>404 Not Found</h1>
-      <p>可能是还没学</p>
+      <div>
+        <h1>404 Not Found</h1>
+        <p>{info}</p>
+      </div>
     </div>
   );
 }

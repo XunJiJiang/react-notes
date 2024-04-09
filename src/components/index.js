@@ -23,7 +23,6 @@ export default function Components () {
     if (context.content === lastContext.current || !context.component) return;
     setMainNode(context.component);
     lastContext.current = context.content;
-    console.log(context)
   }
 
   return (
