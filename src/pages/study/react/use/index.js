@@ -1,4 +1,4 @@
-import PageTemplate from '../../../../components/page-template/index';
+import PageTemplate from '@components/page-template/index';
 
 
 export default function Use () {
