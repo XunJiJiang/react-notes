@@ -74,6 +74,29 @@ function getContentsWidthCache (contents, widthCache) {
   return widthCache.current;
 }
 
+const changeEventMap = {
+  200: (e) => {
+    return {
+      ...e,
+      path: e.path.reduce((p, c) => c ? c + p : p, '')
+    }
+  },
+  404: (e) => {
+    if (e.content._mark_.createNewContent) {
+      return {
+        ...e,
+        content: e.content._mark_.createNewContent(),
+        path: '/pageNotFound'
+      };
+    } else {
+      return {
+        ...e,
+        path: '/pageNotFound'
+      };
+    }
+  }
+};
+
 export default function Contents ({ title = '目录', contents = [], onChange = () => {}, onWidthLoad = () => {} }) {
 
   const pathList = useRef(new Array(getDeepestLayer(contents)).fill(null));
@@ -91,11 +114,7 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
   onWidthLoad(width);
 
   function _changeHandler (e) {
-    const _e = {
-      ...e,
-      path: e.path.reduce((p, c) => c ? c + p : p, '')
-    }
-    onChange(_e);
+    onChange(e.content._mark_ ? changeEventMap[e.content._mark_.code](e) : changeEventMap['200'](e));
   }
 
   return (

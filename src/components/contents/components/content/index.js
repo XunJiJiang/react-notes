@@ -17,11 +17,17 @@ import NotFound from '@pages/404';
  */
 function findComponent (content) {
   if (content.component) {
-    return content.component;
+    return [content.component, content];
   } else if (Array.isArray(content.children) && content.children.length > 0) {
     return findComponent(content.children[0]);
   } else {
-    return NotFound;
+    return [NotFound, {
+      ...content,
+      _mark_: {
+        code: '404',
+        msg: '没有找到可用的组件'
+      }
+    }];
   }
 }
 
@@ -131,7 +137,7 @@ const Content = forwardRef(({
                       deepHeightList.forEach((_, i) => deepHeightList[i] = 0);
                     }
                     if (layer !== 0) {
-                      pathList.current.forEach((_, i) => i <= layer ? pathList.current[i] = null : null);
+                      pathList.current.forEach((_, i) => i < layer ? pathList.current[i] = null : null);
                     }
                   }
                   // 如果当前点击项未被选中
@@ -168,16 +174,16 @@ const Content = forwardRef(({
                   changeFatherDeepList([...deepHeightList]);
                   setDeepHeightList([...deepHeightList]);
                   // 获取当前选中项对应的page组件
-                  const Components = findComponent(content);
+                  const [Components, _content] = findComponent(content);
                   onChange({
-                    content,
+                    content: _content,
                     path: pathList.current,
                     component: <Components />
                   })
                 }}
               />
               {
-                hasChildren &&
+                isBranch &&
                 <ul
                   className='content-children'
                   style={{
@@ -186,16 +192,44 @@ const Content = forwardRef(({
                     }, 0) : 0) + 'px'
                   }}
                 >
-                  <Content
-                    ref={(node) => {
-                      contentRefList[index] = node;
-                    }}
-                    contents={content.children}
-                    visible={childVisible}
-                    layer={layer - 1}
-                    onChange={onChange}
-                    changeFatherDeepList={_changeFatherDeepList}
-                  />
+                  {
+                    hasChildren ? (
+                      <Content
+                        ref={(node) => {
+                          contentRefList[index] = node;
+                        }}
+                        contents={content.children}
+                        visible={childVisible}
+                        layer={layer - 1}
+                        onChange={onChange}
+                        changeFatherDeepList={_changeFatherDeepList}
+                      />
+                    ) : (
+                      <Content
+                        ref={(node) => {
+                          contentRefList[index] = node;
+                        }}
+                        contents={[{
+                          label: '子目录为空',
+                          path: '/pageNotFound',
+                          component: () => <NotFound info='当前目录菜单节点的子目录为空' />,
+                          _mark_: {
+                            code: '404',
+                            msg: '当前目录菜单节点的子目录为空',
+                            createNewContent: () => ({
+                              label: '子目录为空',
+                              path: '/pageNotFound',
+                              component: null
+                            })
+                          }
+                        }]}
+                        visible={childVisible}
+                        layer={layer - 1}
+                        onChange={onChange}
+                        changeFatherDeepList={_changeFatherDeepList}
+                      />
+                    )
+                  }
                 </ul>
               }
             </li>
