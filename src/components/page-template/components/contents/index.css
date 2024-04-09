@@ -3,6 +3,8 @@
   height: 100vh;
   top: 0;
   font-size: 16px;
+  max-width: 256px;
+  min-width: 128px;
   overflow-y: auto;
 
   & .contents-in-page-title {
