@@ -2,6 +2,7 @@ import './index.css';
 import { forwardRef, useImperativeHandle, useEffect, useRef } from 'react';
 import APopover from './components/a-popover';
 import { H1, H2, H3 } from './components/title';
+import Blockquote from './components/blockquote';
 import Markdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -103,15 +104,8 @@ function MarkdownComponent ({ markdown }, ref) {
             </APopover>
           )
         },
-        blockquote ({ node, inline, className, children, ...props }) {
-          return (
-            <blockquote
-              className={`markdown-blockquote ${className ?? ''}`}
-              {...props}
-            >
-              {children}
-            </blockquote>
-          )
+        blockquote ({ ...props }) {
+          return <Blockquote {...props} />
         },
         pre ({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(children.props.className ?? '');

@@ -103,9 +103,30 @@ a:has(.markdown-short-code) {
 .markdown-blockquote {
   padding: 0.5em 1em;
   margin: 0;
-  background-color: #42b98322;
-  border-left: 0.25em solid #42b983;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 1em;
   color: #797a7c;
+
+  margin-bottom: 10px;
+
+  /* background-color: #f6f7f9; */
+  border-color: #e5e7eb;
+  color: #797a7c;
+
+  &.markdown-blockquote-success {
+    background-color: #ecf8f2;
+  }
+
+  &.markdown-blockquote-warn {
+    background-color: #fef5e7;
+  }
+  &.markdown-blockquote-danger {
+    background-color: #ffe9e9;
+  }
+  &.markdown-blockquote-info {
+    background-color: #f6f7f9;
+  }
 }
 
 /* markdown-blockquote end */

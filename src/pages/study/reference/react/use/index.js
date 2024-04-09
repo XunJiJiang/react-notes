@@ -1,12 +1,10 @@
 import PageTemplate from '@components/page-template/index';
-import markdown from './01React Learn.md';
+import markdown from './Use.md';
 
-
-export default function Learn () {
+export default function Use () {
   return (
     <>
       <PageTemplate markdown={markdown}>
-        <h1>Learn</h1>
       </PageTemplate>
     </>
   )
