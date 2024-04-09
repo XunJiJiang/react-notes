@@ -1,10 +1,10 @@
 function createChildren (children) {
+  if (children[1] && !styleMap.has(children[1])) return children;
   const _children = [];
   children.forEach((item, i) => {
     if (i === 0 || i === 1) return;
     _children.push(item);
   });
-  console.log(_children)
   return _children;
 }
 
