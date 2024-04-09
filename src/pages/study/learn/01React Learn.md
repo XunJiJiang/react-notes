@@ -1,6 +1,6 @@
 # React Learn
 
-**React 教程**
+**React 教程 | 笔记**
 
 ## 创建项目
 

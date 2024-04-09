@@ -3,7 +3,36 @@ import { useRef, forwardRef, useImperativeHandle } from 'react';
 import Icon from '@components/icon/index';
 
 export default forwardRef(function Button ({ title = '', tag, icon, isBranch = false, visible = false, onClick = () => {} }, ref) {
+
   const buttonRef = useRef(null);
+
+  const _tag = ((() => {
+    if (tag === null) return null;
+
+    if (typeof tag === 'string') {
+      return <i className='button-tag'>{tag}</i>;
+    }
+
+    if (typeof tag === 'object') {
+      if (tag.icon) {
+        return (
+          <i className='button-tag'>
+            <Icon name={tag.icon} size={isBranch ? 16 : 14} />
+          </i>
+        );
+      } else {
+        return null;
+      }
+    } 
+
+    if (typeof tag === 'function') {
+      // tag 此时应该是一个组件, 不过因为是小写开头, 不用jsx语法
+      return tag();
+    }
+
+    return null;
+  })());
+
   /**
    * 修改按钮样式
    * @param {boolean | {
@@ -27,12 +56,14 @@ export default forwardRef(function Button ({ title = '', tag, icon, isBranch = f
       buttonRef.current.setAttribute('isSelected', isSelected.selected);
     }
   }
+
   useImperativeHandle(ref, () => {
     return {
       setSelectedStyle,
       clientHeight: buttonRef.current.clientHeight
     }
   });
+
   return (
     <button
       ref={buttonRef}
@@ -47,7 +78,10 @@ export default forwardRef(function Button ({ title = '', tag, icon, isBranch = f
         <Icon name={icon} className='button-left-icon' />
         <span className='button-left-icon-right-margin' />
       </>}
-      <span className='button-main'>{title}{tag ? <i className='button-tag'>{tag}</i> : null}</span>
+      <span className='button-main'>
+        {title}
+        {_tag}
+      </span>
       {isBranch && <Icon name='right' className='button-right-icon' />}
     </button>
   );

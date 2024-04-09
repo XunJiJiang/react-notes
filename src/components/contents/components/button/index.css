@@ -8,13 +8,12 @@
   cursor: pointer;
   margin: 0;
   padding: 1px 6px 1px 20px;
-  font-size: 1.2rem;
+  font-size: 14px;
   border-radius: 0 0.75rem 0.75rem 0;
   /* transition: background-color 0.15s; */
   text-align: left;
   line-height: 32px;
   display: flex;
-  font-size: 14px;
   font-family: Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, Arial,
     sans-serif;
   justify-content: space-between;
@@ -52,6 +51,7 @@
   & i.button-tag {
     font-style: normal;
     border-radius: 4px;
+    font-size: inherit;
     margin: 0 4px;
     padding: 0 4px;
     background-color: #99a1b359;

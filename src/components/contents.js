@@ -1,6 +1,7 @@
 import Learn from '@pages/study/learn/index';
 import Use from '@pages/study/react/use/index';
 import UseCallback from '@pages/study/react/useCallback/index';
+// import Icon from '@components/icon/index';
 
 const contents = [{
   label: 'react learn',
@@ -22,6 +23,9 @@ const contents = [{
     children: [{
       label: 'use',
       path: '/use',
+      tag: {
+        icon: 'experiment',
+      },
       component: Use
     }, {
       label: 'useCallback',
@@ -136,19 +140,25 @@ const contents = [{
     }, {
       label: 'experimental_taintObjectReference',
       path: '/experimental_taintObjectReference',
-      tag: 'experiment',
+      tag: {
+        icon: 'experiment',
+      },
       component: null
     }, {
       label: 'experimental_taintUniqueValue',
       path: '/experimental_taintUniqueValue',
-      tag: 'experiment',
+      tag: {
+        icon: 'experiment',
+      },
       component: null
     }]
   }, {
     label: '指示符',
     path: '/indicator',
     component: () => <h1>react 指示符</h1>,
-    tag: 'experiment',
+    tag: {
+      icon: 'experiment',
+    },
     children: [{
       label: 'use client',
       path: '/client',
@@ -163,28 +173,7 @@ const contents = [{
   label: 'react-dom@18.2.0',
   path: '/react-dom@18.2.0',
   component: () => <h1>react-dom@18.2.0</h1>,
-  children: [{
-    label: 'test1',
-    path: '/test1',
-    component: null
-  }, {
-    label: 'test2',
-    path: '/test2',
-    children: [{
-      label: 'test3',
-      path: '/test3',
-      component: null
-    }, {
-      label: 'test4',
-      path: '/test4',
-      component: null,
-      children: [{
-        label: 'test5',
-        path: '/test5',
-        component: null
-      }]
-    }]
-  }]
+  children: []
 }];
 
 export default contents;
