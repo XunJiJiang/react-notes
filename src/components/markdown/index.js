@@ -79,13 +79,20 @@ function MarkdownComponent ({ markdown }, ref) {
       components={{
         code ({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className ?? '');
+          console.log(String(children).replace(/\n$/, '') === 'undefined')
+          const _children = children ? String(children).replace(/\n$/, '') : ' ';
           return !inline && match ? (
             <SyntaxHighlighter
-              children={String(children).replace(/\n$/, '')}
+              children={_children}
               style={StyleHighlighter}
               className={`markdown-code markdown-long-code`}
               language={match[1]}
               PreTag='div'
+              showLineNumbers={true}
+              showInlineLineNumbers={true}
+              customStyle={{
+                paddingLeft: '0'
+              }}
               {...props}
             />
           ) : (
@@ -121,7 +128,8 @@ function MarkdownComponent ({ markdown }, ref) {
               <i
                 className={`markdown-pre-copy`}
                 onClick={(e) => {
-                  const text = e.target.previousSibling.innerText;
+                  const text = e.target.previousSibling.innerText.replace('1', '').replace(/\n(\d+)/g, '');
+
                   navigator.clipboard.writeText(text).then(() => {
                     // console.log('copy success');
                   }).catch(() => {
