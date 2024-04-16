@@ -1,7 +1,7 @@
 .content {
   width: 100%;
   box-sizing: border-box;
-  padding: 0px 5px 0 0px;
+  padding: 0 5px 0 0;
   overflow: hidden;
 
   & .content-children {
@@ -9,13 +9,13 @@
   }
 }
 
-ul {
+.content ul {
   list-style: none;
-  padding: 0;
+  padding: 0px 5px 0 0;
   margin: 0;
 }
 
-li {
+.content li {
   padding: 0;
   margin: 0;
 }

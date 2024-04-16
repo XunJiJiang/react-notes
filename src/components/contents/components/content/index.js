@@ -42,10 +42,14 @@ const Content = forwardRef(({
   //  储存当前组件和每个子选项组件的路径信息. 下标高位为父组件的路径, 低位为子组件的路径.
   const pathList = useContext(PathList);
 
-  // 存储每个选项的可见状态
+  /**
+   * 存储每个选项的可见状态
+   * 有子项的选项的可见状态表示子项的内容是否可见(不表示是否选中)
+   * 没有子项的选项的可见状态表示选项是否被选中
+   */
   const [visibleList, setVisibleList] = useState(new Array(contents.length).fill(false));
 
-  // 记录上次选中的选项的索引
+  // 记录上次展开(选中)的选项的索引, -1表示没有选中的选项
   const [lastIndex, setLastIndex] = useState(-1);
 
   // 存储每个选项的按钮的引用
@@ -86,8 +90,9 @@ const Content = forwardRef(({
       deepHeightList[index] = child;
     })
     setDeepHeightList([...deepHeightList]);
+    // setLastIndex(-1);
     changeFatherDeepList([...deepHeightList]);
-    buttonRefList[lastIndex].setSelectedStyle({
+    buttonRefList[lastIndex] && buttonRefList[lastIndex].setSelectedStyle && buttonRefList[lastIndex].setSelectedStyle({
       expand: true,
       selected: false
     });
@@ -100,7 +105,8 @@ const Content = forwardRef(({
           // 是否是有子目录
           const isBranch = Array.isArray(content.children);
           const hasChildren = isBranch && content.children.length > 0;
-          // 本项的子项的可见状态
+          // 有子项本项的子项的可见状态(不表示是否选中)
+          // 没有子项则表示本项的是否选中
           const childVisible = visibleList[index];
           return (
             <li
@@ -117,62 +123,67 @@ const Content = forwardRef(({
                 isBranch={isBranch}
                 visible={visible}
                 onClick={({ setSelectedStyle }) => {
-                  // 如果当前点击项已被选中且是无子目录的
+                  // 点击项 已被选中, 无子目录的
+                  // 目的行为: 不做任何操作
                   if (childVisible && !isBranch) {
                     return;
                   }
-                  // 如果当前点击项已被选中且是有子目录的
+                  // 已展开(上次展开项与点击项相同), 有子目录
+                  // 目的行为: 收回子目录
                   if (childVisible && isBranch) {
-                    // 将当前的可见状态设置为false
+                    // 设置当前项 展开状态->false
                     visibleList[index] = false;
-                    setVisibleList([...visibleList]);
+                    // 设置当前项 按钮样式->未展开, 已选中
                     setSelectedStyle({
                       expand: false,
                       selected: true
                     });
-                    // 将当前的选项的子内容设置为不可见
+                    // 设置当前的选项 子内容->不可见
                     contentRefList[index] && contentRefList[index].inVisible();
-                    if (layer !== 0 && contentRefList[index]) {
+                    // 点击项子选项数量不为0
+                    if (contentRefList[index]) {
                       // 修改当前深度的高度信息
                       deepHeightList.forEach((_, i) => deepHeightList[i] = 0);
                     }
                     if (layer !== 0) {
+                      // 设置低于当前层级的路径信息->置空
                       pathList.current.forEach((_, i) => i < layer ? pathList.current[i] = null : null);
                     }
                   }
-                  // 如果当前点击项未被选中
+                  // 点击项 未被选中(有子目录且未展开)
                   if (!childVisible) {
                     if (lastIndex !== -1) {
-                      // 将上次选中的选项的可见状态设置为false
+                      // 设置上次选中的选项 可见状态->false
                       visibleList[lastIndex] = false;
-                      // 将上次选中的选项的按钮设置为未选中
+                      // 设置上次选中的选项 按钮样式->未选中(能则未展开)
                       buttonRefList[lastIndex].setSelectedStyle(false);
-                      // 将上次选中的选项的子内容设置为不可见
+                      // 设置上次选中的选项 子内容->不可见
                       contentRefList[lastIndex] && contentRefList[lastIndex].inVisible();
                     }
+                    contentRefList.forEach((item) => item && item.inVisible());
                     setLastIndex(index);
-                    // 将当前的可见状态设置为true
+                    // 设置点击项 可见状态->true
                     visibleList[index] = true;
-                    setVisibleList([...visibleList]);
-                    // 将当前的按钮设置为选中
+                    // 设置点击项 按钮样式->选中(能则展开)
                     setSelectedStyle(true);
-                    // 获取当前的组件
-                    // 修改当前深度的高度信息
-                    // 当不为最深层, 且当前组件存在子选项
-                    if (layer !== 0 && contentRefList[index]) {
-                      deepHeightList.forEach((_, i) => deepHeightList[i] = 0);
+                    // 点击项所处深度及其更深层的深度信息置零
+                    deepHeightList.forEach((_, i) => deepHeightList[i] = 0);
+                    // 点击项有子选项
+                    if (contentRefList[index]) {
+                      // 当前层级的深度信息->当前组件的展开高度
                       deepHeightList[layer - 1] = contentRefList[index].buttonHeight;
                     }
-                    // 当为任意层, 且当前组件不存在子选项
-                    else if (!contentRefList[index]) {
-                      deepHeightList.forEach((_, i) => deepHeightList[i] = 0);
-                    }
+                    // 为任意层, 当前组件没有子选项
+                    else if (!contentRefList[index]) {}
+                    // 设置低于当前层级的路径信息->置空
                     pathList.current.forEach((_, i) => i <= layer ? pathList.current[i] = null : null);
+                    // 设置当前层级的路径信息->当前组件的路径
                     pathList.current[layer] = content.path;
                   }
                   // 将当前的高度信息传递给父组件
                   changeFatherDeepList([...deepHeightList]);
                   setDeepHeightList([...deepHeightList]);
+                  setVisibleList([...visibleList]);
                   // 获取当前选中项对应的page组件
                   const [Components, _content] = findComponent(content);
                   onChange({

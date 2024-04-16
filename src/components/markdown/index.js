@@ -79,7 +79,6 @@ function MarkdownComponent ({ markdown }, ref) {
       components={{
         code ({ node, inline, className, children, ...props }) {
           const match = /language-(\w+)/.exec(className ?? '');
-          console.log(String(children).replace(/\n$/, '') === 'undefined')
           const _children = children ? String(children).replace(/\n$/, '') : ' ';
           return !inline && match ? (
             <SyntaxHighlighter
