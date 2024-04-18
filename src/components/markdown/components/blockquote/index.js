@@ -10,7 +10,6 @@ function createChildren (children) {
 
 const styleMap = new Map([
   ['<success/>', (children) => {
-    createChildren(children)
     return [createChildren(children), 'markdown-blockquote-success']
   }],
   ['<warn/>', (children) => {
