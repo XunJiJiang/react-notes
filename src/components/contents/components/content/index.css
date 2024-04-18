@@ -3,10 +3,10 @@ li.content {
   box-sizing: border-box;
   padding: 0 5px 0 0;
   overflow: hidden;
+}
 
-  & .content-children {
-    transition: height 0.2s;
-  }
+li.content .content-children {
+  transition: height 0.2s;
 }
 
 li.content ul.content-children {

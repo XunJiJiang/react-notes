@@ -9,47 +9,47 @@
   font-size: 12px;
   overflow-y: scroll;
   position: fixed;
+}
 
-  & h1 {
-    margin: 0;
-    padding: 0 0 20px 20px;
-    font-size: 24px;
-    color: #000000;
-    font-family: Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑,
-      Arial, sans-serif;
-  }
+.contents h1 {
+  margin: 0;
+  padding: 0 0 20px 20px;
+  font-size: 24px;
+  color: #000000;
+  font-family: Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, Arial,
+    sans-serif;
+}
 
-  & nav.contents-body {
-    padding: 0 0 0 0;
-    margin: 0;
+.contents nav.contents-body {
+  padding: 0;
+  margin: 0;
+}
 
-    & ul.contents-body {
-      list-style: none;
-      padding: 0px 5px 0 0;
-      margin: 0;
-    }
+.contents nav.contents-body ul.contents-body {
+  list-style: none;
+  padding: 0px 5px 0 0;
+  margin: 0;
+}
 
-    & li {
-      padding: 0;
-      margin: 0;
-    }
-  }
+.contents nav.contents-body li {
+  padding: 0;
+  margin: 0;
+}
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
+.contents::-webkit-scrollbar {
+  width: 4px;
+}
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #d6d6d6;
-    border-radius: 2px;
-  }
+.contents::-webkit-scrollbar-thumb {
+  background-color: #d6d6d6;
+  border-radius: 2px;
+}
 
-  &::-webkit-scrollbar-track {
-    background-color: #00000000;
-  }
+.contents::-webkit-scrollbar-track {
+  background-color: #00000000;
+}
 
-  &::-webkit-scrollbar-button {
-    width: 0;
-    height: 0;
-  }
+.contents::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
 }

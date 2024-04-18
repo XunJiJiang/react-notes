@@ -17,62 +17,60 @@
   font-family: Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, Arial,
     sans-serif;
   justify-content: space-between;
+}
 
-  &.bold-button {
-    font-weight: bold;
-    font-size: 16px;
-  }
+.content-button.bold-button {
+  font-weight: bold;
+  font-size: 16px;
+}
 
-  & .contents-button-left-icon-right-margin {
-    margin: 0 10px 0 0;
-  }
+.content-button .contents-button-left-icon-right-margin {
+  margin: 0 10px 0 0;
+}
 
-  & i.contents-button-right-icon {
-    position: relative;
-    transition: all 0.2s;
-    height: 100%;
+.content-button i.contents-button-right-icon {
+  position: relative;
+  transition: all 0.2s;
+  height: 100%;
+}
 
-    &::before {
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
+.content-button i.contents-button-right-icon::before {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
-  & span.contents-button-main {
-    width: calc(100% - 16px);
-    word-wrap: break-word;
+.content-button span.contents-button-main {
+  width: calc(100% - 16px);
+  word-wrap: break-word;
+}
 
-    & i {
-      white-space: nowrap;
-    }
-  }
+.content-button span.contents-button-main i {
+  white-space: nowrap;
+}
 
-  & i.contents-button-tag {
-    font-style: normal;
-    border-radius: 4px;
-    font-size: inherit;
-    margin: 0 4px;
-    padding: 0 4px;
-    background-color: #99a1b359;
-  }
+.content-button i.contents-button-tag {
+  font-style: normal;
+  border-radius: 4px;
+  font-size: inherit;
+  margin: 0 4px;
+  padding: 0 4px;
+  background-color: #99a1b359;
+}
 
-  &:hover {
-    background-color: #f6f7f9;
-  }
+.content-button:hover {
+  background-color: #f6f7f9;
+}
 
-  &:active {
-    background-color: #ededee;
-  }
+.content-button:active {
+  background-color: #ededee;
+}
 
-  &[isSelected='true'] {
-    background-color: #e6f7ff;
-    color: #087ea4;
-  }
+.content-button[isSelected='true'] {
+  background-color: #e6f7ff;
+  color: #087ea4;
+}
 
-  &[isExpand='true'] {
-    & i.contents-button-right-icon {
-      transform: rotate(90deg);
-    }
-  }
+.content-button[isExpand='true'] i.contents-button-right-icon {
+  transform: rotate(90deg);
 }

@@ -76,15 +76,15 @@ a:has(.markdown-short-code) {
 
 .markdown-long-code {
   position: relative;
+}
 
-  &::before {
-    content: attr(data-language);
-    position: absolute;
-    bottom: 3px;
-    right: 5px;
-    color: #a3a3a3;
-    /* user-select: none; */
-  }
+.markdown-long-code::before {
+  content: attr(data-language);
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+  color: #a3a3a3;
+  /* user-select: none; */
 }
 
 /* markdown-long-code end */
@@ -107,25 +107,25 @@ a:has(.markdown-short-code) {
   border-style: solid;
   border-radius: 1em;
   color: #797a7c;
-  margin: 19px 0;
-
   /* background-color: #f6f7f9; */
+  margin: 19px 0;
   border-color: #e5e7eb;
-  color: #797a7c;
+}
 
-  &.markdown-blockquote-success {
-    background-color: #ecf8f2;
-  }
+.markdown-blockquote.markdown-blockquote-success {
+  background-color: #ecf8f2;
+}
 
-  &.markdown-blockquote-warn {
-    background-color: #fef5e7;
-  }
-  &.markdown-blockquote-danger {
-    background-color: #ffe9e9;
-  }
-  &.markdown-blockquote-info {
-    background-color: #f6f7f9;
-  }
+.markdown-blockquote.markdown-blockquote-warn {
+  background-color: #fef5e7;
+}
+
+.markdown-blockquote.markdown-blockquote-danger {
+  background-color: #ffe9e9;
+}
+
+.markdown-blockquote.markdown-blockquote-info {
+  background-color: #f6f7f9;
 }
 
 /* markdown-blockquote end */
@@ -134,33 +134,33 @@ a:has(.markdown-short-code) {
 
 .markdown-pre {
   position: relative;
+}
 
-  & div {
-    border-radius: 10px;
-    /* box-shadow: 0 0 8px #44444477; */
-  }
+.markdown-pre div {
+  border-radius: 10px;
+  /* box-shadow: 0 0 8px #44444477; */
+}
 
-  & .markdown-pre-copy {
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #a3a3a3;
-    background-color: #00000010;
-    padding: 2px 6px 4px 6px;
-    border-radius: 5px 10px 5px 5px;
-    font-style: normal;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 14px;
-    user-select: none;
-    cursor: pointer;
-    transition: all 0.2s;
-    z-index: 1;
+.markdown-pre .markdown-pre-copy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #a3a3a3;
+  background-color: #00000010;
+  padding: 2px 6px 4px 6px;
+  border-radius: 5px 10px 5px 5px;
+  font-style: normal;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 1;
+}
 
-    &:hover {
-      color: #a3a3a3;
-      background-color: #00000020;
-    }
-  }
+.markdown-pre .markdown-pre-copy:hover {
+  color: #a3a3a3;
+  background-color: #00000020;
 }
 
 /* markdown-pre end */
