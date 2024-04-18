@@ -19,13 +19,18 @@
       Arial, sans-serif;
   }
 
-  & nav {
+  & nav.contents-body {
     padding: 0 0 0 0;
     margin: 0;
 
-    & ul {
+    & ul.contents-body {
       list-style: none;
       padding: 0px 5px 0 0;
+      margin: 0;
+    }
+
+    & li {
+      padding: 0;
       margin: 0;
     }
   }

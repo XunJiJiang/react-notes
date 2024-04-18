@@ -10,13 +10,13 @@ export default forwardRef(function Button ({ title = '', tag, icon, isBranch = f
     if (tag === null) return null;
 
     if (typeof tag === 'string') {
-      return <i className='button-tag'>{tag}</i>;
+      return <i className='contents-button-tag'>{tag}</i>;
     }
 
     if (typeof tag === 'object') {
       if (tag.icon) {
         return (
-          <i className='button-tag'>
+          <i className='contents-button-tag'>
             <Icon name={tag.icon} size={isBranch ? 16 : 14} />
           </i>
         );
@@ -75,14 +75,14 @@ export default forwardRef(function Button ({ title = '', tag, icon, isBranch = f
       }}
     >
       {icon && <>
-        <Icon name={icon} className='button-left-icon' />
-        <span className='button-left-icon-right-margin' />
+        <Icon name={icon} className='contents-button-left-icon' />
+        <span className='contents-button-left-icon-right-margin' />
       </>}
-      <span className='button-main'>
+      <span className='contents-button-main'>
         {title}
         {_tag}
       </span>
-      {isBranch && <Icon name='right' className='button-right-icon' />}
+      {isBranch && <Icon name='right' className='contents-button-right-icon' />}
     </button>
   );
 });

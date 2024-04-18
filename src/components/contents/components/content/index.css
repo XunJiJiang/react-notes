@@ -1,4 +1,4 @@
-.content {
+li.content {
   width: 100%;
   box-sizing: border-box;
   padding: 0 5px 0 0;
@@ -9,13 +9,13 @@
   }
 }
 
-.content ul {
+li.content ul.content-children {
   list-style: none;
   padding: 0px 5px 0 0;
   margin: 0;
 }
 
-.content li {
+li.content li.content-li {
   padding: 0;
   margin: 0;
 }

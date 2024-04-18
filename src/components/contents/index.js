@@ -125,8 +125,8 @@ export default function Contents ({ title = '目录', contents = [], onChange = 
       }}
     >
       <h1>{title}</h1>
-      <nav>
-        <ul>
+      <nav className='contents-body'>
+        <ul className='contents-body'>
           <PathList.Provider value={pathList}>
             <Content
               contents={contents}
