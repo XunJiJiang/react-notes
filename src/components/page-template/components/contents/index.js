@@ -10,7 +10,7 @@ function ContentsINPage ({ contents }, ref) {
   const lastFocusLi = useRef(null);
 
   function changeLocation (content) {
-    const liNode = document.getElementById(`contents-in-page-${content.id}`);
+    const liNode = document.getElementById(`contents-in-page-${content.id}`) ?? content.node;
     lastFocusLi.current && lastFocusLi.current.setAttribute('data-active', false);
     liNode.setAttribute('data-active', true);
     lastFocusLi.current = liNode;
