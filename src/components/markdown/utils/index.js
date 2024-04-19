@@ -11,9 +11,7 @@ function createIdSlices (children) {
         if (typeof item === 'string') return item;
         else return createIdSlices(item.props.children);
       });
-    } else {
-      throw new Error('createIdSlices 函数可能存在问题');
-    }
+    } else return createIdSlices(children.props.children);
   }
   throw new Error('createIdSlices 函数可能存在问题');
 }
