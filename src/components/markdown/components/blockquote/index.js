@@ -34,7 +34,7 @@ function createChildren (children, tag, hasTitle = false, title = '', attributes
             key={`markdown-blockquote-title-${tag}-title`}
             className={`markdown-blockquote-title markdown-blockquote-title-${tag}`}
           >
-            {'icon' in attributes && <><Icon name={attributes.icon.value} /><span> </span></>}
+            {'icon' in attributes && <><Icon name={attributes.icon.value} className='markdown-blockquote-title-icon' /><span> </span></>}
             {title}
           </p>
         );
@@ -43,33 +43,6 @@ function createChildren (children, tag, hasTitle = false, title = '', attributes
     });
     return _children;
   }
-
-  // if (!hasTitle) {
-  //   const _children = [];
-  //   children.forEach((item, i) => {
-  //     if (i === 0 || i === 1) return;
-  //     _children.push(item);
-  //   });
-  //   return _children;
-  // }
-
-  // if (hasTitle) {
-  //   const _children = [];
-  //   children.forEach((item, i) => {
-  //     if (i === 1) {
-  //       _children.push(
-  //         <p
-  //           key={item.key}
-  //           className={`markdown-blockquote-title markdown-blockquote-title-${key}`}
-  //         >
-  //           {item.props.children[1]}
-  //         </p>
-  //       );
-  //     }
-  //     else _children.push(item);
-  //   });
-  //   return _children;
-  // }
 
   return children;
 }
