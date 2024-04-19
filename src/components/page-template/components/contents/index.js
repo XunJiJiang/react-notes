@@ -1,6 +1,23 @@
 import './index.css';
 import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 
+function createHref (label) {
+  if (typeof label === 'string') {
+    return label;
+  }
+
+  if (typeof label === 'object') {
+    if (Array.isArray(label)) {
+      return label.reduce((prev, current) => {
+        return prev + createHref(current);
+      }, '');
+    } else {
+      return label.props.children;
+    }
+  }
+
+  throw new Error('createHref 发生未知错误');
+}
 function ContentsINPage ({ contents }, ref) {
 
   const ulRef = useRef(null);
@@ -54,7 +71,7 @@ function ContentsINPage ({ contents }, ref) {
                 }}
               >
                 <a
-                  href={`#${content.label}`}
+                  href={`#${createHref(content.label)}`}
                   className={`contents-in-page-item contents-in-page-item-${content.level}`}
                 >
                   {content.label}
