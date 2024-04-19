@@ -1,4 +1,4 @@
-/* markdown start */
+/* start markdown */
 
 .markdown {
   font-size: 16px;
@@ -26,9 +26,9 @@
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
 }
 
-/* markdown end */
+/* end markdown */
 
-/* markdown-code start */
+/* start markdown-code */
 
 /* .markdown-code {} */
 
@@ -53,9 +53,9 @@
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
 }
 
-/* markdown-code end */
+/* end markdown-code */
 
-/* markdown-short-code start */
+/* start markdown-short-code */
 
 .markdown-short-code {
   padding: 4px;
@@ -70,9 +70,9 @@ a:has(.markdown-short-code) {
   text-decoration-color: #ec8000;
 }
 
-/* markdown-short-code end */
+/* end markdown-short-code */
 
-/* markdown-long-code start */
+/* start markdown-long-code */
 
 .markdown-long-code {
   position: relative;
@@ -87,50 +87,24 @@ a:has(.markdown-short-code) {
   /* user-select: none; */
 }
 
-/* markdown-long-code end */
+/* end markdown-long-code */
 
-/* markdown-link start */
+/* start markdown-link */
 
 .markdown-link {
   color: #42b983;
   /* text-decoration: none; */
 }
 
-/* markdown-link end */
+/* end markdown-link */
 
-/* markdown-blockquote start */
+/* start markdown-blockquote */
 
-.markdown-blockquote {
-  padding: 0.5em 1em;
-  margin: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 1em;
-  color: #797a7c;
-  /* background-color: #f6f7f9; */
-  margin: 19px 0;
-  border-color: #e5e7eb;
-}
+/* Code in <./blockquote/index.css> */
 
-.markdown-blockquote.markdown-blockquote-success {
-  background-color: #ecf8f2;
-}
+/* end markdown-blockquote */
 
-.markdown-blockquote.markdown-blockquote-warn {
-  background-color: #fef5e7;
-}
-
-.markdown-blockquote.markdown-blockquote-danger {
-  background-color: #ffe9e9;
-}
-
-.markdown-blockquote.markdown-blockquote-info {
-  background-color: #f6f7f9;
-}
-
-/* markdown-blockquote end */
-
-/* markdown-pre start */
+/* start markdown-pre */
 
 .markdown-pre {
   position: relative;
@@ -163,4 +137,10 @@ a:has(.markdown-short-code) {
   background-color: #00000020;
 }
 
-/* markdown-pre end */
+/* end markdown-pre */
+
+/* start markdown-title h1 h2 h3 */
+
+/* Code in <./title/index.css> */
+
+/* end markdown-title h1 h2 h3 */

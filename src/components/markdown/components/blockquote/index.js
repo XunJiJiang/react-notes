@@ -1,33 +1,114 @@
-function createChildren (children) {
-  if (children[1] && !styleMap.has(children[1])) return children;
-  const _children = [];
-  children.forEach((item, i) => {
-    if (i === 0 || i === 1) return;
-    _children.push(item);
-  });
-  return _children;
+import './index.css';
+
+import Icon from '@components/icon';
+
+const styleKeyList = ['success', 'warn', 'danger', 'info'];
+
+function createChildren (children, tag, hasTitle = false, title = '', attributes = {}) {
+  if (!styleKeyList.includes(tag)) return children;
+
+  if (!hasTitle) {
+    const _children = children.map((item, i) => {
+      if (!('icon' in attributes) && (i === 0 || i === 1)) return false;
+      if ('icon' in attributes && i === 1) {
+        return (
+          <p
+            key={`markdown-blockquote-title-${tag}-icon`}
+            className={`markdown-blockquote-title markdown-blockquote-title-${tag}`}
+          >
+            <Icon name={attributes.icon.value} />
+          </p>
+        )
+      }
+      return item;
+    }).filter((item) => !!item);
+
+    return _children;
+  }
+
+  if (hasTitle) {
+    const _children = children.map((item, i) => {
+      if (i === 1) {
+        return (
+          <p
+            key={`markdown-blockquote-title-${tag}-title`}
+            className={`markdown-blockquote-title markdown-blockquote-title-${tag}`}
+          >
+            {'icon' in attributes && <><Icon name={attributes.icon.value} /><span> </span></>}
+            {title}
+          </p>
+        );
+      }
+      return item;
+    });
+    return _children;
+  }
+
+  // if (!hasTitle) {
+  //   const _children = [];
+  //   children.forEach((item, i) => {
+  //     if (i === 0 || i === 1) return;
+  //     _children.push(item);
+  //   });
+  //   return _children;
+  // }
+
+  // if (hasTitle) {
+  //   const _children = [];
+  //   children.forEach((item, i) => {
+  //     if (i === 1) {
+  //       _children.push(
+  //         <p
+  //           key={item.key}
+  //           className={`markdown-blockquote-title markdown-blockquote-title-${key}`}
+  //         >
+  //           {item.props.children[1]}
+  //         </p>
+  //       );
+  //     }
+  //     else _children.push(item);
+  //   });
+  //   return _children;
+  // }
+
+  return children;
 }
 
-const styleMap = new Map([
-  ['<success/>', (children) => {
-    return [createChildren(children), 'markdown-blockquote-success']
-  }],
-  ['<warn/>', (children) => {
-    return [createChildren(children), 'markdown-blockquote-warn']
-  }],
-  ['<danger/>', (children) => {
-  return [createChildren(children), 'markdown-blockquote-danger']
-  }],
-  ['<info/>', (children) => {
-  return [createChildren(children), 'markdown-blockquote-info']
-  }]
-]);
+function getStyleProps (node) {
+  if (!node) return [null, false, '', {}];
+
+  let domText = '';
+  const parser = new DOMParser();
+
+  if ('value' in node) {
+    domText += node.value;
+  }
+
+  if ('children' in node) {
+    node.children.forEach((item) => {
+      domText += item.value;
+    });
+  }
+
+  const doc = parser.parseFromString(domText, 'application/xml');
+
+  if (doc.getElementsByTagName("parsererror").length > 0) return [null, false, '', {}];
+
+  const tag = doc.childNodes[0].tagName;
+
+  const title = doc.childNodes[0].innerHTML;
+
+  const attributes = doc.childNodes[0].attributes;
+
+  return [tag, title !== '', title, attributes]; 
+}
 
 export default function Blockquote ({ node, inline, className, children, ...props }) {
   const [_children, styleClass] = ((() => {
     if (node.children && node.children[1]) {
-      if (styleMap.has(node.children[1].value)) {
-        return styleMap.get(node.children[1].value)(children);
+      const [key, hasTitle, title, attributes] = getStyleProps(node.children[1]);
+      if (styleKeyList.includes(key)) {
+        return [createChildren(children, key, hasTitle, title, attributes), `markdown-blockquote-${key}`];
       } else {
         return [children, 'markdown-blockquote-info'];
       }
@@ -35,6 +116,7 @@ export default function Blockquote ({ node, inline, className, children, ...prop
   })());
   return (
     <blockquote
+      key={node.key}
       className={`markdown-blockquote ${styleClass} ${className ?? ''}`}
       {...props}
     >
