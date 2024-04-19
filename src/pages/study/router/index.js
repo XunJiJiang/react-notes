@@ -1,7 +1,7 @@
 import PageTemplate from '@components/page-template/index';
-import markdown from './use.md';
+import markdown from './React Router.md';
 
-export default function Use () {
+export default function Reference () {
   return (
     <>
       <PageTemplate markdown={markdown}>

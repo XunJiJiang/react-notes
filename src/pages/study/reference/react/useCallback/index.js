@@ -1,7 +1,11 @@
-export default function Use () {
+import PageTemplate from '@components/page-template/index';
+import markdown from './useCallback.md';
+
+export default function UseCallback () {
   return (
     <>
-      <h1>UseCallback</h1>
+      <PageTemplate markdown={markdown}>
+      </PageTemplate>
     </>
   )
 }

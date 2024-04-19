@@ -6,7 +6,6 @@ export default function Learn () {
   return (
     <>
       <PageTemplate markdown={markdown}>
-        <h1>Learn</h1>
       </PageTemplate>
     </>
   )

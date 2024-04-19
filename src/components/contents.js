@@ -1,7 +1,12 @@
 import Learn from '@pages/study/learn/index';
+
+// react reference
 import Reference from '@pages/study/reference/index';
 import Use from '@pages/study/reference/react/use/index';
 import UseCallback from '@pages/study/reference/react/useCallback/index';
+
+// react router
+import Router from '@pages/study/router/index';
 // import Icon from '@components/icon/index';
 
 const contents = [{
@@ -183,6 +188,15 @@ const contents = [{
     path: '/react-dom@18.2.0',
     component: () => <h1>react-dom@18.2.0</h1>,
     children: []
+  }]
+}, {
+  label: 'react-router',
+  path: '/router',
+  component: () => <h1>react-router</h1>,
+  children: [{
+    label: 'react router',
+    path: '/react-router',
+    component: () => <Router />,
   }]
 }];
 
