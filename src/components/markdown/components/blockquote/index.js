@@ -34,7 +34,12 @@ function createChildren (children, tag, hasTitle = false, title = '', attributes
             key={`markdown-blockquote-title-${tag}-title`}
             className={`markdown-blockquote-title markdown-blockquote-title-${tag}`}
           >
-            {'icon' in attributes && <><Icon name={attributes.icon.value} className='markdown-blockquote-title-icon' /><span> </span></>}
+            {'icon' in attributes &&
+              <>
+                <Icon name={attributes.icon.value} className='markdown-blockquote-title-icon' />
+                <span> </span>
+              </>
+            }
             {title}
           </p>
         );
@@ -77,7 +82,7 @@ function getStyleProps (node) {
 }
 
 export default function Blockquote ({ node, inline, className, children, ...props }) {
-  const [_children, styleClass] = ((() => {
+  const [_children, _className] = ((() => {
     if (node.children && node.children[1]) {
       const [key, hasTitle, title, attributes] = getStyleProps(node.children[1]);
       if (styleKeyList.includes(key)) {
@@ -85,12 +90,15 @@ export default function Blockquote ({ node, inline, className, children, ...prop
       } else {
         return [children, 'markdown-blockquote-info'];
       }
+    } else {
+      const _children = ['\n', <p key='markdown-blockquote-blank-block' className='markdown-blockquote-blank-block'>空白的块引用</p>, '\n'];
+      return [_children, 'markdown-blockquote-info'];
     }
   })());
   return (
     <blockquote
       key={node.key}
-      className={`markdown-blockquote ${styleClass} ${className ?? ''}`}
+      className={`markdown-blockquote ${_className} ${className ?? ''}`}
       {...props}
     >
       {_children}

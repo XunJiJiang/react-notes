@@ -50,3 +50,7 @@
 .markdown-blockquote .markdown-blockquote-title.markdown-blockquote-title-info {
   color: #4e5769;
 }
+
+.markdown-blockquote .markdown-blockquote-blank-block {
+  color: #bbbbbb;
+}
