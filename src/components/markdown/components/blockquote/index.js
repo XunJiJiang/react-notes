@@ -60,12 +60,16 @@ function getStyleProps (node) {
 
   if ('value' in node) {
     domText += node.value;
-  }
-
-  if ('children' in node) {
-    node.children.forEach((item) => {
-      domText += item.value;
-    });
+  } else if ('children' in node) {
+    if (Array.isArray(node.children)) {
+      node.children.forEach((item) => {
+        domText += item.value;
+      });
+    } else {
+      throw new Error('getStyleProps函数问题 块引用的子节点是对象不是数组');
+    }
+  } else {
+    throw new Error('getStyleProps函数问题 块引用的子节点存在未知数据类型或结构');
   }
 
   const doc = parser.parseFromString(domText, 'application/xml');
