@@ -14,9 +14,9 @@ function createChildren (children, tag, hasTitle = false, title = '', attributes
         return (
           <p
             key={`markdown-blockquote-title-${tag}-icon`}
-            className={`markdown-blockquote-title markdown-blockquote-title-${tag}`}
+            className={`markdown-blockquote-title markdown-blockquote-title-icon markdown-blockquote-title-${tag}`}
           >
-            <Icon name={attributes.icon.value} />
+            <Icon name={attributes.icon.value} className='markdown-blockquote-title-icon'/>
           </p>
         )
       }

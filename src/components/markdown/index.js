@@ -132,7 +132,7 @@ function MarkdownComponent ({ markdown }, ref) {
                   navigator.clipboard.writeText(text).then(() => {
                     // console.log('copy success');
                   }).catch(() => {
-                    console.warn('copy fail')
+                    console.warn('copy fail');
                   });
                 }}
               >copy</i>
