@@ -120,7 +120,7 @@ a:has(.markdown-short-code) {
   top: 0;
   right: 0;
   color: #a3a3a3;
-  background-color: #00000010;
+  background-color: #00000000;
   padding: 2px 6px 4px 6px;
   border-radius: 5px 10px 5px 5px;
   font-style: normal;
@@ -132,9 +132,14 @@ a:has(.markdown-short-code) {
   z-index: 1;
 }
 
+/* .markdown-pre:hover .markdown-pre-copy {
+  color: #a3a3a3;
+  background-color: #00000010;
+} */
+
 .markdown-pre .markdown-pre-copy:hover {
   color: #a3a3a3;
-  background-color: #00000020;
+  background-color: #00000010;
 }
 
 /* end markdown-pre */
