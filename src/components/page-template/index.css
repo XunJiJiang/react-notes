@@ -5,10 +5,12 @@
   background-color: #ffffff;
   overflow-x: scroll;
   overflow-y: auto;
+  position: relative;
 }
 
 .page-template-box .page-template {
   display: flex;
+  position: relative;
   width: 100%;
 }
 
