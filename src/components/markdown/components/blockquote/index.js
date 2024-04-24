@@ -52,7 +52,7 @@ function createChildren (children, tag, hasTitle = false, title = '', attributes
   return children;
 }
 
-function getStyleProps (node) {
+function getBlockquoteConfig (node) {
   if (!node) return [null, false, '', {}];
 
   let domText = '';
@@ -66,10 +66,10 @@ function getStyleProps (node) {
         domText += item.value;
       });
     } else {
-      throw new Error('getStyleProps函数问题 块引用的子节点是对象不是数组');
+      throw new Error('getBlockquoteConfig函数问题 块引用的子节点是对象不是数组');
     }
   } else {
-    throw new Error('getStyleProps函数问题 块引用的子节点存在未知数据类型或结构');
+    throw new Error('getBlockquoteConfig函数问题 块引用的子节点存在未知数据类型或结构');
   }
 
   const doc = parser.parseFromString(domText, 'application/xml');
@@ -88,7 +88,7 @@ function getStyleProps (node) {
 export default function Blockquote ({ node, inline, className, children, ...props }) {
   const [_children, _className] = ((() => {
     if (node.children && node.children[1]) {
-      const [key, hasTitle, title, attributes] = getStyleProps(node.children[1]);
+      const [key, hasTitle, title, attributes] = getBlockquoteConfig(node.children[1]);
       if (styleKeyList.includes(key)) {
         return [createChildren(children, key, hasTitle, title, attributes), `markdown-blockquote-${key}`];
       } else {

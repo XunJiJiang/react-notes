@@ -1,0 +1,54 @@
+.markdown-pre {
+  position: relative;
+}
+
+.markdown-pre div {
+  border-radius: 10px;
+  /* box-shadow: 0 0 8px #44444477; */
+}
+
+.markdown-pre .markdown-pre-copy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #a3a3a388;
+  background-color: #00000000;
+  padding: 2px 6px 4px 6px;
+  border-radius: 5px 10px 5px 10px;
+  font-style: normal;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  user-select: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  /* z-index: 1; */
+}
+
+.markdown-pre:hover .markdown-pre-copy {
+  color: #a3a3a3;
+  /* background-color: #00000010; */
+}
+
+.markdown-pre .markdown-pre-copy .markdown-pre-copy-icon {
+  line-height: 24px;
+}
+
+.markdown-pre .markdown-pre-copy:hover {
+  color: #a3a3a3;
+  background-color: #00000008;
+}
+
+.markdown-pre::before {
+  content: attr(data-language);
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+  color: #a3a3a388;
+  transition: all 0.3s;
+  /* user-select: none; */
+  z-index: 1;
+}
+
+.markdown-pre:hover::before {
+  color: #a3a3a3;
+}

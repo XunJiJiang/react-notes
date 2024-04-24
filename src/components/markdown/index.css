@@ -1,4 +1,4 @@
-/* start markdown */
+/* > start markdown */
 
 .markdown {
   font-size: 16px;
@@ -26,126 +26,31 @@
   text-shadow: rgb(255, 255, 255) 0px 1px 0px;
 }
 
-/* end markdown */
+/* < end markdown */
 
-/* start markdown-code */
-
-/* .markdown-code {} */
-
-.markdown .markdown-code::selection,
-.markdown .markdown-code ::selection {
-  background: #d3d3d3;
-  color: #555;
-  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
-}
-
-.markdown .markdown-code::-moz-selection,
-.markdown .markdown-code ::-moz-selection {
-  background: #d3d3d3;
-  color: #555;
-  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
-}
-
-.markdown .markdown-code::-webkit-selection,
-.markdown .markdown-code ::-webkit-selection {
-  background: #d3d3d3;
-  color: #555;
-  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
-}
-
-/* end markdown-code */
-
-/* start markdown-short-code */
-
-.markdown-short-code {
-  padding: 4px;
-  background-color: #f5f5f5;
-  border-radius: 5px;
-  color: #ec8000;
-  font-weight: bold;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-}
-
-a:has(.markdown-short-code) {
-  text-decoration-color: #ec8000;
-}
-
-/* end markdown-short-code */
-
-/* start markdown-long-code */
-
-.markdown-long-code {
-  position: relative;
-}
-
-.markdown-long-code::before {
-  content: attr(data-language);
-  position: absolute;
-  bottom: 3px;
-  right: 5px;
-  color: #a3a3a3;
-  /* user-select: none; */
-}
-
-/* end markdown-long-code */
-
-/* start markdown-link */
+/* > start markdown-link */
 
 .markdown-link {
   color: #42b983;
   /* text-decoration: none; */
 }
 
-/* end markdown-link */
+/* < end markdown-link */
 
-/* start markdown-blockquote */
+/* > start markdown-blockquote */
 
-/* Code in <./blockquote/index.css> */
+/* - Code in <./blockquote/index.css> */
 
-/* end markdown-blockquote */
+/* < end markdown-blockquote */
 
-/* start markdown-pre */
+/* > start markdown-pre */
 
-.markdown-pre {
-  position: relative;
-}
+/* - Code in <./pre/index.css> */
 
-.markdown-pre div {
-  border-radius: 10px;
-  /* box-shadow: 0 0 8px #44444477; */
-}
+/* < end markdown-pre */
 
-.markdown-pre .markdown-pre-copy {
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: #a3a3a3;
-  background-color: #00000000;
-  padding: 2px 6px 4px 6px;
-  border-radius: 5px 10px 5px 5px;
-  font-style: normal;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-  font-size: 14px;
-  user-select: none;
-  cursor: pointer;
-  transition: all 0.2s;
-  z-index: 1;
-}
+/* > start markdown-title h1 h2 h3 */
 
-/* .markdown-pre:hover .markdown-pre-copy {
-  color: #a3a3a3;
-  background-color: #00000010;
-} */
+/* - Code in <./title/index.css> */
 
-.markdown-pre .markdown-pre-copy:hover {
-  color: #a3a3a3;
-  background-color: #00000010;
-}
-
-/* end markdown-pre */
-
-/* start markdown-title h1 h2 h3 */
-
-/* Code in <./title/index.css> */
-
-/* end markdown-title h1 h2 h3 */
+/* < end markdown-title h1 h2 h3 */

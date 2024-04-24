@@ -1,13 +1,15 @@
 import './index.css';
 import { forwardRef, useImperativeHandle, useEffect, useRef } from 'react';
-import APopover from './components/a-popover';
-import { H1, H2, H3 } from './components/title';
-import Blockquote from './components/blockquote';
 import Markdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
+// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+// import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import { deepCopy } from '@utils/index';
+import Code from './components/code';
+import APopover from './components/a-popover';
+import Blockquote from './components/blockquote';
+import Pre from './components/pre';
+import { H1, H2, H3 } from './components/title';
 
 function MarkdownComponent ({ markdown }, ref) {
 
@@ -77,28 +79,8 @@ function MarkdownComponent ({ markdown }, ref) {
       remarkPlugins={[remarkGfm]}
       className='markdown'
       components={{
-        code ({ node, inline, className, children, ...props }) {
-          const match = /language-(\w+)/.exec(className ?? '');
-          const _children = children ? String(children).replace(/\n$/, '') : ' ';
-          return !inline && match ? (
-            <SyntaxHighlighter
-              children={_children}
-              style={StyleHighlighter}
-              className={`markdown-code markdown-long-code`}
-              language={match[1]}
-              PreTag='div'
-              showLineNumbers={true}
-              showInlineLineNumbers={true}
-              customStyle={{
-                paddingLeft: '0'
-              }}
-              {...props}
-            />
-          ) : (
-            <code className={`markdown-code markdown-short-code ${className ?? ''}`} {...props}>
-              {children}
-            </code>
-          )
+        code (props) {
+          return <Code { ...props }/>
         },
         a ({ className, children, ...props }) {
           return (
@@ -110,50 +92,27 @@ function MarkdownComponent ({ markdown }, ref) {
             </APopover>
           )
         },
-        blockquote ({ ...props }) {
+        blockquote (props) {
           return <Blockquote {...props} />
         },
-        pre ({ node, inline, className, children, ...props }) {
-          const match = /language-(\w+)/.exec(children.props.className ?? '');
-          return (
-            <pre
-              ref={(node) => {
-                node && node.children && node.children[0] && node.children[0].setAttribute('data-language', match ? match[1] : '');
-              }}
-              className={`markdown-pre ${className ?? ''}`}
-              {...props}
-            >
-              {children}
-              <i
-                className={`markdown-pre-copy`}
-                onClick={(e) => {
-                  const text = e.target.previousSibling.innerText.replace('1', '').replace(/\n(\d+)/g, '');
-
-                  navigator.clipboard.writeText(text).then(() => {
-                    // console.log('copy success');
-                  }).catch(() => {
-                    console.warn('copy fail');
-                  });
-                }}
-              >copy</i>
-            </pre>
-          )
+        pre (props) {
+          return <Pre {...props} />
         },
-        h1 ({ ...props }) {
+        h1 (props) {
           return <H1
             {...props}
             setContents={setContents}
             getContent={getContent}
           />
         },
-        h2 ({ ...props }) {
+        h2 (props) {
           return <H2
             {...props}
             setContents={setContents}
             getContent={getContent}
           />
         },
-        h3 ({ ...props }) {
+        h3 (props) {
           return <H3
             {...props}
             setContents={setContents}
