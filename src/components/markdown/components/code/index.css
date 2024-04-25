@@ -36,8 +36,8 @@
 /* start markdown-short-code */
 
 .markdown-short-code {
-  padding: 4px;
-  border-radius: 5px;
+  padding: 1px 3px;
+  border-radius: 0.375rem;
   font-weight: bold;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
