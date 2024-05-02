@@ -6,7 +6,7 @@ import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { deepCopy } from '@utils/index';
 import Code from './components/code';
-import APopover from './components/a-popover';
+import A from './components/a';
 import Blockquote from './components/blockquote';
 import Pre from './components/pre';
 import { H1, H2, H3 } from './components/title';
@@ -84,12 +84,12 @@ function MarkdownComponent ({ markdown }, ref) {
         },
         a ({ className, children, ...props }) {
           return (
-            <APopover
+            <A
               className={`markdown-link ${className ?? ''}`}
               {...props}
             >
               {children}
-            </APopover>
+            </A>
           )
         },
         blockquote (props) {

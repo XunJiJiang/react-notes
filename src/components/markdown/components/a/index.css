@@ -14,4 +14,10 @@
   opacity: 0;
   transition: all 0.3s;
   white-space: nowrap;
+  transform: translate(0, -50%);
+}
+
+.a-popover.a-popover-show {
+  transform: translate(0, 0);
+  opacity: 1;
 }
