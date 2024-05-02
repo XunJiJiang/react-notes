@@ -4,6 +4,7 @@ import Learn from '@pages/study/learn/index';
 import Reference from '@pages/study/reference/index';
 import Use from '@pages/study/reference/react/use/index';
 import UseCallback from '@pages/study/reference/react/useCallback/index';
+import UseDebugValue from '@pages/study/reference/react/useDebugValue/index';
 
 // react router
 import Router from '@pages/study/router/index';
@@ -52,7 +53,7 @@ const contents = [{
       }, {
         label: 'useDebugValue',
         path: '/useDebugValue',
-        component: null
+        component: () => <UseDebugValue />
       }, {
         label: 'useEffect',
         path: '/useEffect',
