@@ -9,6 +9,7 @@ import Code from './components/code';
 import A from './components/a';
 import Blockquote from './components/blockquote';
 import Pre from './components/pre';
+import Img from './components/img';
 import { H1, H2, H3 } from './components/title';
 
 function MarkdownComponent ({ markdown }, ref) {
@@ -97,6 +98,9 @@ function MarkdownComponent ({ markdown }, ref) {
         },
         pre (props) {
           return <Pre {...props} />
+        },
+        img (props) {
+          return <Img {...props} />
         },
         h1 (props) {
           return <H1
