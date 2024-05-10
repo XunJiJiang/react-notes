@@ -1,15 +1,18 @@
-import Learn from '@pages/study/learn/index';
+import {
+/* import contents in contents.js start */
+  Learn,
+  Reference,
+  Use,
+  UseCallback,
+  UseDebugValue,
+  Router,
+/* import contents in contents.js end */
+} from './contents.js';
 
-// react reference
-import Reference from '@pages/study/reference/index';
-import Use from '@pages/study/reference/react/use/index';
-import UseCallback from '@pages/study/reference/react/useCallback/index';
-import UseDebugValue from '@pages/study/reference/react/useDebugValue/index';
 
-// react router
-import Router from '@pages/study/router/index';
 // import Icon from '@components/icon/index';
 
+/* contents assignment start */
 const contents = [{
   label: 'react learn',
   path: '/learn',
@@ -200,5 +203,6 @@ const contents = [{
     component: () => <Router />,
   }]
 }];
+/* contents assignment end */
 
 export default contents;

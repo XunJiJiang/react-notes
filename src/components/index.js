@@ -1,6 +1,6 @@
 import './index.css';
 import { useState, useRef } from 'react';
-import contents from './contents.js';
+import contents from '../contents/index.js';
 import Contents from './contents/index.js';
 import Transition from './transition/index.js';
 
