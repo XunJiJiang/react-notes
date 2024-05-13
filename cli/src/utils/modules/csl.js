@@ -134,13 +134,13 @@ const _csl = new Proxy(csl, {
   },
   get (target, prop, receiver) {
     if (cslFunc.includes(prop)) {
-      // target[prop] 存在，返回 target[prop]
+      // target[prop] 存在. 返回 target[prop]
       return target[prop];
     } else if (chalk[prop]) {
-      // chalk[prop] 存在，返回一个调用了chalk[prop]的函数
+      // chalk[prop] 存在. 返回一个调用了chalk[prop]的函数
       return (...args) => target(chalk[prop](...args));
     } else {
-      // 其他情况，返回 target
+      // 其他情况. 返回 target
       return target;
     }
   }

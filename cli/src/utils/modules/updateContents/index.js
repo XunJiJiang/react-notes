@@ -81,7 +81,7 @@ const typeRegex = /<type>([\s\S]*?)<\/type>/;
 const childrenRegex = /<children>([\s\S]*?)<\/children>/;
 
 /**
- * 检测全部特殊符号，除了_的转换成_
+ * 检测全部特殊符号, 除了_的转换成_
  * 每个单词的首字母大写
  * @param {String} str
  * @returns {String}
@@ -93,7 +93,7 @@ function replaceSpecialSymbol (str) {
 }
 
 /** 
- * 检测是否匹配正则，并返回匹配结果的值
+ * 检测是否匹配正则, 并返回匹配结果的值
  * @param {RegExp} regex 正则表达式
  * @param {String} content 内容
  * @returns {{
@@ -187,7 +187,6 @@ function _convertComponentToFunction (config) {
     } else if (!isNaN(parseInt(key))) {
       if (value.component !== null && isReactElement(value.component)) {
         const _key = 'Comp' + replaceSpecialSymbol(value.path) + componentIndex++;
-        // 这个路径不对，现在这个是routes的路径 //////
         componentPathList.push([_key, `@${value.entryFilePath.slice(1)}`]);
         return {
           ...value,
