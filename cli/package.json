@@ -1,0 +1,20 @@
+{
+  "name": "xj-react-reference-cli",
+  "version": "1.0.0",
+  "description": "A simple CLI to create a react reference note",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create:note": "node index.js in-cli"
+  },
+  "keywords": [],
+  "author": "xunji",
+  "license": "ISC",
+  "dependencies": {
+    "@inquirer/prompts": "^5.0.2",
+    "chalk": "^5.3.0",
+    "figlet": "^1.7.0",
+    "gradient-string": "^2.0.2"
+  }
+}
