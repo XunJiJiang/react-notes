@@ -1,0 +1,9 @@
+{
+  "label": "react learn",
+  "path": "/learn",
+  "entryFilePath": "/pages/study/learn/index.js",
+  "icon": null,
+  "tag": null,
+  "component": "() => <Learn />",
+  "type": "note"
+}

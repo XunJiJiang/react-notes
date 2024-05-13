@@ -1,6 +1,7 @@
-import PageTemplate from '@components/page-template/index';
+import PageTemplate from '@components/page-template/index.js';
 import _markdown from './useDebugValue.md';
-import { markdownImgPathFormatting } from '@utils/index';
+import { markdownImgPathFormatting } from '@utils/index.js';
+import CodeEditor from '@components/code-editor';
 
 import {
   // useDebugValue,
@@ -36,6 +37,7 @@ export default function UseCallback () {
   return (
     <>
       <PageTemplate markdown={markdown}>
+        <CodeEditor />
       </PageTemplate>
     </>
   )

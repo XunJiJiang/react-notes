@@ -1,4 +1,4 @@
-import PageTemplate from '@components/page-template/index';
+import PageTemplate from '@components/page-template/index.js';
 import markdown from './useCallback.md';
 import SkipRendering from './modules/skipRendering';
 

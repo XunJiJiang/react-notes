@@ -1,0 +1,12 @@
+{
+  "label": "use",
+  "path": "/use",
+  "entryFilePath": "/pages/study/reference/react/Hook/use/index.js",
+  "icon": null,
+  "tag": {
+    "type": "icon",
+    "value": "experiment"
+  },
+  "component": "() => <Use />",
+  "type": "note"
+}

@@ -1,0 +1,9 @@
+{
+  "label": "useDebugValue",
+  "path": "/useDebugValue",
+  "entryFilePath": "/pages/study/reference/react/Hook/useDebugValue/index.js",
+  "icon": null,
+  "tag": null,
+  "component": "() => <UseDebugValue />",
+  "type": "note"
+}

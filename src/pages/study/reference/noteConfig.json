@@ -1,0 +1,9 @@
+{
+  "label": "react reference",
+  "path": "/reference",
+  "entryFilePath": "/pages/study/reference/index.js",
+  "icon": null,
+  "tag": null,
+  "component": "() => <Reference />",
+  "type": "note"
+}

@@ -1,0 +1,9 @@
+{
+  "label": "react router",
+  "path": "/router",
+  "entryFilePath": "/pages/study/router/index.js",
+  "icon": null,
+  "tag": null,
+  "component": "() => <Router />",
+  "type": "note"
+}

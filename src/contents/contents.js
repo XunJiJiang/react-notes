@@ -1,19 +1,15 @@
-/* import contents in @pages start */
-import Learn from '@pages/study/learn/index.js';
-import Reference from '@pages/study/reference/index.js';
-import Use from '@pages/study/reference/react/use/index.js';
-import UseCallback from '@pages/study/reference/react/useCallback/index.js';
-import UseDebugValue from '@pages/study/reference/react/useDebugValue/index.js';
-import Router from '@pages/study/router/index.js';
-/* import contents in @pages end */
+import CompLearn0 from '@pages/study/learn/index.js';
+import CompReference1 from '@pages/study/reference/index.js';
+import CompUse2 from '@pages/study/reference/react/Hook/use/index.js';
+import CompUseCallback3 from '@pages/study/reference/react/Hook/useCallback/index.js';
+import CompUseDebugValue4 from '@pages/study/reference/react/Hook/useDebugValue/index.js';
+import CompRouter5 from '@pages/study/router/index.js';
 
 export {
-/* export contents start */
-  Learn,
-  Reference,
-  Use,
-  UseCallback,
-  UseDebugValue,
-  Router,
-/* export contents end */
+  CompLearn0,
+  CompReference1,
+  CompUse2,
+  CompUseCallback3,
+  CompUseDebugValue4,
+  CompRouter5,
 };

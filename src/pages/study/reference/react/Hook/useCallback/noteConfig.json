@@ -1,0 +1,9 @@
+{
+  "label": "useCallback",
+  "path": "/useCallback",
+  "entryFilePath": "/pages/study/reference/react/Hook/useCallback/index.js",
+  "icon": null,
+  "tag": null,
+  "component": "() => <UseCallback />",
+  "type": "note"
+}
