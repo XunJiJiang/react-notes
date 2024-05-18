@@ -1,7 +1,7 @@
 import React from 'react';
 // import type { Components, ExtraProps } from 'react-markdown';
 
-type ContentLabelType = string | React.ReactNode | Array<string | React.ReactNode>;
+type ContentLabelType = React.ReactNode | Array<React.ReactNode>;
 
 interface ContentType {
   id: string;
@@ -36,6 +36,7 @@ interface MarkdownComponentFunc {
 export type {
   ContentType,
   ContentsType,
+  ContentLabelType,
   MarkdownComponentProps,
   MarkdownComponentRef,
   MarkdownComponentFunc,

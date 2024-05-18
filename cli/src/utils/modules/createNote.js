@@ -16,26 +16,6 @@ const CONTENTS_OBJECT = path.resolve(__dirname, './src/contents/index.tsx');
 
 const CONTENTS_PATH = path.resolve(__dirname, './src/contents/contents.tsx');
 
-// 未完待续
-/**
- * 深度搜索
- * 如果没有则创建对象
- * @param {*} obj 
- * @param {*} keys 
- * @returns 
- */
-// function deepSearchOrCreate(obj, keys, title) {
-//   const key = keys[0];
-//   if (keys.length === 1) {
-//     obj
-//   } else if (key in obj) {
-//     return deepSearchOrCreate(obj[key], keys.slice(1));
-//   } else {
-//     return null;
-
-//   }
-// }
-
 /** 
  * 键入笔记配置并写入文件
  * @param {*} title
@@ -88,7 +68,6 @@ async function _createNote (pathText, error) {
     }
   } else {
     fs.mkdirSync(path.resolve(__dirname, notePath));
-    // await _updateImport(title, notePath);
   }
 
   // 创建\更新md文件

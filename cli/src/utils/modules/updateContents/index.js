@@ -247,26 +247,11 @@ function _generateContentsImportFile (componentPathList) {
  * @param {Array<[string, string]>} componentPathList
  * @param {string} contentText
  * @example
- * import {
-  Learn,
-  Reference,
-  Use,
-  UseCallback,
-  UseDebugValue,
-  Router,
-} from './contents.tsx';
-
-const contents = [...];
-
-export default contents;
-
  */
 function _generateContentsFile (componentPathList, contentText) {
   const contentsExport = componentPathList.map(([key]) => {
     return `  ${key},`;
   }).join('\n');
-
-  console.log(CONTENTS_FILE_PATH)
 
   const contentsText = `import {\n${contentsExport}\n} from './contents.tsx';\n\nconst contents = ${contentText};\n\nexport default contents;`;
 
@@ -283,7 +268,6 @@ async function updateContents (directoryPath) {
   const { contentText, componentPathList } = _convertComponentToFunction(config);
   _generateContentsImportFile(componentPathList);
   _generateContentsFile(componentPathList, contentText);
-  // fs.writeFileSync(path.resolve('F:\\Users\\Documents\\MyDocument\\study\\selab\\front-end\\0011react\\code\\react-reference\\cli', 'contents.json'), contentText);
 }
 
 export default updateContents;

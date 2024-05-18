@@ -10,10 +10,3 @@ function App() {
 }
 
 export default App;
-
-// "rules": {
-//    "import/no-unresolved": [
-//       2, 
-//       { "caseSensitive": false }
-//    ]
-// }
