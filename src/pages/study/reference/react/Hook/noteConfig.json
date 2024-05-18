@@ -1,7 +1,7 @@
 {
   "label": "Hook",
   "path": "/Hook",
-  "entryFilePath": "/pages/study/reference/react/Hook/index.js",
+  "entryFilePath": "/pages/study/reference/react/Hook/index.tsx",
   "icon": null,
   "tag": null,
   "component": "() => <h1>react Hook</h1>",

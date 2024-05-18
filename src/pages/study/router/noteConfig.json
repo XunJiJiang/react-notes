@@ -1,7 +1,7 @@
 {
   "label": "react router",
   "path": "/router",
-  "entryFilePath": "/pages/study/router/index.js",
+  "entryFilePath": "/pages/study/router/index.tsx",
   "icon": null,
   "tag": null,
   "component": "() => <Router />",

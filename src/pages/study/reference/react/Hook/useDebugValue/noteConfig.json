@@ -1,7 +1,7 @@
 {
   "label": "useDebugValue",
   "path": "/useDebugValue",
-  "entryFilePath": "/pages/study/reference/react/Hook/useDebugValue/index.js",
+  "entryFilePath": "/pages/study/reference/react/Hook/useDebugValue/index.tsx",
   "icon": null,
   "tag": null,
   "component": "() => <UseDebugValue />",

@@ -1,7 +1,7 @@
 {
   "label": "react reference",
   "path": "/reference",
-  "entryFilePath": "/pages/study/reference/index.js",
+  "entryFilePath": "/pages/study/reference/index.tsx",
   "icon": null,
   "tag": null,
   "component": "() => <Reference />",

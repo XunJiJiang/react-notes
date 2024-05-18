@@ -1,7 +1,7 @@
 {
   "label": "react learn",
   "path": "/learn",
-  "entryFilePath": "/pages/study/learn/index.js",
+  "entryFilePath": "/pages/study/learn/index.tsx",
   "icon": null,
   "tag": null,
   "component": "() => <Learn />",

@@ -1,7 +1,7 @@
 {
   "label": "useCallback",
   "path": "/useCallback",
-  "entryFilePath": "/pages/study/reference/react/Hook/useCallback/index.js",
+  "entryFilePath": "/pages/study/reference/react/Hook/useCallback/index.tsx",
   "icon": null,
   "tag": null,
   "component": "() => <UseCallback />",

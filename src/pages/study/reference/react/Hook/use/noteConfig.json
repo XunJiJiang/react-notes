@@ -1,7 +1,7 @@
 {
   "label": "use",
   "path": "/use",
-  "entryFilePath": "/pages/study/reference/react/Hook/use/index.js",
+  "entryFilePath": "/pages/study/reference/react/Hook/use/index.tsx",
   "icon": null,
   "tag": {
     "type": "icon",

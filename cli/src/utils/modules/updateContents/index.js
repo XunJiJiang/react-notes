@@ -51,12 +51,12 @@ function _readContentsConfigFile (structure, directoryPath = __dirname) {
 /**
  * 目录结构文件路径
  */
-const CONTENTS_FILE_PATH = path.resolve(__dirname, './src/contents/index.js');
+const CONTENTS_FILE_PATH = path.resolve(__dirname, './src/contents/index.tsx');
 
 /**
  * 目录组件引入路径
  */
-const CONTENTS_IMPORT_FILE_PATH = path.resolve(__dirname, './src/contents/contents.js');
+const CONTENTS_IMPORT_FILE_PATH = path.resolve(__dirname, './src/contents/contents.tsx');
 
 /**
  * 标签
@@ -254,7 +254,7 @@ function _generateContentsImportFile (componentPathList) {
   UseCallback,
   UseDebugValue,
   Router,
-} from './contents.js';
+} from './contents.tsx';
 
 const contents = [...];
 
@@ -266,7 +266,9 @@ function _generateContentsFile (componentPathList, contentText) {
     return `  ${key},`;
   }).join('\n');
 
-  const contentsText = `import {\n${contentsExport}\n} from './contents.js';\n\nconst contents = ${contentText};\n\nexport default contents;`;
+  console.log(CONTENTS_FILE_PATH)
+
+  const contentsText = `import {\n${contentsExport}\n} from './contents.tsx';\n\nconst contents = ${contentText};\n\nexport default contents;`;
 
   fs.writeFileSync(CONTENTS_FILE_PATH, contentsText);
 }
