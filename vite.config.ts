@@ -7,7 +7,12 @@ function imgPath() {
   return {
     name: 'img-path',
     transform(src: string, id: string) {
-      if (id.endsWith('.png') || id.endsWith('.jpg') || id.endsWith('.jpeg') || id.endsWith('.gif')) {
+      if (
+        id.endsWith('.png') ||
+        id.endsWith('.jpg') ||
+        id.endsWith('.jpeg') ||
+        id.endsWith('.gif')
+      ) {
         return;
       }
       return;
@@ -15,17 +20,17 @@ function imgPath() {
   };
 }
 
-function markdownRaw() {
-  return {
-    name: 'markdown-raw',
-    transform(src: string, id: string) {
-      if (id.endsWith('.md')) {
-        return src;
-      }
-      return;
-    },
-  };
-}
+// function markdownRaw() {
+//   return {
+//     name: 'markdown-raw',
+//     transform(src: string, id: string) {
+//       if (id.endsWith('.md')) {
+//         return src;
+//       }
+//       return;
+//     },
+//   };
+// }
 
 const alias = {
   '@': path.resolve(__dirname, 'src'),
