@@ -17,10 +17,13 @@ function detectLineEnding (file, type = 'path') {
     }
   })());
   if (content.includes('\r\n')) {
+    // crlf
     return '\r\n';
   } else if (content.includes('\n')) {
+    // lf
     return '\n';
   } else {
+    // cr
     return '\r';
   }
 }
