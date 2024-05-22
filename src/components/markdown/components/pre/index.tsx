@@ -42,6 +42,41 @@ function Pre({ className = '', children, ...props }: PreProps) {
             navigator.clipboard
               .writeText(text)
               .then(() => {
+                if (isCopySuccess) return;
+                isCopySuccess = true;
+                iRef.current?.style.setProperty('--icon-opacity', '0');
+                setTimeout(() => {
+                  iRef.current?.style.setProperty('--svg-opacity', '1');
+                  setTimeout(() => {
+                    iRef.current?.style.setProperty(
+                      '--circle-stroke-dashoffset',
+                      '0',
+                    );
+                    setTimeout(() => {
+                      iRef.current?.style.setProperty(
+                        '--polyline-stroke-dashoffset',
+                        '0',
+                      );
+                    }, 300);
+                    setTimeout(() => {
+                      iRef.current?.style.setProperty('--svg-opacity', '0');
+                      setTimeout(() => {
+                        iRef.current?.style.setProperty('--icon-opacity', '1');
+                        setTimeout(() => {
+                          isCopySuccess = false;
+                          iRef.current?.style.setProperty(
+                            '--circle-stroke-dashoffset',
+                            '38',
+                          );
+                          iRef.current?.style.setProperty(
+                            '--polyline-stroke-dashoffset',
+                            '11',
+                          );
+                        }, 600);
+                      }, 300);
+                    }, 1000);
+                  }, 300);
+                }, 100);
               })
               .catch(() => {
                 console.warn('copy fail');
