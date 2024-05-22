@@ -1,4 +1,7 @@
-import type { ChangeEventMapReturnContentType, ChangeEventMapReturnType } from '@type/modules/comp-contents.d.ts';
+import type {
+  ChangeEventMapReturnContentType,
+  ChangeEventMapReturnType,
+} from '@type/modules/comp-contents.d.ts';
 
 import './index.css';
 import { useState, useRef } from 'react';
@@ -34,12 +37,15 @@ export default function Components() {
         title="React"
         contents={contents}
         onChange={changeHandler}
-        onWidthLoad={width => {
+        onWidthLoad={(width) => {
           if (mainRef.current) {
             const widthNum = parseInt(width);
             let _width = Math.min(widthNum, 1024);
             _width = Math.max(widthNum, 256);
-            mainRef.current.style.setProperty('--leaveWidthBlank', _width + 'px');
+            mainRef.current.style.setProperty(
+              '--leaveWidthBlank',
+              _width + 'px',
+            );
           }
         }}
       />

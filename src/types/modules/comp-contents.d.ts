@@ -1,10 +1,10 @@
 import type { ElementTypeFunc } from '@type/utils/modules/Element.js';
-import type { ContentTagType, ContentType, ContentsType } from './contents.d.ts';
 import type {
-  ContentChangePathType,
-  ContentChangeEventType,
-  ContentTypeExtend,
-} from './comp-contents-comp-content.d.ts';
+  ContentTagType,
+  ContentType,
+  ContentsType,
+} from './contents.d.ts';
+import type { ContentChangeEventType } from './comp-contents-comp-content.d.ts';
 import React from 'react';
 
 /**
@@ -18,7 +18,10 @@ interface GetDeepestLayerFunc {
  * 计算目录的宽度类型
  */
 interface GetContentsWidthCacheFunc {
-  (contents: ContentsType, widthCacheL: React.MutableRefObject<`${number}px` | null>): `${number}px`;
+  (
+    contents: ContentsType,
+    widthCacheL: React.MutableRefObject<`${number}px` | null>,
+  ): `${number}px`;
 }
 
 /**
@@ -67,7 +70,7 @@ interface OnChangeFunc {
   (context: ChangeEventMapReturnType): void;
 }
 
-interface ContentsPropsType {
+interface ContentsProps {
   title: string;
   contents: ContentsType;
   onChange: OnChangeFunc;
@@ -82,5 +85,5 @@ export type {
   _GetContentWidthFunc,
   ChangeEventMapType,
   On_ChangeFunc,
-  ContentsPropsType,
+  ContentsProps,
 };

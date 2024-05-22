@@ -1,11 +1,11 @@
 import React from 'react';
-import type { ContentType, ContentsType } from './contents.d.ts';
+import type { ContentType } from './contents.d.ts';
 import type { ElementTypeFunc } from '@type/utils/modules/Element.js';
 
 type ContentChangePathType = Array<string | null>;
 
 /**
- * ContentType扩展
+ * ContentType扩展类型
  */
 interface ContentTypeExtend extends ContentType {
   _mark_?: {
@@ -36,12 +36,14 @@ interface ContentChangeEventType {
 
 /**
  * 寻找组件
- * 返回最上级存在的最近的组件
+ * 返回最上级存在的最近的组件类型
  */
 interface FindComponentFunc {
-  (content: ContentTypeExtendForChange): [
-    (...props: any[]) => React.JSX.Element | JSX.Element,
-    ContentTypeExtendForChange
+  (
+    content: ContentTypeExtendForChange,
+  ): [
+    (props: React.ComponentProps<T>) => React.JSX.Element | JSX.Element,
+    ContentTypeExtendForChange,
   ];
 }
 
@@ -52,7 +54,7 @@ interface FindComponentFunc {
 interface DeepHeightListType extends Array<number> {}
 
 /**
- * Content组件props
+ * Content组件props类型
  */
 interface ContentProps {
   contents: Array<ContentTypeExtendForChange>;
@@ -63,7 +65,7 @@ interface ContentProps {
 }
 
 /**
- * Content组件ref
+ * Content组件ref类型
  */
 interface ContentRef {
   inVisible: () => void;

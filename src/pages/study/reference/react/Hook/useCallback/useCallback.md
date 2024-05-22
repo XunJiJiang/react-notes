@@ -30,13 +30,13 @@ import { useCallback } from 'react';
 
 ```jsx
 const handleSubmit = useCallback(
-  orderDetails => {
+  (orderDetails) => {
     post('/product/' + productId + '/buy', {
       referrer,
       orderDetails,
     });
   },
-  [productId, referrer]
+  [productId, referrer],
 );
 ```
 
@@ -58,16 +58,16 @@ const handleSubmit = useCallback(
 const [todos, setTodos] = useState([]);
 
 const handleAddTodo = useCallback(
-  text => {
+  (text) => {
     const newTodo = { id: nextId++, text };
     // setTodos([...todos, newTodo]);
     // ↓
-    setTodos(todos => [...todos, newTodo]);
+    setTodos((todos) => [...todos, newTodo]);
     // 使用记忆回调, 此时todos总是最新数据
     // 此时不依赖于外部todos
     // 不需要每次todos变化时返回新的函数
   },
-  /* [todos] → */ []
+  /* [todos] → */ [],
 );
 ```
 
@@ -118,10 +118,10 @@ function useRouter() {
   const { dispatch } = useContext(RouterStateContext);
 
   const navigate = useCallback(
-    url => {
+    (url) => {
       dispatch({ type: 'navigate', url });
     },
-    [dispatch]
+    [dispatch],
   );
 
   const goBack = useCallback(() => {

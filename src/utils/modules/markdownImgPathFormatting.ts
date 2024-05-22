@@ -16,10 +16,10 @@ type ImgType = {
  */
 const markdownImgPathFormatting = (markdown: string, imgs: ImgType[]) => {
   let _markdown = markdown;
-  imgs.forEach(img => {
+  imgs.forEach((img) => {
     _markdown = _markdown.replace(
       new RegExp(`!\\[.*\\]\\(${img.originalPath}\\)`),
-      `![${img.title}](${img.replacementPath})`
+      `![${img.title}](${img.replacementPath})`,
     );
   });
   return _markdown;

@@ -1,6 +1,6 @@
-import type { KeyframeType, KeyframeTypes } from './comp-transition-hooks-useTransition.d.ts';
+import type { KeyframeType } from './comp-transition-hooks-useTransition.d.ts';
 
-interface TransitionPropsType {
+interface TransitionProps {
   mode?: 'in' | 'out' | 'out-in';
   children: React.ReactElement;
   keyframe?: KeyframeType;
@@ -8,4 +8,4 @@ interface TransitionPropsType {
   easing?: string;
 }
 
-export type { TransitionPropsType };
+export type { TransitionProps };

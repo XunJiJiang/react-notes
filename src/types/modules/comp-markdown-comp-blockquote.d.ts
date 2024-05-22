@@ -11,7 +11,7 @@ type NodeType =
     };
 
 interface GetBlockquoteConfigFunc {
-  (node: NodeType): [string | null, boolean, string, {}];
+  (node: NodeType): [string | null, boolean, string, object];
 }
 
 interface CreateChildrenFunc {
@@ -24,7 +24,7 @@ interface CreateChildrenFunc {
       icon?: {
         value: string;
       };
-    }
+    },
   ): React.ReactNode;
 }
 
@@ -33,4 +33,9 @@ interface BlockquoteProps extends ExtraProps {
   children?: Array<React.ReactNode | string> | React.ReactNode | null;
 }
 
-export type { NodeType, GetBlockquoteConfigFunc, CreateChildrenFunc, BlockquoteProps };
+export type {
+  NodeType,
+  GetBlockquoteConfigFunc,
+  CreateChildrenFunc,
+  BlockquoteProps,
+};

@@ -8,10 +8,13 @@ import './index.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-function FencedCodeBlocks({ children, match, ...props }: FencedCodeBlocksProps) {
+function FencedCodeBlocks({
+  children,
+  match,
+  ...props
+}: FencedCodeBlocksProps) {
   return (
     <SyntaxHighlighter
-      children={children}
       style={StyleHighlighter}
       className={`markdown-code markdown-long-code`}
       language={match[1]}
@@ -22,7 +25,9 @@ function FencedCodeBlocks({ children, match, ...props }: FencedCodeBlocksProps) 
         paddingLeft: '0',
       }}
       {...props}
-    />
+    >
+      {children}
+    </SyntaxHighlighter>
   );
 }
 
@@ -41,7 +46,9 @@ function getShortCodeBlocksConfig(children: string | React.ReactNode) {
   if (typeof children === 'string') {
     domText = children;
   } else {
-    throw new Error('getShortCodeBlocksConfig函数问题 块引用的子节点存在未知数据类型或结构');
+    throw new Error(
+      'getShortCodeBlocksConfig函数问题 块引用的子节点存在未知数据类型或结构',
+    );
   }
 
   const doc = parser.parseFromString(domText, 'application/xml');
@@ -71,10 +78,17 @@ function getShortCodeBlocksConfig(children: string | React.ReactNode) {
   };
 }
 
-function ShortCodeBlocks({ children, className, ...props }: ShortCodeBlocksProps) {
+function ShortCodeBlocks({
+  children,
+  className,
+  ...props
+}: ShortCodeBlocksProps) {
   const { children: _children, tag } = getShortCodeBlocksConfig(children);
   return (
-    <code className={`markdown-code markdown-short-code markdown-short-code-${tag} ${className ?? ''}`} {...props}>
+    <code
+      className={`markdown-code markdown-short-code markdown-short-code-${tag} ${className ?? ''}`}
+      {...props}
+    >
       {_children}
     </code>
   );

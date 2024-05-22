@@ -1,4 +1,9 @@
-import type { ContentType, ContentsType, MarkdownComponentFunc } from '@type/modules/comp-markdown.d.ts';
+import type {
+  ContentType,
+  ContentsType,
+  MarkdownComponentProps,
+  MarkdownComponentRef,
+} from '@type/modules/comp-markdown.d.ts';
 import type { Components } from 'react-markdown';
 
 import './index.css';
@@ -14,15 +19,18 @@ import Pre from './components/pre/index.tsx';
 import Img from './components/img/index.tsx';
 import { H1, H2, H3 } from './components/title/index.tsx';
 
-const MarkdownComponent: MarkdownComponentFunc = ({ markdown }, ref) => {
+const MarkdownComponent = forwardRef(function _MarkdownComponent(
+  { markdown }: MarkdownComponentProps,
+  ref: React.ForwardedRef<MarkdownComponentRef>,
+) {
   // 保存目录项
   const contents = useRef<ContentsType>([]);
 
   // 保存当前指向的目录项下标, 当且仅当目录项的节点成功渲染时, 下标指向下一个目录项
-  let contentsIndex = useRef(0);
+  const contentsIndex = useRef(0);
 
   useEffect(() => {
-    contents.current.forEach(content => {
+    contents.current.forEach((content) => {
       const { node } = content;
       if (!node) return;
       // 保存节点的占位高度
@@ -89,7 +97,15 @@ const MarkdownComponent: MarkdownComponentFunc = ({ markdown }, ref) => {
     contents,
   }));
 
-  return <Markdown children={markdown} remarkPlugins={[remarkGfm]} className="markdown" components={components} />;
-};
+  return (
+    <Markdown
+      remarkPlugins={[remarkGfm]}
+      className="markdown"
+      components={components}
+    >
+      {markdown}
+    </Markdown>
+  );
+});
 
-export default forwardRef(MarkdownComponent);
+export default MarkdownComponent;

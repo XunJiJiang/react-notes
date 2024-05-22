@@ -1,6 +1,6 @@
 import './index.css';
 
-export default function NotFound({ info = '' }) {
+export default function NotFound({ info = '' }: { info?: string }) {
   return (
     <div className="not-found">
       <div>

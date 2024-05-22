@@ -43,7 +43,8 @@ const contents = [
               {
                 label: 'use',
                 path: '/use',
-                entryFilePath: '/pages/study/reference/react/Hook/use/index.tsx',
+                entryFilePath:
+                  '/pages/study/reference/react/Hook/use/index.tsx',
                 icon: null,
                 tag: {
                   icon: 'experiment',
@@ -53,7 +54,8 @@ const contents = [
               {
                 label: 'useCallback',
                 path: '/useCallback',
-                entryFilePath: '/pages/study/reference/react/Hook/useCallback/index.tsx',
+                entryFilePath:
+                  '/pages/study/reference/react/Hook/useCallback/index.tsx',
                 icon: null,
                 tag: null,
                 component: () => <CompUseCallback3 />,
@@ -61,7 +63,8 @@ const contents = [
               {
                 label: 'useDebugValue',
                 path: '/useDebugValue',
-                entryFilePath: '/pages/study/reference/react/Hook/useDebugValue/index.tsx',
+                entryFilePath:
+                  '/pages/study/reference/react/Hook/useDebugValue/index.tsx',
                 icon: null,
                 tag: null,
                 component: () => <CompUseDebugValue4 />,

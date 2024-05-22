@@ -2,40 +2,45 @@ import type {
   ChangeLocationFunc,
   ContentsINPageProps,
   ContentsINPageRef,
+  ContentLabelType,
 } from '@type/modules/comp-page-template-comp-contents.d.ts';
-import type { ContentLabelType } from '@type/modules/comp-markdown.d.ts';
 
 import './index.css';
 import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 
-function createHref(label: ContentLabelType) {
+function createHref(label: ContentLabelType): string {
   if (typeof label === 'string') {
     return label;
   }
 
-  if (typeof label === 'object' && label !== null && 'props' in label) {
+  if (typeof label === 'object' && label !== null) {
     if (Array.isArray(label)) {
-      return label.reduce((prev, current) => {
+      return label.reduce((prev: string, current: ContentLabelType) => {
         return prev + createHref(current);
       }, '');
     } else {
-      return label!.props.children;
+      if ('props' in label) return label!.props.children;
     }
   }
 
   throw new Error('createHref 发生未知错误');
 }
 
-function ContentsINPage({ contents }: ContentsINPageProps, ref: React.ForwardedRef<ContentsINPageRef>) {
+const ContentsINPage = forwardRef(function _ContentsINPage(
+  { contents }: ContentsINPageProps,
+  ref: React.ForwardedRef<ContentsINPageRef>,
+) {
   const ulRef = useRef(null);
 
   const liList = useRef<HTMLElement[]>([]);
 
   const lastFocusLi = useRef<HTMLElement | null>(null);
 
-  const changeLocation: ChangeLocationFunc = content => {
-    const liNode = document.getElementById(`contents-in-page-${content.id}`) ?? content.node;
-    lastFocusLi.current && lastFocusLi.current.setAttribute('data-active', `${false}`);
+  const changeLocation: ChangeLocationFunc = (content) => {
+    const liNode =
+      document.getElementById(`contents-in-page-${content.id}`) ?? content.node;
+    lastFocusLi.current &&
+      lastFocusLi.current.setAttribute('data-active', `${false}`);
     liNode.setAttribute('data-active', `${true}`);
     lastFocusLi.current = liNode;
   };
@@ -56,7 +61,7 @@ function ContentsINPage({ contents }: ContentsINPageProps, ref: React.ForwardedR
       <span className="contents-in-page-title">目录</span>
       <ul ref={ulRef}>
         {contents
-          .filter(content => {
+          .filter((content) => {
             return content.level !== 1;
           })
           .map((content, index) => {
@@ -64,7 +69,7 @@ function ContentsINPage({ contents }: ContentsINPageProps, ref: React.ForwardedR
               <li
                 id={`contents-in-page-${content.id}`}
                 className="contents-in-page-item-box"
-                ref={node => {
+                ref={(node) => {
                   node && liList.current.push(node);
                 }}
                 key={index}
@@ -90,6 +95,6 @@ function ContentsINPage({ contents }: ContentsINPageProps, ref: React.ForwardedR
       </ul>
     </nav>
   );
-}
+});
 
-export default forwardRef(ContentsINPage);
+export default ContentsINPage;

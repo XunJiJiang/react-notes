@@ -10,13 +10,9 @@
 
 > <info/>
 >
-> **Canary**: 预定将在下一个正式版本中启用。参阅 [React 发布渠道](https://zh-hans.react.dev/community/versioning-policy#all-release-channels) 
-
-
+> **Canary**: 预定将在下一个正式版本中启用。参阅 [React 发布渠道](https://zh-hans.react.dev/community/versioning-policy#all-release-channels)
 
 #### 使用 `use` 读取 context
-
-
 
 ### useCallback
 
@@ -30,7 +26,7 @@
 import { useCallback } from 'react';
 ```
 
-#### 参数 
+#### 参数
 
 - `fn`：想要缓存的函数。此函数可以接受任何参数并且返回任何值。
 
@@ -42,21 +38,22 @@ import { useCallback } from 'react';
 
   如果你的代码检查工具 [配置了 React](https://zh-hans.react.dev/learn/editor-setup#linting)，那么它将校验每一个正确指定为依赖的响应式值。依赖列表必须具有确切数量的项，并且必须像 `[dep1, dep2, dep3]` 这样编写。React 使用 [`Object.is`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is) 比较每一个依赖和它的之前的值。
 
-#### 返回值 
+#### 返回值
 
 初次渲染时，`useCallback` 返回传入的 `fn` 函数
 
 在之后的渲染中, 如果依赖没有改变，`useCallback` 返回上一次渲染中缓存的 `fn` 函数；否则返回这一次渲染传入的 `fn`。
 
-
-
 ```jsx
-const handleSubmit = useCallback((orderDetails) => {
-  post('/product/' + productId + '/buy', {
-    referrer,
-    orderDetails,
-  });
-}, [productId, referrer]);
+const handleSubmit = useCallback(
+  (orderDetails) => {
+    post('/product/' + productId + '/buy', {
+      referrer,
+      orderDetails,
+    });
+  },
+  [productId, referrer],
+);
 ```
 
 #### 使用
@@ -71,23 +68,26 @@ const handleSubmit = useCallback((orderDetails) => {
 
 因此，使用`useCallback`缓存函数， 将组件包裹在 [`memo`](https://zh-hans.react.dev/reference/react/memo) 中，以跳过不必要的组件渲染。
 
-##### 从记忆化回调中更新 state 
+##### 从记忆化回调中更新 state
 
 ```js
 const [todos, setTodos] = useState([]);
 
-const handleAddTodo = useCallback((text) => {
-  const newTodo = { id: nextId++, text };
-  // setTodos([...todos, newTodo]); 
-  // ↓
-  setTodos(todos => [...todos, newTodo]);
-  // 使用记忆回调, 此时todos总是最新数据
-  // 此时不依赖于外部todos
-  // 不需要每次todos变化时返回新的函数
-}, /* [todos] → */[]);
+const handleAddTodo = useCallback(
+  (text) => {
+    const newTodo = { id: nextId++, text };
+    // setTodos([...todos, newTodo]);
+    // ↓
+    setTodos((todos) => [...todos, newTodo]);
+    // 使用记忆回调, 此时todos总是最新数据
+    // 此时不依赖于外部todos
+    // 不需要每次todos变化时返回新的函数
+  },
+  /* [todos] → */ [],
+);
 ```
 
-##### 防止频繁触发 Effect 
+##### 防止频繁触发 Effect
 
 如果需要在 [Effect](https://zh-hans.react.dev/learn/synchronizing-with-effects) 内部调用函数
 
@@ -133,9 +133,12 @@ function ChatRoom({ roomId }) {
 function useRouter() {
   const { dispatch } = useContext(RouterStateContext);
 
-  const navigate = useCallback((url) => {
-    dispatch({ type: 'navigate', url });
-  }, [dispatch]);
+  const navigate = useCallback(
+    (url) => {
+      dispatch({ type: 'navigate', url });
+    },
+    [dispatch],
+  );
 
   const goBack = useCallback(() => {
     dispatch({ type: 'back' });
@@ -151,18 +154,18 @@ function useRouter() {
 比如，在如下使用时，`Router`组件的重渲染不会导致`Button`组件重渲染
 
 ```jsx
-const Button = memo(function ({ children , onClick}) {
-  return <button onClick={onClick}>{children}</button>
+const Button = memo(function ({ children, onClick }) {
+  return <button onClick={onClick}>{children}</button>;
 });
 
 function Router() {
   const { navigate, goBack } = useRouter();
   return (
     <>
-    	<Button onClick={navigate}>navigate</Button>
-    	<Button onClick={goBack}>goBack</Button>
+      <Button onClick={navigate}>navigate</Button>
+      <Button onClick={goBack}>goBack</Button>
     </>
-  )
+  );
 }
 ```
 
@@ -171,4 +174,3 @@ function Router() {
 > `react learn`里有一部分
 
 ### useDebugValue
-

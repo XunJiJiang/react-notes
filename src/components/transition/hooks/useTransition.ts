@@ -1,4 +1,7 @@
-import type { KeyframeTypes, RunAnimateFunc } from '@type/modules/comp-transition-hooks-useTransition';
+import type {
+  KeyframeTypes,
+  RunAnimateFunc,
+} from '@type/modules/comp-transition-hooks-useTransition';
 
 import { flushSync } from 'react-dom';
 
@@ -43,7 +46,12 @@ export const _keyframes: KeyframeTypes = {
   },
 };
 
-const runAnimate: RunAnimateFunc = (children, { mode, keyframe, duration, easing }, setNowChild, isVisible) => {
+const runAnimate: RunAnimateFunc = (
+  children,
+  { mode, keyframe, duration, easing },
+  setNowChild,
+  isVisible,
+) => {
   const mainPage = document.getElementById(children.props.id);
   if (!mainPage) {
     Promise.resolve().then(() => {
@@ -70,7 +78,7 @@ const runAnimate: RunAnimateFunc = (children, { mode, keyframe, duration, easing
         // 设置新组件 isVisible
         isVisible.current = children;
       },
-      isVisible.current ? duration : 0
+      isVisible.current ? duration : 0,
     );
   }
 
@@ -117,7 +125,7 @@ const runAnimate: RunAnimateFunc = (children, { mode, keyframe, duration, easing
           isVisible.current = children;
         }, duration);
       },
-      isVisible.current ? duration - 10 : 0
+      isVisible.current ? duration - 10 : 0,
     );
   }
 };

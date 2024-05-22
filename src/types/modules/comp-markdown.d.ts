@@ -21,9 +21,12 @@ interface MarkdownComponentRef {
   contents: React.MutableRefObject<ContentsType>;
 }
 
-interface MarkdownComponentFunc {
-  (props: MarkdownComponentProps, ref: React.ForwardedRef<MarkdownComponentRef>): React.JSX.Element;
-}
+// interface MarkdownComponentFunc {
+//   (
+//     props: MarkdownComponentProps,
+//     ref: React.ForwardedRef<MarkdownComponentRef>,
+//   ): React.JSX.Element;
+// }
 
 // type ComponentsFuncProps<TagName> =
 //   | Component<JSX.IntrinsicElements[TagName] & ExtraProps>
@@ -39,7 +42,7 @@ export type {
   ContentLabelType,
   MarkdownComponentProps,
   MarkdownComponentRef,
-  MarkdownComponentFunc,
+  // MarkdownComponentFunc,
   // ComponentsFuncProps,
   // ComponentsFunc,
 };

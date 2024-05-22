@@ -2,7 +2,10 @@ import type { TestProps } from '../types/skipRendering.d.ts';
 
 import React from 'react';
 
-const Test = React.memo(({ testHandler, isUseCallback }: TestProps) => {
+const Test = React.memo(function _Test({
+  testHandler,
+  isUseCallback,
+}: TestProps) {
   const title = isUseCallback ? 'useCallback' : 'not useCallback';
   testHandler(title);
   return (
@@ -17,7 +20,7 @@ function SkipRendering() {
   const [b] = React.useState(
     new (class B {
       b = 1;
-    })()
+    })(),
   );
   const testHandler = (title: string) => {
     console.log(title, '重新渲染', ';use state:', b);
@@ -26,7 +29,7 @@ function SkipRendering() {
     (title: string) => {
       console.log(title, '重新渲染', ';use state:', b);
     },
-    [b]
+    [b],
   );
   const [count, setCount] = React.useState(0);
   const render = () => {

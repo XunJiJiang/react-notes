@@ -1,8 +1,8 @@
 import React from 'react';
 
-interface PageTemplatePropsType {
+interface PageTemplateProps {
   children?: React.ReactNode;
   markdown?: string;
 }
 
-export type { PageTemplatePropsType };
+export type { PageTemplateProps };

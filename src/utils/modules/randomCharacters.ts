@@ -45,7 +45,12 @@ const CHARACTERS_map = new Map<keys, value>([
  * @param {boolean} param.symbol
  * @returns
  */
-function getCharacters({ uppercase = true, lowercase = true, number = true, symbol = false }) {
+function getCharacters({
+  uppercase = true,
+  lowercase = true,
+  number = true,
+  symbol = false,
+}) {
   let result = '';
   let length = 0;
   if (uppercase) {
@@ -81,7 +86,9 @@ const randomCharacters = (length = 6, option = {}) => {
   const [CHARACTERS, CHARACTERS_LENGTH] = getCharacters(option);
   let result = '';
   for (let i = 0; i < length; i++) {
-    result += String(CHARACTERS).charAt(Math.floor(Math.random() * Number(CHARACTERS_LENGTH)));
+    result += String(CHARACTERS).charAt(
+      Math.floor(Math.random() * Number(CHARACTERS_LENGTH)),
+    );
   }
   return result;
 };

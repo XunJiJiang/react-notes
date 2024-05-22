@@ -1,4 +1,5 @@
 import type { ContentType, ContentsType } from './comp-markdown.d.ts';
+import React from 'react';
 
 interface ChangeLocationFunc {
   (content: ContentType): void;
@@ -12,4 +13,14 @@ interface ContentsINPageProps {
   contents: ContentsType;
 }
 
-export type { ChangeLocationFunc, ContentsINPageRef, ContentsINPageProps };
+type ContentLabelType =
+  | string
+  | React.ReactNode
+  | Array<string | React.ReactNode>;
+
+export type {
+  ChangeLocationFunc,
+  ContentsINPageRef,
+  ContentsINPageProps,
+  ContentLabelType,
+};

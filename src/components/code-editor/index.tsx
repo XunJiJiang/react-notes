@@ -1,20 +1,20 @@
 import './index.css';
-import hljs from 'highlight.js';
+// import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css';
 
-const { highlight } = hljs;
+// const { highlight } = hljs;
 
-const code = highlight(
-  `function CodeEditor () {
-  return {
-    test: true
-  };
-}`,
-  {
-    language: 'javascript',
-    ignoreIllegals: true,
-  }
-);
+// const code = highlight(
+//   `function CodeEditor () {
+//   return {
+//     test: true
+//   };
+// }`,
+//   {
+//     language: 'javascript',
+//     ignoreIllegals: true,
+//   },
+// );
 
 function CodeEditor() {
   return (
@@ -36,7 +36,7 @@ function CodeEditor() {
             node.addEventListener('input', inputHandler, { once: true });
           }
         }}
-        className="editor hljs"
+        className='editor hljs'
       ></code> */}
     </pre>
   );

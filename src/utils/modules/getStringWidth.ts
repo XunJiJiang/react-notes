@@ -11,7 +11,7 @@ const getStringWidth = (
   _style: {
     fontSize?: number;
     fontFamily?: string;
-  }
+  },
 ) => {
   const style = {
     fontSize: _style.fontSize ?? 12,

@@ -11,7 +11,13 @@ import Icon from '@components/icon';
 
 const styleKeyList = ['success', 'warn', 'danger', 'info'];
 
-const createChildren: CreateChildrenFunc = (children, tag, hasTitle = false, title = '', attributes = {}) => {
+const createChildren: CreateChildrenFunc = (
+  children,
+  tag,
+  hasTitle = false,
+  title = '',
+  attributes = {},
+) => {
   if (!styleKeyList.includes(tag)) return children;
 
   if (!hasTitle) {
@@ -24,13 +30,16 @@ const createChildren: CreateChildrenFunc = (children, tag, hasTitle = false, tit
               key={`markdown-blockquote-title-${tag}-icon`}
               className={`markdown-blockquote-title markdown-blockquote-title-icon markdown-blockquote-title-${tag}`}
             >
-              <Icon name={attributes.icon!.value} className="markdown-blockquote-title-icon" />
+              <Icon
+                name={attributes.icon!.value}
+                className="markdown-blockquote-title-icon"
+              />
             </p>
           );
         }
         return item;
       })
-      .filter(item => !!item);
+      .filter((item) => !!item);
 
     return _children;
   }
@@ -45,7 +54,10 @@ const createChildren: CreateChildrenFunc = (children, tag, hasTitle = false, tit
           >
             {'icon' in attributes && (
               <>
-                <Icon name={attributes.icon!.value} className="markdown-blockquote-title-icon" />
+                <Icon
+                  name={attributes.icon!.value}
+                  className="markdown-blockquote-title-icon"
+                />
                 <span> </span>
               </>
             )}
@@ -61,7 +73,7 @@ const createChildren: CreateChildrenFunc = (children, tag, hasTitle = false, tit
   return children;
 };
 
-const getBlockquoteConfig: GetBlockquoteConfigFunc = node => {
+const getBlockquoteConfig: GetBlockquoteConfigFunc = (node) => {
   if (!node) return [null, false, '', {}];
 
   let domText = '';
@@ -71,19 +83,24 @@ const getBlockquoteConfig: GetBlockquoteConfigFunc = node => {
     domText += node.value;
   } else if ('children' in node) {
     if (Array.isArray(node.children)) {
-      node.children.forEach(item => {
+      node.children.forEach((item) => {
         domText += item.value;
       });
     } else {
-      throw new Error('getBlockquoteConfig函数问题 块引用的子节点是对象不是数组');
+      throw new Error(
+        'getBlockquoteConfig函数问题 块引用的子节点是对象不是数组',
+      );
     }
   } else {
-    throw new Error('getBlockquoteConfig函数问题 块引用的子节点存在未知数据类型或结构');
+    throw new Error(
+      'getBlockquoteConfig函数问题 块引用的子节点存在未知数据类型或结构',
+    );
   }
 
   const doc = parser.parseFromString(domText, 'application/xml');
 
-  if (doc.getElementsByTagName('parsererror').length > 0) return [null, false, '', {}];
+  if (doc.getElementsByTagName('parsererror').length > 0)
+    return [null, false, '', {}];
 
   const _node = doc.childNodes[0] as Element;
 
@@ -96,19 +113,32 @@ const getBlockquoteConfig: GetBlockquoteConfigFunc = node => {
   return [tag, title !== '', title, attributes];
 };
 
-export default function Blockquote({ node, className = '', children = [''], ...props }: BlockquoteProps) {
+export default function Blockquote({
+  node,
+  className = '',
+  children = [''],
+  ...props
+}: BlockquoteProps) {
   const [_children, _className] = (() => {
     if (node && node.children && node.children[1]) {
-      const [key, hasTitle, title, attributes] = getBlockquoteConfig(node.children[1] as NodeType);
+      const [key, hasTitle, title, attributes] = getBlockquoteConfig(
+        node.children[1] as NodeType,
+      );
       if (Array.isArray(children) && key && styleKeyList.includes(key)) {
-        return [createChildren(children, key, hasTitle, title, attributes), `markdown-blockquote-${key}`];
+        return [
+          createChildren(children, key, hasTitle, title, attributes),
+          `markdown-blockquote-${key}`,
+        ];
       } else {
         return [children, 'markdown-blockquote-info'];
       }
     } else {
       const _children = [
         '\n',
-        <p key="markdown-blockquote-blank-block" className="markdown-blockquote-blank-block">
+        <p
+          key="markdown-blockquote-blank-block"
+          className="markdown-blockquote-blank-block"
+        >
           空白的块引用
         </p>,
         '\n',
@@ -117,7 +147,10 @@ export default function Blockquote({ node, className = '', children = [''], ...p
     }
   })();
   return (
-    <blockquote className={`markdown-blockquote ${_className} ${className ?? ''}`} {...props}>
+    <blockquote
+      className={`markdown-blockquote ${_className} ${className ?? ''}`}
+      {...props}
+    >
       {_children}
     </blockquote>
   );

@@ -1,15 +1,28 @@
-import type { ContentNodeNullType, TitleProps } from '@type/modules/comp-markdown-comp-title';
+import type {
+  ContentNodeNullType,
+  TitleProps,
+} from '@type/modules/comp-markdown-comp-title';
 import type { ContentType } from '@type/modules/comp-markdown.d.ts';
 
 import { useId } from 'react';
 import { createId } from '../../utils/index.ts';
 
-export function H1({ className = '', children = '', setContents, ...props }: TitleProps) {
+export function H1({
+  className = '',
+  children = '',
+  setContents,
+  ...props
+}: TitleProps) {
   const id = createId(children) + useId();
-  const content: ContentNodeNullType = { id, label: children, level: 1, node: null };
+  const content: ContentNodeNullType = {
+    id,
+    label: children,
+    level: 1,
+    node: null,
+  };
   return (
     <h1
-      ref={node => {
+      ref={(node) => {
         if (!node) return;
         content.node = node;
         setContents(content as ContentType);
@@ -23,12 +36,22 @@ export function H1({ className = '', children = '', setContents, ...props }: Tit
   );
 }
 
-export function H2({ className, children = '', setContents, ...props }: TitleProps) {
+export function H2({
+  className,
+  children = '',
+  setContents,
+  ...props
+}: TitleProps) {
   const id = createId(children) + useId();
-  const content: ContentNodeNullType = { id, label: children, level: 2, node: null };
+  const content: ContentNodeNullType = {
+    id,
+    label: children,
+    level: 2,
+    node: null,
+  };
   return (
     <h2
-      ref={node => {
+      ref={(node) => {
         if (!node) return;
         content.node = node;
         setContents(content as ContentType);
@@ -42,12 +65,22 @@ export function H2({ className, children = '', setContents, ...props }: TitlePro
   );
 }
 
-export function H3({ className, children = '', setContents, ...props }: TitleProps) {
+export function H3({
+  className,
+  children = '',
+  setContents,
+  ...props
+}: TitleProps) {
   const id = createId(children) + useId();
-  const content: ContentNodeNullType = { id, label: children, level: 3, node: null };
+  const content: ContentNodeNullType = {
+    id,
+    label: children,
+    level: 3,
+    node: null,
+  };
   return (
     <h3
-      ref={node => {
+      ref={(node) => {
         if (!node) return;
         content.node = node;
         setContents(content as ContentType);

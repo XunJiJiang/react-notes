@@ -4,7 +4,7 @@ import type {
   _GetContentWidthFunc,
   ChangeEventMapType,
   On_ChangeFunc,
-  ContentsPropsType,
+  ContentsProps,
 } from '@type/modules/comp-contents.d.ts';
 import type { PathListType } from '@type/modules/comp-contents-context-pathList.d.ts';
 
@@ -17,11 +17,11 @@ import Content from './components/content/index.tsx';
 /**
  * 获取目录的最深层级
  */
-const getDeepestLayer: GetDeepestLayerFunc = contents => {
+const getDeepestLayer: GetDeepestLayerFunc = (contents) => {
   let layer = 1;
   const childLayers = [];
   if (Array.isArray(contents)) {
-    contents.forEach(content => {
+    contents.forEach((content) => {
       if (Array.isArray(content.children)) {
         childLayers.push(getDeepestLayer(content.children));
       } else {
@@ -42,11 +42,14 @@ const getDeepestLayer: GetDeepestLayerFunc = contents => {
 /**
  * 计算目录的宽度
  */
-const getContentsWidthCache: GetContentsWidthCacheFunc = (contents, widthCache) => {
+const getContentsWidthCache: GetContentsWidthCacheFunc = (
+  contents,
+  widthCache,
+) => {
   if (widthCache.current !== null) return widthCache.current;
   const maxDeepestLayer = getDeepestLayer(contents);
   let maxStringWidth: number = 0;
-  const _getContentWidth: _GetContentWidthFunc = content => {
+  const _getContentWidth: _GetContentWidthFunc = (content) => {
     const _deepestLayer = getDeepestLayer(content);
     const _stringWidth =
       getStringWidth(content.label, {
@@ -71,13 +74,13 @@ const getContentsWidthCache: GetContentsWidthCacheFunc = (contents, widthCache) 
 };
 
 const changeEventMap: ChangeEventMapType = {
-  200: e => {
+  200: (e) => {
     return {
       ...e,
       path: e.path.reduce((p, c) => (c ? c + p : p), '') || '/',
     };
   },
-  404: e => {
+  404: (e) => {
     if (e.content._mark_?.createNewContent) {
       return {
         ...e,
@@ -98,8 +101,10 @@ export default function Contents({
   contents = [],
   onChange = () => {},
   onWidthLoad = () => {},
-}: ContentsPropsType) {
-  const pathList = useRef<PathListType>(new Array(getDeepestLayer(contents)).fill(null));
+}: ContentsProps) {
+  const pathList = useRef<PathListType>(
+    new Array(getDeepestLayer(contents)).fill(null),
+  );
 
   const widthCache = useRef(null);
 
@@ -113,8 +118,12 @@ export default function Contents({
 
   onWidthLoad(width);
 
-  const _changeHandler: On_ChangeFunc = e => {
-    onChange(e.content._mark_ ? changeEventMap[e.content._mark_.code](e) : changeEventMap['200'](e));
+  const _changeHandler: On_ChangeFunc = (e) => {
+    onChange(
+      e.content._mark_
+        ? changeEventMap[e.content._mark_.code](e)
+        : changeEventMap['200'](e),
+    );
   };
 
   return (

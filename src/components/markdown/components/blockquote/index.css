@@ -31,11 +31,14 @@
   margin-top: 8px;
 }
 
-.markdown-blockquote .markdown-blockquote-title .markdown-blockquote-title-icon {
+.markdown-blockquote
+  .markdown-blockquote-title
+  .markdown-blockquote-title-icon {
   font-size: 1em;
 }
 
-.markdown-blockquote .markdown-blockquote-title.markdown-blockquote-title-success {
+.markdown-blockquote
+  .markdown-blockquote-title.markdown-blockquote-title-success {
   color: #2b6e62;
 }
 
@@ -43,7 +46,8 @@
   color: #c76a15;
 }
 
-.markdown-blockquote .markdown-blockquote-title.markdown-blockquote-title-danger {
+.markdown-blockquote
+  .markdown-blockquote-title.markdown-blockquote-title-danger {
   color: #d93030;
 }
 

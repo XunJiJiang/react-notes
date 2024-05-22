@@ -19,7 +19,8 @@ interface ButtonRef {
   clientHeight: number | null;
 }
 
-interface ButtonEventTarget extends React.MouseEvent<HTMLButtonElement, MouseEvent> {
+interface ButtonEventTarget
+  extends React.MouseEvent<HTMLButtonElement, MouseEvent> {
   setSelectedStyle: SetSelectedStyleFunc;
 }
 

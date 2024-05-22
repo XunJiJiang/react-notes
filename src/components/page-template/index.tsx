@@ -1,6 +1,9 @@
-import type { PageTemplatePropsType } from '@type/modules/comp-page-template.d.ts';
+import type { PageTemplateProps } from '@type/modules/comp-page-template.d.ts';
 import type { ContentsINPageRef } from '@type/modules/comp-page-template-comp-contents.d.ts';
-import type { ContentsType, MarkdownComponentRef } from '@type/modules/comp-markdown.d.ts';
+import type {
+  ContentsType,
+  MarkdownComponentRef,
+} from '@type/modules/comp-markdown.d.ts';
 
 import './index.css';
 import { useRef, useState } from 'react';
@@ -9,7 +12,10 @@ import Contents from './components/contents/index.tsx';
 
 const scrollEvent = 'scroll';
 
-export default function PageTemplate({ children, markdown = '> 没有 markdown 文本' }: PageTemplatePropsType) {
+export default function PageTemplate({
+  children,
+  markdown = '> 没有 markdown 文本',
+}: PageTemplateProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const markdownRef = useRef<MarkdownComponentRef | null>(null);
@@ -22,7 +28,10 @@ export default function PageTemplate({ children, markdown = '> 没有 markdown �
    * 滚动事件处理
    */
   function scrollHandler() {
-    if (markdownContentsRef.current && markdownContentsRef.current.changeLocation) {
+    if (
+      markdownContentsRef.current &&
+      markdownContentsRef.current.changeLocation
+    ) {
       const viewHeight = window.innerHeight;
       const inView: ContentsType = [];
       for (let i = markdownContents.length - 1; i >= 0; i--) {
@@ -34,7 +43,10 @@ export default function PageTemplate({ children, markdown = '> 没有 markdown �
         ) {
           inView.push(content);
         }
-        if (scrollRef.current && content.offsetTop < scrollRef.current.scrollTop - 16) {
+        if (
+          scrollRef.current &&
+          content.offsetTop < scrollRef.current.scrollTop - 16
+        ) {
           if (inView.length === 0) {
             markdownContentsRef.current.changeLocation(content);
           } else {
@@ -51,7 +63,7 @@ export default function PageTemplate({ children, markdown = '> 没有 markdown �
 
   return (
     <div
-      ref={node => {
+      ref={(node) => {
         if (node) {
           node.removeEventListener(scrollEvent, scrollHandler);
           node.addEventListener(scrollEvent, scrollHandler);
@@ -64,8 +76,12 @@ export default function PageTemplate({ children, markdown = '> 没有 markdown �
       <div className="page-template">
         <div className="page-template-markdown">
           <MarkdownComponent
-            ref={node => {
-              if (node && node.contents.current && markdownContents.length === 0) {
+            ref={(node) => {
+              if (
+                node &&
+                node.contents.current &&
+                markdownContents.length === 0
+              ) {
                 setMarkdownContents(node.contents.current);
               }
               return markdownRef;
@@ -74,7 +90,7 @@ export default function PageTemplate({ children, markdown = '> 没有 markdown �
           />
         </div>
         {children && <div className="page-template-render">{children}</div>}
-        {markdownContents.filter(c => c.level !== 1).length > 0 && (
+        {markdownContents.filter((c) => c.level !== 1).length > 0 && (
           <div className="page-template-contents">
             <Contents ref={markdownContentsRef} contents={markdownContents} />
           </div>

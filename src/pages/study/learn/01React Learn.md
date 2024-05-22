@@ -8,8 +8,6 @@
 npx create-react-app <生成的根目录名称>
 ```
 
-  
-
 `src/index.js`
 
 ```jsx
@@ -25,41 +23,35 @@ const root = ReactDOM.createRoot(document.getElementByIxd('root'));
 
 // 渲染根组件
 root.render(<App />);
-
 ```
 
 `src/App.js`
 
 ```jsx
 // 根组件
-function App () {
-  return (
-    <div className="App">
-      app
-    </div>
-  );
+function App() {
+  return <div className="App">app</div>;
 }
 
 export default App;
-
 ```
 
 ## Jsx
 
-### 使用 JSX 编写标签 
+### 使用 JSX 编写标签
 
 必须将组件包裹到一个共享的父级中，比如 `<div>...</div>` 或使用空的 `<>...</>`
 
 ```jsx
-export function Jsx () {
+export function Jsx() {
   return (
     <>
-      <h1 className='123'>Jsx</h1>
+      <h1 className="123">Jsx</h1>
     </>
   );
 }
 
-export function JsxInDiv () {
+export function JsxInDiv() {
   return (
     <div>
       <h1>JsxInDiv</h1>
@@ -68,34 +60,32 @@ export function JsxInDiv () {
 }
 ```
 
-### 添加样式 
+### 添加样式
 
 使用 `className` 来指定一个 CSS 的 class
 
 与 HTML 的 [`class`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/class) 属性的工作方式相同
 
 ```jsx
-import './002Style.css'
+import './002Style.css';
 
-export default function Style () {
-  return <div className='style-002'>Style</div>;
+export default function Style() {
+  return <div className="style-002">Style</div>;
 }
 ```
 
-### 显示数据 
+### 显示数据
 
 ```jsx
-export default function Data () {
-  return (
-    <div any={'任意属性的值'}>{'任何js语句'}</div>
-  );
+export default function Data() {
+  return <div any={'任意属性的值'}>{'任何js语句'}</div>;
 }
 ```
 
 ### 条件渲染
 
 ```jsx
-export default function If () {
+export default function If() {
   const condition = true;
   return (
     <div>
@@ -106,14 +96,14 @@ export default function If () {
 }
 ```
 
-### 渲染列表 
+### 渲染列表
 
 使用`for`和`Array.map`渲染组件列表
 
 渲染的子标签必须传递一个字符串或者数字给 `key`，用于在其兄弟节点中唯一标识该元素。否则报错
 
 ```jsx
-export default function List () {
+export default function List() {
   const arr = [1, 2, 3, 4, 5];
   return (
     <div>
@@ -130,17 +120,15 @@ export default function List () {
 通过在组件中声明 **事件处理** 函数来响应事件：
 
 ```jsx
-export default function MyButton () {
-  function handleClick () {
+export default function MyButton() {
+  function handleClick() {
     console.log('Button clicked');
   }
-  return (
-    <button onClick={handleClick}>Click me</button>
-  );
+  return <button onClick={handleClick}>Click me</button>;
 }
 ```
 
-## 基础Hook(状态管理)
+## 基础 Hook(状态管理)
 
 ### 更新界面
 
@@ -157,12 +145,12 @@ import { useState } from 'react';
 > React Hooks 必须在 React 函数组件或自定义 React Hook 的 **顶层** 中调用
 
 ```jsx
-function Example () {
+function Example() {
   //声明一个 state 变量, 默认值为 0
   const [count, setCount] = useState(0);
 
   // 声明一个叫做 handleClick 的函数
-  function handleClick () {
+  function handleClick() {
     setCount(count + 1);
   }
 
@@ -174,7 +162,7 @@ function Example () {
 
 #### State 批处理
 
-React 会对 state 更新进行批处理，因此如下使用时，并不会每次加3
+React 会对 state 更新进行批处理，因此如下使用时，并不会每次加 3
 
 ```jsx
 export default function Counter() {
@@ -183,29 +171,33 @@ export default function Counter() {
   return (
     <>
       <h1>{number}</h1>
-      <button onClick={() => {
-        setNumber(number + 1);
-        setNumber(number + 1);
-        setNumber(number + 1);
-      }}>+3</button>
+      <button
+        onClick={() => {
+          setNumber(number + 1);
+          setNumber(number + 1);
+          setNumber(number + 1);
+        }}
+      >
+        +3
+      </button>
     </>
-  )
+  );
 }
 ```
 
-因为setNumber调用后number没有立刻修改，而是会等待本次事件结束后一次性修改值、渲染新数据
+因为 setNumber 调用后 number 没有立刻修改，而是会等待本次事件结束后一次性修改值、渲染新数据
 
-##### 通过函数修改state
+##### 通过函数修改 state
 
 如果你想在下次渲染之前多次更新同一个 state，可以给 state 的修改函数传入一个函数
 
 ```js
-setNumber(n => n + 1)
+setNumber((n) => n + 1);
 ```
 
 这样传入一个根据队列中的前一个 state 计算下一个 state 的 **函数**
 
-##### 使用flushSync API强制同步更新数据与DOM
+##### 使用 flushSync API 强制同步更新数据与 DOM
 
 如果你想在本次事件结束前使用修改后的数据，可以使用`flushSync API`
 
@@ -217,7 +209,7 @@ flushSync(() => {
 
 这将指示 React 当封装在 `flushSync` 中的代码执行后，立即同步更新 DOM
 
-### 使用Hook
+### 使用 Hook
 
 [`Code`](./code/react-basic/src/components/0008Hook.js)
 
@@ -231,7 +223,7 @@ flushSync(() => {
 
 Hook 比普通函数更严格。只能在组件（或其他 Hook）的 **顶层** 调用 Hook
 
-### 组件间共享数据 
+### 组件间共享数据
 
 [`Code`](./code/react-basic/src/components/0009ShareHook.js)
 
@@ -240,21 +232,21 @@ Hook 比普通函数更严格。只能在组件（或其他 Hook）的 **顶层*
 将 `ShareHook` 中的点击事件处理函数以及 **state 一同向下传递到** 每个 `Child` 中
 
 ```jsx
-function Child1 (props) {
+function Child1(props) {
   // 通过 props 获取父组件传递过来的状态和操作状态的函数
   return <button onClick={props.onClick}>Child1 {props.count}</button>;
 }
 
-function Child2 ({ count, onClick: handleClick }) {
+function Child2({ count, onClick: handleClick }) {
   // 通过解构赋值获取父组件传递过来的状态和操作状态的函数
   return <button onClick={handleClick}>Child2 {count}</button>;
 }
 
-export default function ShareHook () {
+export default function ShareHook() {
   // 将需要共享的状态提升到父组件中
   const [count, setCount] = useState(0);
 
-  function handleAdd () {
+  function handleAdd() {
     setCount(count + 1);
   }
   // 将状态和操作状态的函数通过 props 传递给子组件
@@ -287,7 +279,7 @@ import { useReducer } from 'react';
 
 // 开发者创建的reducer函数需要接受两个参数，第一个是state，第二个是action
 // 返回一个新的state，而不是修改然后返回原来的state
-function MyReducer (state, action) {
+function MyReducer(state, action) {
   switch (action.type) {
     case 'increment':
       return state + 1;
@@ -298,18 +290,18 @@ function MyReducer (state, action) {
   }
 }
 
-export default function Reducer () {
+export default function Reducer() {
   // useReducer接受两个参数，第一个是开发者创建的reducer函数，第二个是初始值
   const [state, dispatch] = useReducer(MyReducer, 0);
 
-  function handleIncrement () {
+  function handleIncrement() {
     // dispatch函数接受一个action对象
     // 并且会将这个action对象传递给reducer函数
     // 通过reducer函数返回的新state，来更新state
     dispatch({ type: 'increment' });
   }
 
-  function handleDecrement () {
+  function handleDecrement() {
     dispatch({ type: 'decrement' });
   }
 
@@ -323,13 +315,13 @@ export default function Reducer () {
 }
 ```
 
-必须在所有使用reducer数据的组件的`共同顶级组件`中使用`useReducer`获取数据及其处理函数，
+必须在所有使用 reducer 数据的组件的`共同顶级组件`中使用`useReducer`获取数据及其处理函数，
 
-当其子组件需要使用和修改reducer的数据时，通过`props`或配合`Context`向下传递给子组件，否则可能不会更新数据
+当其子组件需要使用和修改 reducer 的数据时，通过`props`或配合`Context`向下传递给子组件，否则可能不会更新数据
 
 #### 使用 Immer 简化 reducers
 
-可以使用 [`Immer`](https://github.com/immerjs/use-immer#useimmerreducer)这个库来简化 
+可以使用 [`Immer`](https://github.com/immerjs/use-immer#useimmerreducer)这个库来简化
 
 ```shell
 npm install immer
@@ -349,8 +341,6 @@ import { [reducer函数] } from '[路径]';
 const [tasks, dispatch] = useImmerReducer([reducer函数],[初始值]);
 ```
 
-
-
 ### Context
 
 [`Code`](./code/react-basic/src/components/0011Context.js)
@@ -362,14 +352,19 @@ import { createContext, useContext } from 'react';
 const MyContext = createContext(0);
 
 // 子组件通过useContext获取对应Context的值
-function Child ({ children }) {
+function Child({ children }) {
   const value = useContext(MyContext);
-  return <><p>value: {value}</p>{ children }</>;
+  return (
+    <>
+      <p>value: {value}</p>
+      {children}
+    </>
+  );
 }
 
 // 父组件通过MyContext.Provider提供对应Context的值
 // 通过嵌套的方式，可以在任意层级的子组件中获取到对应的值
-export default function Context () {
+export default function Context() {
   return (
     <div>
       <MyContext.Provider value={42}>
@@ -402,14 +397,14 @@ Context 可以将信息深入传递给其他组件
 
 ## 脱围机制
 
-### 使用 ref 引用值 
+### 使用 ref 引用值
 
 [`code`](./code/react-basic/src/components/0012Ref_data.js)
 
 ```jsx
 import { useRef, useState } from 'react';
 
-export default function Counter () {
+export default function Counter() {
   // ref和state的都可以保存数据，而ref保存的数据修改时不会触发组件重新渲染
   const ref = useRef(0);
   // 直接定义的变量，每次重新渲染都会重新定义，所以不会保存数据
@@ -430,12 +425,8 @@ export default function Counter () {
     <>
       <h1>Ref Data</h1>
       <div>上次重渲染时点击次数: {ref.current}</div>
-      <button onClick={handleClick}>
-        增加点击次数
-      </button>
-      <button onClick={redraw}>
-        重新渲染
-      </button>
+      <button onClick={handleClick}>增加点击次数</button>
+      <button onClick={redraw}>重新渲染</button>
     </>
   );
 }
@@ -462,33 +453,37 @@ const inputRef = useRef(null);
 React 会把对该节点的引用放入 `inputRef.current`
 
 ```jsx
-export default function Ref_DOM () {
+export default function Ref_DOM() {
   const inputRef = useRef(null);
   function handleClick() {
     inputRef.current.focus();
   }
-  return <>
-    <h1>Ref DOM</h1>
-    <input ref={inputRef} />
-    <button onClick={handleClick}>获取焦点</button>
-  </>;
+  return (
+    <>
+      <h1>Ref DOM</h1>
+      <input ref={inputRef} />
+      <button onClick={handleClick}>获取焦点</button>
+    </>
+  );
 }
 ```
-
-
 
 另一种用法是**将函数传递给 `ref` 属性**。
 
 这称为 [`ref` 回调](https://zh-hans.react.dev/reference/react-dom/components/common#ref-callback)
 
 ```jsx
-export function RefDOM2 () {
-  return <>
-    <h1>Ref DOM2</h1>
-    <div ref={(node) => {
-      console.log('RefDOM2', node);
-    }}></div>
-  </>
+export function RefDOM2() {
+  return (
+    <>
+      <h1>Ref DOM2</h1>
+      <div
+        ref={(node) => {
+          console.log('RefDOM2', node);
+        }}
+      ></div>
+    </>
+  );
 }
 ```
 
@@ -522,14 +517,10 @@ const MyInput = forwardRef((props, ref) => {
 
 另一方面，像表单、列表或页面段落这样的高级组件通常不会暴露它们的 DOM 节点，以避免对 DOM 结构的意外依赖
 
-##### 使用命令句柄`useImperativeHandle`暴露部分 API 
+##### 使用命令句柄`useImperativeHandle`暴露部分 API
 
 ```js
-import {
-  forwardRef, 
-  useRef, 
-  useImperativeHandle
-} from 'react';
+import { forwardRef, useRef, useImperativeHandle } from 'react';
 ```
 
 ```jsx
@@ -547,7 +538,7 @@ const MyInput = forwardRef((props, ref) => {
       // 任意操作
     },
     // 任意值
-    myData: null
+    myData: null,
   }));
   return <input {...props} ref={realInputRef} />;
 });
@@ -579,7 +570,7 @@ function MyComponent() {
 >
 > 对于 `不同` ，此处使用的是值的比较（使用 `Object.is` 进行比较），如果传入的依赖是一个对象，当对象内的属性值改变时，将不会认为该对象发生变化
 >
-> 如果`Effect`内确实依赖的这个对象，即使这个对象在声明时使用的是`const`，linter也可能不会报错，但`Effect`并不会运行
+> 如果`Effect`内确实依赖的这个对象，即使这个对象在声明时使用的是`const`，linter 也可能不会报错，但`Effect`并不会运行
 
 如果第二个参数是空数组，则`Effect`只会在组件挂载后执行
 
@@ -596,22 +587,22 @@ function MyComponent() {
 可以在 Effect 中返回一个 **清理（cleanup）** 函数。
 
 ```js
-useEffect(() => {
-  // ...
-  return () => {
-    // cleanup 函数
-  };
-}, /* ... */);
+useEffect(
+  () => {
+    // ...
+    return () => {
+      // cleanup 函数
+    };
+  } /* ... */,
+);
 ```
 
 每次重新执行 Effect 之前，React 都会调用清理函数；
 
 组件被卸载时，也会调用清理函数。
 
-
-
 > <warn/>
 >
-> 对于没有逻辑联系的Effect，最好将它们拆分在不同的Effect里，即使它们有相同的依赖
+> 对于没有逻辑联系的 Effect，最好将它们拆分在不同的 Effect 里，即使它们有相同的依赖
 >
-> 不要将内聚的逻辑拆分为多个独立的Effect，这可能会提升维护难度
+> 不要将内聚的逻辑拆分为多个独立的 Effect，这可能会提升维护难度

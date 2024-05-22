@@ -1,4 +1,4 @@
-import PageTemplate from '@components/page-template/index.js';
+import PageTemplate from '@components/page-template/index.tsx';
 import _markdown from './useDebugValue.md?raw';
 import { markdownImgPathFormatting } from '@utils/index.js';
 import CodeEditor from '@components/code-editor/index.tsx';
@@ -14,12 +14,14 @@ import imgNotUseDebugValue from '@img/react-reference/useDebugValue/notUseDebugV
 const imgPaths = [
   {
     replacementPath: imgUseDebugValue,
-    originalPath: '../../../../../assets/images/react-reference/useDebugValue/useDebugValue.png',
+    originalPath:
+      '../../../../../assets/images/react-reference/useDebugValue/useDebugValue.png',
     title: 'useDebugValue',
   },
   {
     replacementPath: imgNotUseDebugValue,
-    originalPath: '../../../../../assets/images/react-reference/useDebugValue/notUseDebugValue.png',
+    originalPath:
+      '../../../../../assets/images/react-reference/useDebugValue/notUseDebugValue.png',
     title: 'not useDebugValue',
   },
 ];

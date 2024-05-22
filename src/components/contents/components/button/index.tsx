@@ -9,9 +9,16 @@ import './index.css';
 import { useRef, forwardRef, useImperativeHandle } from 'react';
 import Icon from '@components/icon/index';
 
-function Button(
-  { title = '', tag, icon, isBranch = false, visible = false, onClick = () => {} }: ButtonProps,
-  ref: React.ForwardedRef<ButtonRef>
+const Button = forwardRef(function Button(
+  {
+    title = '',
+    tag,
+    icon,
+    isBranch = false,
+    visible = false,
+    onClick = () => {},
+  }: ButtonProps,
+  ref: React.ForwardedRef<ButtonRef>,
 ) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -76,7 +83,7 @@ function Button(
       ref={buttonRef}
       className={`content-button ${isBranch ? 'bold-button' : ''}`}
       tabIndex={visible ? 0 : -1}
-      onClick={e => {
+      onClick={(e) => {
         const event: ButtonEventTarget = {
           ...e,
           setSelectedStyle,
@@ -98,6 +105,6 @@ function Button(
       {isBranch && <Icon name="right" className="contents-button-right-icon" />}
     </button>
   );
-}
+});
 
-export default forwardRef(Button);
+export default Button;

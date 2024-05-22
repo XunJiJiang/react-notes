@@ -25,12 +25,12 @@ const deepCopy = (obj: AllType): AllType => {
     if (typeof _obj !== 'object' || _obj === null) return _obj;
     if (map.has(_obj)) return map.get(_obj);
 
-    let result: { [key: string]: AllType } = {};
+    const result: { [key: string]: AllType } = {};
 
     map.set(_obj, result);
 
-    for (let key in _obj) {
-      if (_obj.hasOwnProperty(key)) {
+    for (const key in _obj) {
+      if (Object.prototype.hasOwnProperty.call(_obj, key)) {
         result[key] = _deepCopy((_obj as { [key: string]: AllType })[key]);
       }
     }
