@@ -3,6 +3,7 @@ import type { PreProps } from '@type/modules/comp-markdown-comp-pre.d.ts';
 import './index.css';
 import { useRef } from 'react';
 import Icon from '@components/icon/index.tsx';
+import { TimeoutTaskQueue } from '@utils/index.ts';
 
 function Pre({ className = '', children, ...props }: PreProps) {
   if (
@@ -43,40 +44,68 @@ function Pre({ className = '', children, ...props }: PreProps) {
               .writeText(text)
               .then(() => {
                 if (isCopySuccess) return;
-                isCopySuccess = true;
-                iRef.current?.style.setProperty('--icon-opacity', '0');
-                setTimeout(() => {
-                  iRef.current?.style.setProperty('--svg-opacity', '1');
-                  setTimeout(() => {
-                    iRef.current?.style.setProperty(
-                      '--circle-stroke-dashoffset',
-                      '0',
-                    );
-                    setTimeout(() => {
+                const taskQueue = new TimeoutTaskQueue();
+                taskQueue
+                  .addTask({
+                    callback: () => {
+                      isCopySuccess = true;
+                      iRef.current?.style.setProperty('--icon-opacity', '0');
+                    },
+                    timeout: 0,
+                  })
+                  .addTask({
+                    callback: () => {
+                      iRef.current?.style.setProperty('--svg-opacity', '1');
+                    },
+                    timeout: 100,
+                  })
+                  .addTask({
+                    callback: () => {
+                      iRef.current?.style.setProperty(
+                        '--circle-stroke-dashoffset',
+                        '0',
+                      );
+                    },
+                    timeout: 300,
+                  })
+                  .addTask({
+                    callback: () => {
                       iRef.current?.style.setProperty(
                         '--polyline-stroke-dashoffset',
                         '0',
                       );
-                    }, 300);
-                    setTimeout(() => {
+                    },
+                    timeout: 300,
+                  })
+                  .addTask({
+                    callback: () => {
                       iRef.current?.style.setProperty('--svg-opacity', '0');
-                      setTimeout(() => {
-                        iRef.current?.style.setProperty('--icon-opacity', '1');
-                        setTimeout(() => {
-                          isCopySuccess = false;
-                          iRef.current?.style.setProperty(
-                            '--circle-stroke-dashoffset',
-                            '38',
-                          );
-                          iRef.current?.style.setProperty(
-                            '--polyline-stroke-dashoffset',
-                            '11',
-                          );
-                        }, 600);
-                      }, 300);
-                    }, 1000);
-                  }, 300);
-                }, 100);
+                    },
+                    timeout: 700,
+                  })
+                  .addTask({
+                    callback: () => {
+                      iRef.current?.style.setProperty('--icon-opacity', '1');
+                    },
+                    timeout: 300,
+                  })
+                  .addTask({
+                    callback: () => {
+                      iRef.current?.style.setProperty(
+                        '--circle-stroke-dashoffset',
+                        '38',
+                      );
+                      iRef.current?.style.setProperty(
+                        '--polyline-stroke-dashoffset',
+                        '11',
+                      );
+                    },
+                    timeout: 600,
+                  })
+                  .finally(() => {
+                    isCopySuccess = false;
+                  })
+                  .run();
               })
               .catch(() => {
                 console.warn('copy fail');
