@@ -38,7 +38,7 @@ function Pre({ className = '', children, ...props }: PreProps) {
           try {
             const text = preRef.current.innerText
               .replace('1', '')
-              .replace(/\n(\d+)/g, '');
+              .replace(/\n(\d+)/g, '\n');
 
             navigator.clipboard
               .writeText(text)
