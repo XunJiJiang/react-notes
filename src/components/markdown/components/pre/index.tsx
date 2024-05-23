@@ -99,8 +99,21 @@ function Pre({ className = '', children, ...props }: PreProps) {
                         '--polyline-stroke-dashoffset',
                         '11',
                       );
+                      iRef.current?.style.setProperty(
+                        '--svg-transition',
+                        'all 0s',
+                      );
                     },
                     timeout: 600,
+                  })
+                  .addTask({
+                    callback: () => {
+                      iRef.current?.style.setProperty(
+                        '--svg-transition',
+                        'all 0.6s',
+                      );
+                    },
+                    timeout: 0,
                   })
                   .finally(() => {
                     isCopySuccess = false;
