@@ -67,7 +67,7 @@ function Pre({ className = '', children, ...props }: PreProps) {
       callback: () => {
         iRef.current?.style.setProperty('--svg-transition', 'all 0.6s');
       },
-      delay: 0,
+      delay: 10,
     });
 
   return (
