@@ -1,4 +1,5 @@
 interface Task {
+  id?: string;
   delay?: number;
   callback: () => void | Promise<void>;
 }
@@ -15,19 +16,42 @@ function isAsyncFunction<T>(
  * 创建延时任务队列，按照添加任务的顺序执行
  */
 class TimeoutTaskQueue {
+  /**
+   * 运行下次任务的promise
+   */
   private _promise: [Promise<void>, () => void] | [null, null] = [null, null];
 
+  /**
+   * 任务完成后执行的回调
+   */
   private _finallyCallback: (() => void)[] = [];
 
+  /**
+   * 任务队列
+   */
   private _taskQueue: Task[] = [];
 
+  /**
+   * 任务队列需要运行的次数
+   */
   private _queuedNumber = 0;
 
+  /**
+   * 当前的状态, 可以决定下一次任务是否运行
+   */
   private _state: 'pending' | 'complete' | 'running' = 'complete';
 
+  /**
+   * 是否有任务正在运行
+   */
   private _isRunning = false;
 
-  private _addTask({ delay, callback }: Task): TimeoutTaskQueue {
+  /**
+   * 向任务队列中添加任务
+   * @param delay 延时长度(ms)
+   * @param callback 任务
+   */
+  private _addTask({ delay, callback }: Task) {
     this._promise[0] = this._promise[0]!.then(() => {
       if (isAsyncFunction<void>(callback)) {
         if (typeof delay === 'number') {
@@ -52,7 +76,6 @@ class TimeoutTaskQueue {
       callback();
       return Promise.resolve();
     });
-    return this;
   }
 
   /**
@@ -60,10 +83,30 @@ class TimeoutTaskQueue {
    */
   public addTask(task: Task): TimeoutTaskQueue {
     this._taskQueue.push(task);
-
     return this;
   }
 
+  /**
+   * 删除指定id的任务
+   */
+  public deleteTask(id: string): TimeoutTaskQueue {
+    const index = this._taskQueue.findIndex((task) => {
+      if (typeof task.id === 'string' && id === task.id) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if (index !== -1) {
+      this._taskQueue.splice(index, 1);
+    }
+    return this;
+  }
+
+  /**
+   * 创建一条待执行任务队列
+   * @param once 是否在运行本次队列后自动运行下一条任务
+   */
   private _createTaskQueue(once: boolean): TimeoutTaskQueue {
     this._promise[0] = new Promise((resolve) => {
       this._promise[1] = resolve;
@@ -95,6 +138,9 @@ class TimeoutTaskQueue {
     return this;
   }
 
+  /**
+   * 运行一次任务队列(根据_state和_isRunning判断是否运行)
+   */
   private _run(once = false): void {
     if (this._isRunning) {
       return;
