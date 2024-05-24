@@ -34,7 +34,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 14px;
-  padding: 3px 2px 2px 2px;
+  padding: 3px 2px 2px 1.4px;
   border: #00000000 solid 1.4px;
   transition:
     border 0.3s,

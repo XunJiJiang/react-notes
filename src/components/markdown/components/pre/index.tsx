@@ -139,7 +139,7 @@ function Pre({ className = '', children, ...props }: PreProps) {
           />
           <polyline
             className="markdown-pre-copy-svg-polyline"
-            points="5,8 7,11 11,6"
+            points="4.6,8 6.6,11 10.6,6"
           />
         </svg>
       </i>
