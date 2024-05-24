@@ -17,7 +17,59 @@ function Pre({ className = '', children, ...props }: PreProps) {
   const match = /language-(\w+)/.exec(children.props.className ?? '');
   const preRef = useRef<HTMLPreElement | null>(null);
   const iRef = useRef<HTMLElement | null>(null);
-  let isCopySuccess = false;
+  const taskQueue = new TimeoutTaskQueue();
+  taskQueue
+    .addTask({
+      callback: () => {
+        iRef.current?.style.setProperty('--icon-opacity', '0');
+      },
+      delay: 0,
+    })
+    .addTask({
+      callback: () => {
+        iRef.current?.style.setProperty('--svg-opacity', '1');
+      },
+      delay: 100,
+    })
+    .addTask({
+      callback: () => {
+        iRef.current?.style.setProperty('--circle-stroke-dashoffset', '0');
+      },
+      delay: 300,
+    })
+    .addTask({
+      callback: () => {
+        iRef.current?.style.setProperty('--polyline-stroke-dashoffset', '0');
+      },
+      delay: 300,
+    })
+    .addTask({
+      callback: () => {
+        iRef.current?.style.setProperty('--svg-opacity', '0');
+      },
+      delay: 700,
+    })
+    .addTask({
+      callback: () => {
+        iRef.current?.style.setProperty('--icon-opacity', '1');
+      },
+      delay: 300,
+    })
+    .addTask({
+      callback: () => {
+        iRef.current?.style.setProperty('--circle-stroke-dashoffset', '38');
+        iRef.current?.style.setProperty('--polyline-stroke-dashoffset', '11');
+        iRef.current?.style.setProperty('--svg-transition', 'all 0s');
+      },
+      delay: 600,
+    })
+    .addTask({
+      callback: () => {
+        iRef.current?.style.setProperty('--svg-transition', 'all 0.6s');
+      },
+      delay: 0,
+    });
+
   return (
     <pre
       ref={(node) => {
@@ -43,82 +95,7 @@ function Pre({ className = '', children, ...props }: PreProps) {
             navigator.clipboard
               .writeText(text)
               .then(() => {
-                if (isCopySuccess) return;
-                const taskQueue = new TimeoutTaskQueue();
-                taskQueue
-                  .addTask({
-                    callback: () => {
-                      isCopySuccess = true;
-                      iRef.current?.style.setProperty('--icon-opacity', '0');
-                    },
-                    timeout: 0,
-                  })
-                  .addTask({
-                    callback: () => {
-                      iRef.current?.style.setProperty('--svg-opacity', '1');
-                    },
-                    timeout: 100,
-                  })
-                  .addTask({
-                    callback: () => {
-                      iRef.current?.style.setProperty(
-                        '--circle-stroke-dashoffset',
-                        '0',
-                      );
-                    },
-                    timeout: 300,
-                  })
-                  .addTask({
-                    callback: () => {
-                      iRef.current?.style.setProperty(
-                        '--polyline-stroke-dashoffset',
-                        '0',
-                      );
-                    },
-                    timeout: 300,
-                  })
-                  .addTask({
-                    callback: () => {
-                      iRef.current?.style.setProperty('--svg-opacity', '0');
-                    },
-                    timeout: 700,
-                  })
-                  .addTask({
-                    callback: () => {
-                      iRef.current?.style.setProperty('--icon-opacity', '1');
-                    },
-                    timeout: 300,
-                  })
-                  .addTask({
-                    callback: () => {
-                      iRef.current?.style.setProperty(
-                        '--circle-stroke-dashoffset',
-                        '38',
-                      );
-                      iRef.current?.style.setProperty(
-                        '--polyline-stroke-dashoffset',
-                        '11',
-                      );
-                      iRef.current?.style.setProperty(
-                        '--svg-transition',
-                        'all 0s',
-                      );
-                    },
-                    timeout: 600,
-                  })
-                  .addTask({
-                    callback: () => {
-                      iRef.current?.style.setProperty(
-                        '--svg-transition',
-                        'all 0.6s',
-                      );
-                    },
-                    timeout: 0,
-                  })
-                  .finally(() => {
-                    isCopySuccess = false;
-                  })
-                  .run();
+                taskQueue.runOnce(false);
               })
               .catch(() => {
                 console.warn('copy fail');
