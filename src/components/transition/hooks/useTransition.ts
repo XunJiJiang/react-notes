@@ -3,8 +3,6 @@ import type {
   RunAnimateFunc
 } from '@type/modules/comp-transition-hooks-useTransition';
 
-import { flushSync } from 'react-dom';
-
 export const _keyframes: KeyframeTypes = {
   'out-in': {
     out: [
@@ -55,9 +53,7 @@ const runAnimate: RunAnimateFunc = (
   const mainPage = document.getElementById(children.props.id);
   if (!mainPage) {
     Promise.resolve().then(() => {
-      flushSync(() => {
-        setNowChild(children);
-      });
+      setNowChild(children);
     });
     isVisible.current = children;
     return;
@@ -72,9 +68,7 @@ const runAnimate: RunAnimateFunc = (
     // 延迟执行载入新组件如果已展示的组件为空则立即执行
     setTimeout(
       () => {
-        flushSync(() => {
-          setNowChild(children);
-        });
+        setNowChild(children);
         // 设置新组件 isVisible
         isVisible.current = children;
       },
@@ -83,11 +77,8 @@ const runAnimate: RunAnimateFunc = (
   }
 
   if (mode === 'in') {
-    // 将flushSync放入Promise中在下一次渲染前执行
     Promise.resolve().then(() => {
-      flushSync(() => {
-        setNowChild(children);
-      });
+      setNowChild(children);
       // 运行新组件的动画
       mainPage.animate(keyframe.in ?? _keyframes.in.in, {
         duration: duration,
@@ -110,9 +101,7 @@ const runAnimate: RunAnimateFunc = (
     setTimeout(
       () => {
         // 2. 切换渲染的组件
-        flushSync(() => {
-          setNowChild(children);
-        });
+        setNowChild(children);
         // 3. 执行新组件的动画
         const mainPage = document.getElementById(children.props.id);
         mainPage &&
