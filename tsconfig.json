@@ -23,12 +23,13 @@
     /* alias */
     "baseUrl": "./src",
     "paths": {
-      "@*": ["*"],
+      "@/*": ["*"],
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"],
       "@pages/*": ["pages/*"],
       "@img/*": ["assets/images/*"],
-      "@type/*": ["types/*"]
+      "@type/*": ["types/*"],
+      "@router/*": ["router/*"],
     }
   },
   "include": ["src"],
