@@ -42,8 +42,9 @@ function _readContentsConfigFile (structure, directoryPath = __dirname) {
 
   if (structure.directories.length > 0) {
     config.children = structure.directories.map((directory) => {
-      return _readContentsConfigFile(directory, path.resolve(directoryPath, directory.dirName));
-    });
+      const child = _readContentsConfigFile(directory, path.resolve(directoryPath, directory.dirName));
+      return Object.keys(child).length === 0 ? null : child;
+    }).filter((item) => item !== null);
   }
 
   return config;
@@ -180,7 +181,7 @@ function _convertComponentToFunction (config) {
     } else if (key === 'type') {
       return `<type>${value}</type>`;
     } else if (key === 'children') {
-      if (JSON.stringify(value) === '[{}]') {
+      if (JSON.stringify(value) === '[]') {
         return `<children>null</children>`;
       } else {
         return value;
@@ -213,7 +214,7 @@ function _convertComponentToFunction (config) {
   }).map((line) => {
     const functionContent = matchRegex(functionRegex, line);
     if (functionContent !== null) {
-      return `${getSpace(line).space}"component": ${functionContent.value},`;
+      return `${getSpace(line).space}"component": ${functionContent.value},`
     } else {
       return line;
     }
