@@ -3,15 +3,19 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  font-size: 2rem;
+  font-size:0.91rem;
   font-weight: bold;
   text-align: center;
+  line-height: 3rem;
 
   & h2 {
     margin-right: 1rem;
   }
 
   & p {
+    font-size: 1rem;
+    color: #525252;
+    font-weight: normal;
     margin-left: 1rem;
   }
 }
