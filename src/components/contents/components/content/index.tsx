@@ -123,10 +123,10 @@ const Content = forwardRef(function _Content(
           // 没有子项则表示本项的是否选中
           const childVisible = visibleList[index];
           return (
-            <li className={`content`} key={content.label + index}>
               <Button
                 ref={(node) => {
                   if (node) buttonRefList[index] = node;
+            <li className={`content`} key={'' + content.label + index}>
                 }}
                 title={content.label ?? '该子目录不存在'}
                 tag={content.tag ?? null}
