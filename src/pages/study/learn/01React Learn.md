@@ -538,7 +538,7 @@ const MyInput = forwardRef((props, ref) => {
       // 任意操作
     },
     // 任意值
-    myData: null,
+    myData: null
   }));
   return <input {...props} ref={realInputRef} />;
 });
@@ -593,7 +593,7 @@ useEffect(
     return () => {
       // cleanup 函数
     };
-  } /* ... */,
+  } /* ... */
 );
 ```
 

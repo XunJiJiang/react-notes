@@ -1,6 +1,6 @@
 import type {
   CreateIdSlicesFunc,
-  CreateIdFunc,
+  CreateIdFunc
 } from '@type/modules/comp-markdown-utils.d.ts';
 
 // 记录每个标题的 id 的由空格分割的字符串对应的 key
@@ -20,7 +20,7 @@ const createIdSlices: CreateIdSlicesFunc = (children) => {
         .flat();
     } else
       return createIdSlices(
-        'props' in children ? children.props.children : null,
+        'props' in children ? children.props.children : null
       );
   }
   throw new Error('createIdSlices 函数可能存在问题');

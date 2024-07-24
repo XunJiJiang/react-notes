@@ -1,6 +1,6 @@
 import type {
   ChangeEventMapReturnContentType,
-  ChangeEventMapReturnType,
+  ChangeEventMapReturnType
 } from '@type/modules/comp-contents.d.ts';
 
 import './index.css';
@@ -44,7 +44,7 @@ export default function Components() {
             _width = Math.max(widthNum, 256);
             mainRef.current.style.setProperty(
               '--leaveWidthBlank',
-              _width + 'px',
+              _width + 'px'
             );
           }
         }}

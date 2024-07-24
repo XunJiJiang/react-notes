@@ -16,7 +16,7 @@ function imgPath() {
         return;
       }
       return;
-    },
+    }
   };
 }
 
@@ -38,22 +38,22 @@ const alias = {
   '@utils': path.resolve(__dirname, 'src/utils'),
   '@pages': path.resolve(__dirname, 'src/pages'),
   '@img': path.resolve(__dirname, 'src/assets/images'),
-  '@type': path.resolve(__dirname, 'src/types'),
+  '@type': path.resolve(__dirname, 'src/types')
 };
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), imgPath()],
   resolve: {
-    alias,
+    alias
   },
   server: {
-    port: 3000,
-  },
+    port: 3000
+  }
 });
 
 export const viteConfig = {
   resolve: {
-    alias,
-  },
+    alias
+  }
 };

@@ -4,7 +4,7 @@ import {
   CompUse2,
   CompUseCallback3,
   CompUseDebugValue4,
-  CompRouter5,
+  CompRouter5
 } from './contents.tsx';
 
 const contents = [
@@ -14,7 +14,7 @@ const contents = [
     entryFilePath: '/pages/study/learn/index.tsx',
     icon: null,
     tag: null,
-    component: () => <CompLearn0 />,
+    component: () => <CompLearn0 />
   },
   {
     label: 'react reference',
@@ -47,9 +47,9 @@ const contents = [
                   '/pages/study/reference/react/Hook/use/index.tsx',
                 icon: null,
                 tag: {
-                  icon: 'experiment',
+                  icon: 'experiment'
                 },
-                component: () => <CompUse2 />,
+                component: () => <CompUse2 />
               },
               {
                 label: 'useCallback',
@@ -59,6 +59,7 @@ const contents = [
                 icon: null,
                 tag: null,
                 component: () => <CompUseCallback3 />,
+                children: [{}, {}]
               },
               {
                 label: 'useDebugValue',
@@ -67,13 +68,13 @@ const contents = [
                   '/pages/study/reference/react/Hook/useDebugValue/index.tsx',
                 icon: null,
                 tag: null,
-                component: () => <CompUseDebugValue4 />,
-              },
-            ],
-          },
-        ],
-      },
-    ],
+                component: () => <CompUseDebugValue4 />
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     label: 'react router',
@@ -81,8 +82,8 @@ const contents = [
     entryFilePath: '/pages/study/router/index.tsx',
     icon: null,
     tag: null,
-    component: () => <CompRouter5 />,
-  },
+    component: () => <CompRouter5 />
+  }
 ];
 
 export default contents;

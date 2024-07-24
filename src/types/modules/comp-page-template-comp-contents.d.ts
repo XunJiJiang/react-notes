@@ -22,5 +22,5 @@ export type {
   ChangeLocationFunc,
   ContentsINPageRef,
   ContentsINPageProps,
-  ContentLabelType,
+  ContentLabelType
 };

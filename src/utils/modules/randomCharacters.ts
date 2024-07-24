@@ -10,46 +10,46 @@ const CHARACTERS_map = new Map<keys, value>([
     'uppercase',
     {
       value: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-      length: 26,
-    },
+      length: 26
+    }
   ],
   [
     'lowercase',
     {
       value: 'abcdefghijklmnopqrstuvwxyz',
-      length: 26,
-    },
+      length: 26
+    }
   ],
   [
     'number',
     {
       value: '0123456789',
-      length: 10,
-    },
+      length: 10
+    }
   ],
   [
     'symbol',
     {
       value: '!@#$%^&*()_-+=` ~[]{}|;:,.<>?/\\"',
-      length: 32,
-    },
-  ],
+      length: 32
+    }
+  ]
 ]);
 
 /**
  * 获取字符集
- * @param {Object} param
- * @param {boolean} param.uppercase
- * @param {boolean} param.lowercase
- * @param {boolean} param.number
- * @param {boolean} param.symbol
+ * @param param
+ * @param param.uppercase
+ * @param param.lowercase
+ * @param param.number
+ * @param param.symbol
  * @returns
  */
 function getCharacters({
   uppercase = true,
   lowercase = true,
   number = true,
-  symbol = false,
+  symbol = false
 }) {
   let result = '';
   let length = 0;
@@ -74,12 +74,12 @@ function getCharacters({
 
 /**
  * 随机字符
- * @param {number} length
- * @param {Object} option
- * @param {boolean} option.uppercase
- * @param {boolean} option.lowercase
- * @param {boolean} option.number
- * @param {boolean} option.symbol
+ * @param length
+ * @param option
+ * @param option.uppercase
+ * @param option.lowercase
+ * @param option.number
+ * @param option.symbol
  * @returns
  */
 const randomCharacters = (length = 6, option = {}) => {
@@ -87,7 +87,7 @@ const randomCharacters = (length = 6, option = {}) => {
   let result = '';
   for (let i = 0; i < length; i++) {
     result += String(CHARACTERS).charAt(
-      Math.floor(Math.random() * Number(CHARACTERS_LENGTH)),
+      Math.floor(Math.random() * Number(CHARACTERS_LENGTH))
     );
   }
   return result;

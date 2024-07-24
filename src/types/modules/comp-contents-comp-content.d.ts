@@ -40,10 +40,10 @@ interface ContentChangeEventType {
  */
 interface FindComponentFunc {
   (
-    content: ContentTypeExtendForChange,
+    content: ContentTypeExtendForChange
   ): [
     (props: React.ComponentProps<T>) => React.JSX.Element | JSX.Element,
-    ContentTypeExtendForChange,
+    ContentTypeExtendForChange
   ];
 }
 
@@ -79,5 +79,5 @@ export type {
   ContentTypeExtend,
   FindComponentFunc,
   ContentProps,
-  ContentRef,
+  ContentRef
 };

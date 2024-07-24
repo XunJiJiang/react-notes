@@ -41,7 +41,7 @@ export type {
   ContentsType,
   ContentLabelType,
   MarkdownComponentProps,
-  MarkdownComponentRef,
+  MarkdownComponentRef
   // MarkdownComponentFunc,
   // ComponentsFuncProps,
   // ComponentsFunc,

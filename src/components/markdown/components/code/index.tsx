@@ -1,7 +1,7 @@
 import type {
   FencedCodeBlocksProps,
   ShortCodeBlocksProps,
-  CodeProps,
+  CodeProps
 } from '@type/modules/comp-markdown-comp-code.d.ts';
 
 import './index.css';
@@ -22,7 +22,7 @@ function FencedCodeBlocks({
       showLineNumbers={true}
       showInlineLineNumbers={true}
       customStyle={{
-        paddingLeft: '0',
+        paddingLeft: '0'
       }}
       {...props}
     >
@@ -37,7 +37,7 @@ function getShortCodeBlocksConfig(children: string | React.ReactNode) {
   if (!children)
     return {
       children: '',
-      tag: 'info',
+      tag: 'info'
     };
 
   let domText = '';
@@ -47,7 +47,7 @@ function getShortCodeBlocksConfig(children: string | React.ReactNode) {
     domText = children;
   } else {
     throw new Error(
-      'getShortCodeBlocksConfig函数问题 块引用的子节点存在未知数据类型或结构',
+      'getShortCodeBlocksConfig函数问题 块引用的子节点存在未知数据类型或结构'
     );
   }
 
@@ -56,7 +56,7 @@ function getShortCodeBlocksConfig(children: string | React.ReactNode) {
   if (doc.getElementsByTagName('parsererror').length > 0)
     return {
       children,
-      tag: 'info',
+      tag: 'info'
     };
 
   const element = doc.childNodes[0] as Element;
@@ -69,12 +69,12 @@ function getShortCodeBlocksConfig(children: string | React.ReactNode) {
   if (styleKeyList.includes(tag))
     return {
       children: content,
-      tag,
+      tag
     };
 
   return {
     children: content,
-    tag: 'info',
+    tag: 'info'
   };
 }
 

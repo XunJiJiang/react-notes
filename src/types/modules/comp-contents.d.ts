@@ -2,7 +2,7 @@ import type { ElementTypeFunc } from '@type/utils/modules/Element.js';
 import type {
   ContentTagType,
   ContentType,
-  ContentsType,
+  ContentsType
 } from './contents.d.ts';
 import type { ContentChangeEventType } from './comp-contents-comp-content.d.ts';
 import React from 'react';
@@ -20,7 +20,7 @@ interface GetDeepestLayerFunc {
 interface GetContentsWidthCacheFunc {
   (
     contents: ContentsType,
-    widthCacheL: React.MutableRefObject<`${number}px` | null>,
+    widthCacheL: React.MutableRefObject<`${number}px` | null>
   ): `${number}px`;
 }
 
@@ -85,5 +85,5 @@ export type {
   _GetContentWidthFunc,
   ChangeEventMapType,
   On_ChangeFunc,
-  ContentsProps,
+  ContentsProps
 };

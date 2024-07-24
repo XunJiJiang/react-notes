@@ -1,6 +1,6 @@
 import type {
   KeyframeTypes,
-  RunAnimateFunc,
+  RunAnimateFunc
 } from '@type/modules/comp-transition-hooks-useTransition';
 
 import { flushSync } from 'react-dom';
@@ -9,48 +9,48 @@ export const _keyframes: KeyframeTypes = {
   'out-in': {
     out: [
       {
-        opacity: 1,
+        opacity: 1
       },
       {
-        opacity: 0,
-      },
+        opacity: 0
+      }
     ],
     in: [
       {
-        opacity: 0,
+        opacity: 0
       },
       {
-        opacity: 1,
-      },
-    ],
+        opacity: 1
+      }
+    ]
   },
   in: {
     in: [
       {
-        opacity: 0,
+        opacity: 0
       },
       {
-        opacity: 1,
-      },
-    ],
+        opacity: 1
+      }
+    ]
   },
   out: {
     out: [
       {
-        opacity: 1,
+        opacity: 1
       },
       {
-        opacity: 0,
-      },
-    ],
-  },
+        opacity: 0
+      }
+    ]
+  }
 };
 
 const runAnimate: RunAnimateFunc = (
   children,
   { mode, keyframe, duration, easing },
   setNowChild,
-  isVisible,
+  isVisible
 ) => {
   const mainPage = document.getElementById(children.props.id);
   if (!mainPage) {
@@ -67,7 +67,7 @@ const runAnimate: RunAnimateFunc = (
     // 运行旧组件的动画
     mainPage.animate(keyframe.out ?? _keyframes.out.out, {
       duration: duration,
-      easing: easing,
+      easing: easing
     });
     // 延迟执行载入新组件如果已展示的组件为空则立即执行
     setTimeout(
@@ -78,7 +78,7 @@ const runAnimate: RunAnimateFunc = (
         // 设置新组件 isVisible
         isVisible.current = children;
       },
-      isVisible.current ? duration : 0,
+      isVisible.current ? duration : 0
     );
   }
 
@@ -91,7 +91,7 @@ const runAnimate: RunAnimateFunc = (
       // 运行新组件的动画
       mainPage.animate(keyframe.in ?? _keyframes.in.in, {
         duration: duration,
-        easing: easing,
+        easing: easing
       });
       // 设置新组件 isVisible
       setTimeout(() => {
@@ -104,7 +104,7 @@ const runAnimate: RunAnimateFunc = (
     // 1. 执行旧组件的动画
     mainPage.animate(keyframe.out ?? _keyframes['out-in'].out, {
       duration: duration,
-      easing: easing,
+      easing: easing
     });
 
     setTimeout(
@@ -118,14 +118,14 @@ const runAnimate: RunAnimateFunc = (
         mainPage &&
           mainPage.animate(keyframe.in ?? _keyframes['out-in'].in, {
             duration: duration,
-            easing: easing,
+            easing: easing
           });
         // 4. 设置新组件 isVisible
         setTimeout(() => {
           isVisible.current = children;
         }, duration);
       },
-      isVisible.current ? duration - 10 : 0,
+      isVisible.current ? duration - 10 : 0
     );
   }
 };

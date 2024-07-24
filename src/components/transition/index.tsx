@@ -8,7 +8,7 @@ export default function Transition({
   children,
   keyframe = _keyframes[mode],
   duration = 300,
-  easing = 'ease-in-out',
+  easing = 'ease-in-out'
 }: TransitionProps) {
   if (!children) {
     throw new Error('Transition 组件必须有一个子元素');
@@ -28,7 +28,7 @@ export default function Transition({
       children,
       { mode, keyframe, duration, easing },
       setNowChild,
-      isVisible,
+      isVisible
     );
     // 这里仅在 children 发生变化时执行动画逻辑
     // 但是编译器非要我把 mode, keyframe, duration, easing 放到依赖里

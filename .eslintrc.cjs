@@ -9,40 +9,40 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended'
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 'latest',
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: [
     'react',
     'import',
     'react-refresh',
     '@typescript-eslint',
-    'prettier',
+    'prettier'
   ],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
-      { allowConstantExport: true },
+      { allowConstantExport: true }
     ],
     'import/no-unresolved': 'error',
     'prettier/prettier': ['error', { singleQuote: true }],
     'react/react-in-jsx-scope': 'off',
-    'react/jsx-uses-react': 'off',
+    'react/jsx-uses-react': 'off'
   },
   settings: {
     react: {
-      version: 'detect',
+      version: 'detect'
     },
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+      '@typescript-eslint/parser': ['.ts', '.tsx']
     },
     'import/resolver': {
       vite: {
@@ -54,15 +54,15 @@ module.exports = {
               '@utils': path.resolve(__dirname, 'src/utils'),
               '@pages': path.resolve(__dirname, 'src/pages'),
               '@img': path.resolve(__dirname, 'src/assets/images'),
-              '@type': path.resolve(__dirname, 'src/types'),
-            },
-          },
-        },
+              '@type': path.resolve(__dirname, 'src/types')
+            }
+          }
+        }
       },
       typescript: {
         // 从 <root>@types 读取类型定义
-        alwaysTryTypes: true,
-      },
-    },
-  },
+        alwaysTryTypes: true
+      }
+    }
+  }
 };

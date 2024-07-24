@@ -2,7 +2,7 @@ import type {
   NodeType,
   GetBlockquoteConfigFunc,
   CreateChildrenFunc,
-  BlockquoteProps,
+  BlockquoteProps
 } from '@type/modules/comp-markdown-comp-blockquote.d.ts';
 
 import './index.css';
@@ -16,7 +16,7 @@ const createChildren: CreateChildrenFunc = (
   tag,
   hasTitle = false,
   title = '',
-  attributes = {},
+  attributes = {}
 ) => {
   if (!styleKeyList.includes(tag)) return children;
 
@@ -88,12 +88,12 @@ const getBlockquoteConfig: GetBlockquoteConfigFunc = (node) => {
       });
     } else {
       throw new Error(
-        'getBlockquoteConfig函数问题 块引用的子节点是对象不是数组',
+        'getBlockquoteConfig函数问题 块引用的子节点是对象不是数组'
       );
     }
   } else {
     throw new Error(
-      'getBlockquoteConfig函数问题 块引用的子节点存在未知数据类型或结构',
+      'getBlockquoteConfig函数问题 块引用的子节点存在未知数据类型或结构'
     );
   }
 
@@ -122,12 +122,12 @@ export default function Blockquote({
   const [_children, _className] = (() => {
     if (node && node.children && node.children[1]) {
       const [key, hasTitle, title, attributes] = getBlockquoteConfig(
-        node.children[1] as NodeType,
+        node.children[1] as NodeType
       );
       if (Array.isArray(children) && key && styleKeyList.includes(key)) {
         return [
           createChildren(children, key, hasTitle, title, attributes),
-          `markdown-blockquote-${key}`,
+          `markdown-blockquote-${key}`
         ];
       } else {
         return [children, 'markdown-blockquote-info'];
@@ -141,7 +141,7 @@ export default function Blockquote({
         >
           空白的块引用
         </p>,
-        '\n',
+        '\n'
       ];
       return [_children, 'markdown-blockquote-info'];
     }

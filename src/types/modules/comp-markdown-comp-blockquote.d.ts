@@ -24,7 +24,7 @@ interface CreateChildrenFunc {
       icon?: {
         value: string;
       };
-    },
+    }
   ): React.ReactNode;
 }
 
@@ -37,5 +37,5 @@ export type {
   NodeType,
   GetBlockquoteConfigFunc,
   CreateChildrenFunc,
-  BlockquoteProps,
+  BlockquoteProps
 };

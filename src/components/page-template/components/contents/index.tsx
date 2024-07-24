@@ -2,7 +2,7 @@ import type {
   ChangeLocationFunc,
   ContentsINPageProps,
   ContentsINPageRef,
-  ContentLabelType,
+  ContentLabelType
 } from '@type/modules/comp-page-template-comp-contents.d.ts';
 
 import './index.css';
@@ -28,7 +28,7 @@ function createHref(label: ContentLabelType): string {
 
 const ContentsINPage = forwardRef(function _ContentsINPage(
   { contents }: ContentsINPageProps,
-  ref: React.ForwardedRef<ContentsINPageRef>,
+  ref: React.ForwardedRef<ContentsINPageRef>
 ) {
   const ulRef = useRef(null);
 
@@ -53,7 +53,7 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
   });
 
   useImperativeHandle(ref, () => ({
-    changeLocation,
+    changeLocation
   }));
 
   return (

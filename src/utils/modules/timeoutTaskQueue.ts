@@ -5,7 +5,7 @@ interface Task {
 }
 
 function isAsyncFunction<T>(
-  value: unknown,
+  value: unknown
 ): value is (...args: unknown[]) => Promise<T> {
   return (
     typeof value === 'function' && value.constructor.name === 'AsyncFunction'
@@ -164,9 +164,9 @@ class TimeoutTaskQueue {
   public runOnce(
     callback: (() => void) | false = () => {
       console.warn(
-        'TimeoutTaskQueue: This operation "runOnce" is invalid when the task is running',
+        'TimeoutTaskQueue: This operation "runOnce" is invalid when the task is running'
       );
-    },
+    }
   ) {
     if (this._state === 'running' || this._isRunning) {
       callback && callback();
@@ -192,7 +192,7 @@ class TimeoutTaskQueue {
   public start(): void {
     if (this._state === 'running') {
       console.warn(
-        'TimeoutTaskQueue: This operation "start" is invalid when the task is running',
+        'TimeoutTaskQueue: This operation "start" is invalid when the task is running'
       );
       return;
     }

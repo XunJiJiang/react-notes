@@ -1,3 +1,4 @@
+import { execSync } from 'child_process';
 import path from 'path';
 import {
   csl,
@@ -70,7 +71,8 @@ async function logSelect (message, directoryPath = './src/pages/study') {
     }
   } else if (answer === '退出') {
     csl.color('期待与您的再次相遇');
-    updateContents(studyPath);
+    await updateContents(studyPath);
+    execSync(`npx prettier --write ${path.resolve(__dirname, './src/contents/index.tsx')}`);
     return;
   } else if (answer === '返回上一级') {
     return await logSelect(message, path.resolve(studyPath, '../'));

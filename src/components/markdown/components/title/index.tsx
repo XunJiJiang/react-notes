@@ -1,6 +1,6 @@
 import type {
   ContentNodeNullType,
-  TitleProps,
+  TitleProps
 } from '@type/modules/comp-markdown-comp-title';
 import type { ContentType } from '@type/modules/comp-markdown.d.ts';
 
@@ -18,7 +18,7 @@ export function H1({
     id,
     label: children,
     level: 1,
-    node: null,
+    node: null
   };
   return (
     <h1
@@ -47,7 +47,7 @@ export function H2({
     id,
     label: children,
     level: 2,
-    node: null,
+    node: null
   };
   return (
     <h2
@@ -76,7 +76,7 @@ export function H3({
     id,
     label: children,
     level: 3,
-    node: null,
+    node: null
   };
   return (
     <h3

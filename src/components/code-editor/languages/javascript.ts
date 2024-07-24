@@ -1,5 +1,5 @@
 const javascript = {
-  name: ['javascript', 'js'],
+  name: ['javascript', 'js']
 };
 
 export default javascript;

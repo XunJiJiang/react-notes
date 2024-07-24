@@ -2,7 +2,7 @@ import type {
   SetSelectedStyleFunc,
   ButtonProps,
   ButtonRef,
-  ButtonEventTarget,
+  ButtonEventTarget
 } from '@type/modules/comp-contents-comp-button';
 
 import './index.css';
@@ -16,9 +16,9 @@ const Button = forwardRef(function Button(
     icon,
     isBranch = false,
     visible = false,
-    onClick = () => {},
+    onClick = () => {}
   }: ButtonProps,
-  ref: React.ForwardedRef<ButtonRef>,
+  ref: React.ForwardedRef<ButtonRef>
 ) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -63,7 +63,7 @@ const Button = forwardRef(function Button(
     if (typeof isSelected === 'object' && buttonRef.current) {
       const _isSelected = {
         expand: isSelected.expand ?? false,
-        selected: isSelected.selected ?? false,
+        selected: isSelected.selected ?? false
       };
 
       buttonRef.current.setAttribute('isExpand', `${_isSelected.expand}`);
@@ -74,7 +74,7 @@ const Button = forwardRef(function Button(
   useImperativeHandle(ref, () => {
     return {
       setSelectedStyle,
-      clientHeight: buttonRef.current?.clientHeight ?? null,
+      clientHeight: buttonRef.current?.clientHeight ?? null
     };
   });
 
@@ -86,7 +86,7 @@ const Button = forwardRef(function Button(
       onClick={(e) => {
         const event: ButtonEventTarget = {
           ...e,
-          setSelectedStyle,
+          setSelectedStyle
         };
         event.setSelectedStyle = setSelectedStyle;
         onClick(event);

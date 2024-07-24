@@ -6,6 +6,7 @@ import get__dirname from '../get__dirname.js';
 import capitalizeFirstLetter from '../capitalizeFirstLetter.js';
 import detectLineEnding from '../detectLineEnding.js';
 
+
 const __dirname = get__dirname();
 
 function _readContentsStructure (directoryPath) {
@@ -185,7 +186,7 @@ function _convertComponentToFunction (config) {
         return value;
       }
     } else if (!isNaN(parseInt(key))) {
-      if (value.component !== null && isReactElement(value.component)) {
+      if (value.component !== null && value.component && isReactElement(value.component)) {
         const _key = 'Comp' + replaceSpecialSymbol(value.path) + componentIndex++;
         componentPathList.push([_key, `@${value.entryFilePath.slice(1)}`]);
         return {

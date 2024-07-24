@@ -30,7 +30,7 @@ interface RunAnimateFunc {
       easing: string;
     },
     setNowChild: (children: React.ReactElement) => void,
-    isVisible: React.MutableRefObject<React.ReactElement>,
+    isVisible: React.MutableRefObject<React.ReactElement>
   ): void;
 }
 

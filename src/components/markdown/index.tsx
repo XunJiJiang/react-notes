@@ -2,7 +2,7 @@ import type {
   ContentType,
   ContentsType,
   MarkdownComponentProps,
-  MarkdownComponentRef,
+  MarkdownComponentRef
 } from '@type/modules/comp-markdown.d.ts';
 import type { Components } from 'react-markdown';
 
@@ -21,7 +21,7 @@ import { H1, H2, H3 } from './components/title/index.tsx';
 
 const MarkdownComponent = forwardRef(function _MarkdownComponent(
   { markdown }: MarkdownComponentProps,
-  ref: React.ForwardedRef<MarkdownComponentRef>,
+  ref: React.ForwardedRef<MarkdownComponentRef>
 ) {
   // 保存目录项
   const contents = useRef<ContentsType>([]);
@@ -90,11 +90,11 @@ const MarkdownComponent = forwardRef(function _MarkdownComponent(
     },
     h3(props) {
       return <H3 {...props} setContents={setContents} />;
-    },
+    }
   };
 
   useImperativeHandle(ref, () => ({
-    contents,
+    contents
   }));
 
   return (

@@ -5,7 +5,7 @@ import CodeEditor from '@components/code-editor/index.tsx';
 
 import {
   // useDebugValue,
-  useState,
+  useState
 } from 'react';
 
 import imgUseDebugValue from '@img/react-reference/useDebugValue/useDebugValue.png';
@@ -16,14 +16,14 @@ const imgPaths = [
     replacementPath: imgUseDebugValue,
     originalPath:
       '../../../../../assets/images/react-reference/useDebugValue/useDebugValue.png',
-    title: 'useDebugValue',
+    title: 'useDebugValue'
   },
   {
     replacementPath: imgNotUseDebugValue,
     originalPath:
       '../../../../../assets/images/react-reference/useDebugValue/notUseDebugValue.png',
-    title: 'not useDebugValue',
-  },
+    title: 'not useDebugValue'
+  }
 ];
 
 const markdown = markdownImgPathFormatting(_markdown, imgPaths);

@@ -2,7 +2,7 @@ import type {
   ContentTypeExtendForChange,
   FindComponentFunc,
   ContentProps,
-  ContentRef,
+  ContentRef
 } from '@type/modules/comp-contents-comp-content.d.ts';
 import type { ButtonRef } from '@type/modules/comp-contents-comp-button.d.ts';
 
@@ -17,7 +17,7 @@ import NotFound from '@pages/404/index.tsx';
  * 返回最上级存在的最近的组件
  */
 const findComponent: FindComponentFunc = (
-  content: ContentTypeExtendForChange,
+  content: ContentTypeExtendForChange
 ) => {
   if (content.component) {
     return [content.component, content];
@@ -30,9 +30,9 @@ const findComponent: FindComponentFunc = (
         ...content,
         _mark_: {
           code: '404',
-          msg: '没有找到可用的组件',
-        },
-      },
+          msg: '没有找到可用的组件'
+        }
+      }
     ];
   }
 };
@@ -43,9 +43,9 @@ const Content = forwardRef(function _Content(
     visible = false,
     layer,
     onChange,
-    changeFatherDeepList = () => {},
+    changeFatherDeepList = () => {}
   }: ContentProps,
-  ref: React.ForwardedRef<ContentRef>,
+  ref: React.ForwardedRef<ContentRef>
 ) {
   //  储存当前组件和每个子选项组件的路径信息. 下标高位为父组件的路径, 低位为子组件的路径.
   const pathList = useContext(PathList);
@@ -56,7 +56,7 @@ const Content = forwardRef(function _Content(
    * 没有子项的选项的可见状态表示选项是否被选中
    */
   const [visibleList, setVisibleList] = useState(
-    new Array(contents.length).fill(false),
+    new Array(contents.length).fill(false)
   );
 
   // 记录上次展开(选中)的选项的索引, -1表示没有选中的选项
@@ -70,7 +70,7 @@ const Content = forwardRef(function _Content(
 
   // 储存当前组件和每个子选项组件的深度展开的高度信息. 下标高位为父级的深度, 低位为子级的深度.
   const [deepHeightList, setDeepHeightList] = useState<number[]>(
-    new Array(layer).fill(0),
+    new Array(layer).fill(0)
   );
 
   useImperativeHandle(ref, () => {
@@ -89,7 +89,7 @@ const Content = forwardRef(function _Content(
       // 当前组件全部直接子按钮的高度和
       buttonHeight: buttonRefList.reduce((accumulator, currentValue) => {
         return accumulator + (currentValue.clientHeight ?? 0);
-      }, 0),
+      }, 0)
     };
   });
 
@@ -108,7 +108,7 @@ const Content = forwardRef(function _Content(
       buttonRefList[lastIndex].setSelectedStyle &&
       buttonRefList[lastIndex].setSelectedStyle({
         expand: true,
-        selected: false,
+        selected: false
       });
   }
 
@@ -136,7 +136,7 @@ const Content = forwardRef(function _Content(
                 onClick={({ setSelectedStyle }) => {
                   if (!pathList) {
                     throw new Error(
-                      'The value of PathList.Provider must be set.',
+                      'The value of PathList.Provider must be set.'
                     );
                   }
                   // 点击项 已被选中, 无子目录的
@@ -152,7 +152,7 @@ const Content = forwardRef(function _Content(
                     // 设置当前项 按钮样式->未展开, 已选中
                     setSelectedStyle({
                       expand: false,
-                      selected: true,
+                      selected: true
                     });
                     // 设置当前的选项 子内容->不可见
                     contentRefList[index] && contentRefList[index].inVisible();
@@ -164,7 +164,7 @@ const Content = forwardRef(function _Content(
                     if (layer !== 0) {
                       // 设置低于当前层级的路径信息->置空
                       pathList.current.forEach((_, i) =>
-                        i < layer ? (pathList.current[i] = null) : null,
+                        i < layer ? (pathList.current[i] = null) : null
                       );
                     }
                   }
@@ -198,7 +198,7 @@ const Content = forwardRef(function _Content(
                     // }
                     // 设置低于当前层级的路径信息->置空
                     pathList.current.forEach((_, i) =>
-                      i <= layer ? (pathList.current[i] = null) : null,
+                      i <= layer ? (pathList.current[i] = null) : null
                     );
                     // 设置当前层级的路径信息->当前组件的路径
                     pathList.current[layer] = content.path;
@@ -212,7 +212,7 @@ const Content = forwardRef(function _Content(
                   onChange({
                     content: _content,
                     path: pathList.current,
-                    component: <Components />,
+                    component: <Components />
                   });
                 }}
               />
@@ -226,9 +226,9 @@ const Content = forwardRef(function _Content(
                             (previousValue, currentValue) => {
                               return previousValue + currentValue;
                             },
-                            0,
+                            0
                           )
-                        : 0) + 'px',
+                        : 0) + 'px'
                   }}
                 >
                   {hasChildren ? (
@@ -262,10 +262,10 @@ const Content = forwardRef(function _Content(
                             createNewContent: () => ({
                               label: '子目录为空',
                               path: '/pageNotFound',
-                              component: null,
-                            }),
-                          },
-                        },
+                              component: null
+                            })
+                          }
+                        }
                       ]}
                       visible={childVisible}
                       layer={layer - 1}

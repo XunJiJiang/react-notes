@@ -23,37 +23,37 @@ function Pre({ className = '', children, ...props }: PreProps) {
       callback: () => {
         iRef.current?.style.setProperty('--icon-opacity', '0');
       },
-      delay: 0,
+      delay: 0
     })
     .addTask({
       callback: () => {
         iRef.current?.style.setProperty('--svg-opacity', '1');
       },
-      delay: 100,
+      delay: 100
     })
     .addTask({
       callback: () => {
         iRef.current?.style.setProperty('--circle-stroke-dashoffset', '0');
       },
-      delay: 300,
+      delay: 300
     })
     .addTask({
       callback: () => {
         iRef.current?.style.setProperty('--polyline-stroke-dashoffset', '0');
       },
-      delay: 300,
+      delay: 300
     })
     .addTask({
       callback: () => {
         iRef.current?.style.setProperty('--svg-opacity', '0');
       },
-      delay: 700,
+      delay: 700
     })
     .addTask({
       callback: () => {
         iRef.current?.style.setProperty('--icon-opacity', '1');
       },
-      delay: 300,
+      delay: 300
     })
     .addTask({
       callback: () => {
@@ -61,13 +61,13 @@ function Pre({ className = '', children, ...props }: PreProps) {
         iRef.current?.style.setProperty('--polyline-stroke-dashoffset', '11');
         iRef.current?.style.setProperty('--svg-transition', 'all 0s');
       },
-      delay: 600,
+      delay: 600
     })
     .addTask({
       callback: () => {
         iRef.current?.style.setProperty('--svg-transition', 'all 0.6s');
       },
-      delay: 10,
+      delay: 10
     });
 
   return (

@@ -49,10 +49,10 @@ const handleSubmit = useCallback(
   (orderDetails) => {
     post('/product/' + productId + '/buy', {
       referrer,
-      orderDetails,
+      orderDetails
     });
   },
-  [productId, referrer],
+  [productId, referrer]
 );
 ```
 
@@ -83,7 +83,7 @@ const handleAddTodo = useCallback(
     // 此时不依赖于外部todos
     // 不需要每次todos变化时返回新的函数
   },
-  /* [todos] → */ [],
+  /* [todos] → */ []
 );
 ```
 
@@ -137,7 +137,7 @@ function useRouter() {
     (url) => {
       dispatch({ type: 'navigate', url });
     },
-    [dispatch],
+    [dispatch]
   );
 
   const goBack = useCallback(() => {
@@ -146,7 +146,7 @@ function useRouter() {
 
   return {
     navigate,
-    goBack,
+    goBack
   };
 }
 ```

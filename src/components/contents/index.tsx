@@ -4,7 +4,7 @@ import type {
   _GetContentWidthFunc,
   ChangeEventMapType,
   On_ChangeFunc,
-  ContentsProps,
+  ContentsProps
 } from '@type/modules/comp-contents.d.ts';
 import type { PathListType } from '@type/modules/comp-contents-context-pathList.d.ts';
 
@@ -44,7 +44,7 @@ const getDeepestLayer: GetDeepestLayerFunc = (contents) => {
  */
 const getContentsWidthCache: GetContentsWidthCacheFunc = (
   contents,
-  widthCache,
+  widthCache
 ) => {
   if (widthCache.current !== null) return widthCache.current;
   const maxDeepestLayer = getDeepestLayer(contents);
@@ -55,7 +55,7 @@ const getContentsWidthCache: GetContentsWidthCacheFunc = (
       getStringWidth(content.label, {
         fontSize: 16,
         fontFamily: `Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑,
-      Arial, sans-serif`,
+      Arial, sans-serif`
       }) +
       16 + // + 右侧箭头的宽度
       26 + // + 按钮左右侧padding
@@ -77,7 +77,7 @@ const changeEventMap: ChangeEventMapType = {
   200: (e) => {
     return {
       ...e,
-      path: e.path.reduce((p, c) => (c ? c + p : p), '') || '/',
+      path: e.path.reduce((p, c) => (c ? c + p : p), '') || '/'
     };
   },
   404: (e) => {
@@ -85,25 +85,25 @@ const changeEventMap: ChangeEventMapType = {
       return {
         ...e,
         content: e.content._mark_.createNewContent(),
-        path: '/pageNotFound',
+        path: '/pageNotFound'
       };
     } else {
       return {
         ...e,
-        path: '/pageNotFound',
+        path: '/pageNotFound'
       };
     }
-  },
+  }
 };
 
 export default function Contents({
   title = '目录',
   contents = [],
   onChange = () => {},
-  onWidthLoad = () => {},
+  onWidthLoad = () => {}
 }: ContentsProps) {
   const pathList = useRef<PathListType>(
-    new Array(getDeepestLayer(contents)).fill(null),
+    new Array(getDeepestLayer(contents)).fill(null)
   );
 
   const widthCache = useRef(null);
@@ -122,7 +122,7 @@ export default function Contents({
     onChange(
       e.content._mark_
         ? changeEventMap[e.content._mark_.code](e)
-        : changeEventMap['200'](e),
+        : changeEventMap['200'](e)
     );
   };
 
@@ -130,7 +130,7 @@ export default function Contents({
     <div
       className="contents"
       style={{
-        width,
+        width
       }}
     >
       <h1>{title}</h1>

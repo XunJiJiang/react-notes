@@ -2,7 +2,7 @@ import type { PageTemplateProps } from '@type/modules/comp-page-template.d.ts';
 import type { ContentsINPageRef } from '@type/modules/comp-page-template-comp-contents.d.ts';
 import type {
   ContentsType,
-  MarkdownComponentRef,
+  MarkdownComponentRef
 } from '@type/modules/comp-markdown.d.ts';
 
 import './index.css';
@@ -14,7 +14,7 @@ const scrollEvent = 'scroll';
 
 export default function PageTemplate({
   children,
-  markdown = '> 没有 markdown 文本',
+  markdown = '> 没有 markdown 文本'
 }: PageTemplateProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
