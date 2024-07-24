@@ -15,7 +15,7 @@ li.content ul.content-children {
   margin: 0;
 }
 
-li.content button.content-button[isExpand='true'] + ul.content-children::after {
+/* li.content button.content-button[isExpand='true'] + ul.content-children::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -33,7 +33,7 @@ li.content button.content-button + ul.content-children::before {
   width: 2px;
   height: 2px;
   background-color: #00000022;
-}
+} */
 
 li.content li.content-li {
   padding: 0;
