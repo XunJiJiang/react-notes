@@ -9,6 +9,7 @@
   font-size: 12px;
   overflow-y: scroll;
   position: fixed;
+  z-index: 1;
 }
 
 .contents h1 {

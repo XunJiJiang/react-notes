@@ -4,20 +4,24 @@ import type {
 } from '@type/modules/comp-contents.d.ts';
 
 import './index.css';
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
+import { Outlet, useLoaderData, useNavigation } from 'react-router-dom';
+// import Transition from './transition/index.tsx';
 import contents from '../contents/index.tsx';
 import Contents from './contents/index.tsx';
-import Transition from './transition/index.tsx';
 
 export default function Components() {
   // 当前展示的组件
-  const [mainNode, setMainNode] = useState<null | React.JSX.Element>(null);
+  // const [mainNode, setMainNode] = useState<null | React.JSX.Element>(null);
 
   // 上一次点击的菜单上下文
   const lastContext = useRef<null | ChangeEventMapReturnContentType>(null);
 
-  // 展示组件的ref
-  const mainRef = useRef<null | HTMLDivElement>(null);
+  const contentsWidth = useRef(0);
+
+  const navigation = useNavigation();
+
+  useLoaderData();
 
   /**
    * 组件切换事件处理
@@ -27,7 +31,7 @@ export default function Components() {
    */
   function changeHandler(context: ChangeEventMapReturnType) {
     if (context.content === lastContext.current || !context.component) return;
-    setMainNode(context.component);
+    // setMainNode(context.component);
     lastContext.current = context.content;
   }
 
@@ -38,22 +42,27 @@ export default function Components() {
         contents={contents}
         onChange={changeHandler}
         onWidthLoad={(width) => {
-          if (mainRef.current) {
-            const widthNum = parseInt(width);
-            let _width = Math.min(widthNum, 1024);
-            _width = Math.max(widthNum, 256);
-            mainRef.current.style.setProperty(
-              '--leaveWidthBlank',
-              _width + 'px'
-            );
-          }
+          const widthNum = parseInt(width);
+          let _width = Math.min(widthNum, 1024);
+          _width = Math.max(widthNum, 256);
+          contentsWidth.current = _width;
         }}
       />
-      <Transition mode="out-in">
-        <div className="main" id="main-page" ref={mainRef}>
-          {mainNode}
-        </div>
-      </Transition>
+      {/* <Transition mode="out-in"> */}
+      <div
+        className={`main ${navigation.state === 'loading' ? 'main-loading' : ''}`}
+        id="main-page"
+        ref={(node) => {
+          node?.style.setProperty(
+            '--leaveWidthBlank',
+            contentsWidth.current + 'px'
+          );
+          return node;
+        }}
+      >
+        <Outlet />
+      </div>
+      {/* </Transition> */}
     </div>
   );
 }

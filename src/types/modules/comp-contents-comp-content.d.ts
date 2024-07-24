@@ -59,6 +59,7 @@ interface DeepHeightListType extends Array<number> {}
 interface ContentProps {
   contents: Array<ContentTypeExtendForChange>;
   visible: boolean;
+  fatherPath?: string;
   layer: number;
   onChange: (context: ContentChangeEventType) => void;
   changeFatherDeepList?: (childDeepList: DeepHeightListType) => void;

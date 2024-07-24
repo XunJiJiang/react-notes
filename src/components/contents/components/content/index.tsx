@@ -8,6 +8,7 @@ import type { ButtonRef } from '@type/modules/comp-contents-comp-button.d.ts';
 
 import './index.css';
 import { useState, useContext, forwardRef, useImperativeHandle } from 'react';
+import { Link } from 'react-router-dom';
 import PathList from '../../context/pathList';
 import Button from '../button/index.tsx';
 import NotFound from '@pages/404/index.tsx';
@@ -40,6 +41,7 @@ const findComponent: FindComponentFunc = (
 const Content = forwardRef(function _Content(
   {
     contents = [],
+    fatherPath = '',
     visible = false,
     layer,
     onChange,
@@ -122,100 +124,115 @@ const Content = forwardRef(function _Content(
           // 有子项本项的子项的可见状态(不表示是否选中)
           // 没有子项则表示本项的是否选中
           const childVisible = visibleList[index];
+          const _path = fatherPath + content.path.slice(1);
           return (
-              <Button
-                ref={(node) => {
-                  if (node) buttonRefList[index] = node;
             <li className={`content`} key={'' + content.label + index}>
+              <Link
+                to={_path}
+                tabIndex={-1}
+                style={{
+                  textDecoration: 'none',
+                  color: 'inherit'
                 }}
-                title={content.label ?? '该子目录不存在'}
-                tag={content.tag ?? null}
-                icon={content.icon ?? null}
-                isBranch={isBranch}
-                visible={visible}
-                onClick={({ setSelectedStyle }) => {
-                  if (!pathList) {
-                    throw new Error(
-                      'The value of PathList.Provider must be set.'
-                    );
-                  }
-                  // 点击项 已被选中, 无子目录的
-                  // 目的行为: 不做任何操作
-                  if (childVisible && !isBranch) {
-                    return;
-                  }
-                  // 已展开(上次展开项与点击项相同), 有子目录
-                  // 目的行为: 收回子目录
-                  if (childVisible && isBranch) {
-                    // 设置当前项 展开状态->false
-                    visibleList[index] = false;
-                    // 设置当前项 按钮样式->未展开, 已选中
-                    setSelectedStyle({
-                      expand: false,
-                      selected: true
-                    });
-                    // 设置当前的选项 子内容->不可见
-                    contentRefList[index] && contentRefList[index].inVisible();
-                    // 点击项子选项数量不为0
-                    if (contentRefList[index]) {
-                      // 修改当前深度的高度信息
-                      deepHeightList.forEach((_, i) => (deepHeightList[i] = 0));
-                    }
-                    if (layer !== 0) {
-                      // 设置低于当前层级的路径信息->置空
-                      pathList.current.forEach((_, i) =>
-                        i < layer ? (pathList.current[i] = null) : null
+              >
+                <Button
+                  ref={(node) => {
+                    if (node) buttonRefList[index] = node;
+                  }}
+                  title={content.label ?? '该子目录不存在'}
+                  tag={content.tag ?? null}
+                  icon={content.icon ?? null}
+                  isBranch={isBranch}
+                  visible={visible}
+                  onClick={({ setSelectedStyle }) => {
+                    if (!pathList) {
+                      throw new Error(
+                        'The value of PathList.Provider must be set.'
                       );
                     }
-                  }
-                  // 点击项 未被选中(有子目录且未展开)
-                  if (!childVisible) {
-                    if (lastIndex !== -1) {
-                      // 设置上次选中的选项 可见状态->false
-                      visibleList[lastIndex] = false;
-                      // 设置上次选中的选项 按钮样式->未选中(能则未展开)
-                      buttonRefList[lastIndex].setSelectedStyle(false);
-                      // 设置上次选中的选项 子内容->不可见
-                      contentRefList[lastIndex] &&
-                        contentRefList[lastIndex].inVisible();
+                    // 点击项 已被选中, 无子目录的
+                    // 目的行为: 不做任何操作
+                    if (childVisible && !isBranch) {
+                      return;
                     }
-                    contentRefList.forEach((item) => item && item.inVisible());
-                    setLastIndex(index);
-                    // 设置点击项 可见状态->true
-                    visibleList[index] = true;
-                    // 设置点击项 按钮样式->选中(能则展开)
-                    setSelectedStyle(true);
-                    // 点击项所处深度及其更深层的深度信息置零
-                    deepHeightList.forEach((_, i) => (deepHeightList[i] = 0));
-                    // 点击项有子选项
-                    if (contentRefList[index]) {
-                      // 当前层级的深度信息->当前组件的展开高度
-                      deepHeightList[layer - 1] =
-                        contentRefList[index].buttonHeight;
+                    // 已展开(上次展开项与点击项相同), 有子目录
+                    // 目的行为: 收回子目录
+                    if (childVisible && isBranch) {
+                      // 设置当前项 展开状态->false
+                      visibleList[index] = false;
+                      // 设置当前项 按钮样式->未展开, 已选中
+                      setSelectedStyle({
+                        expand: false,
+                        selected: true
+                      });
+                      // 设置当前的选项 子内容->不可见
+                      contentRefList[index] &&
+                        contentRefList[index].inVisible();
+                      // 点击项子选项数量不为0
+                      if (contentRefList[index]) {
+                        // 修改当前深度的高度信息
+                        deepHeightList.forEach(
+                          (_, i) => (deepHeightList[i] = 0)
+                        );
+                      }
+                      if (layer !== 0) {
+                        // 设置低于当前层级的路径信息->置空
+                        pathList.current.forEach((_, i) =>
+                          i < layer ? (pathList.current[i] = null) : null
+                        );
+                      }
                     }
-                    // 为任意层, 当前组件没有子选项
-                    // else if (!contentRefList[index]) {
-                    // }
-                    // 设置低于当前层级的路径信息->置空
-                    pathList.current.forEach((_, i) =>
-                      i <= layer ? (pathList.current[i] = null) : null
-                    );
-                    // 设置当前层级的路径信息->当前组件的路径
-                    pathList.current[layer] = content.path;
-                  }
-                  // 将当前的高度信息传递给父组件
-                  changeFatherDeepList([...deepHeightList]);
-                  setDeepHeightList([...deepHeightList]);
-                  setVisibleList([...visibleList]);
-                  // 获取当前选中项对应的page组件
-                  const [Components, _content] = findComponent(content);
-                  onChange({
-                    content: _content,
-                    path: pathList.current,
-                    component: <Components />
-                  });
-                }}
-              />
+                    // 点击项 未被选中(有子目录且未展开)
+                    if (!childVisible) {
+                      if (lastIndex !== -1) {
+                        // 设置上次选中的选项 可见状态->false
+                        visibleList[lastIndex] = false;
+                        // 设置上次选中的选项 按钮样式->未选中(能则未展开)
+                        buttonRefList[lastIndex].setSelectedStyle(false);
+                        // 设置上次选中的选项 子内容->不可见
+                        contentRefList[lastIndex] &&
+                          contentRefList[lastIndex].inVisible();
+                      }
+                      contentRefList.forEach(
+                        (item) => item && item.inVisible()
+                      );
+                      setLastIndex(index);
+                      // 设置点击项 可见状态->true
+                      visibleList[index] = true;
+                      // 设置点击项 按钮样式->选中(能则展开)
+                      setSelectedStyle(true);
+                      // 点击项所处深度及其更深层的深度信息置零
+                      deepHeightList.forEach((_, i) => (deepHeightList[i] = 0));
+                      // 点击项有子选项
+                      if (contentRefList[index]) {
+                        // 当前层级的深度信息->当前组件的展开高度
+                        deepHeightList[layer - 1] =
+                          contentRefList[index].buttonHeight;
+                      }
+                      // 为任意层, 当前组件没有子选项
+                      // else if (!contentRefList[index]) {
+                      // }
+                      // 设置低于当前层级的路径信息->置空
+                      pathList.current.forEach((_, i) =>
+                        i <= layer ? (pathList.current[i] = null) : null
+                      );
+                      // 设置当前层级的路径信息->当前组件的路径
+                      pathList.current[layer] = content.path;
+                    }
+                    // 将当前的高度信息传递给父组件
+                    changeFatherDeepList([...deepHeightList]);
+                    setDeepHeightList([...deepHeightList]);
+                    setVisibleList([...visibleList]);
+                    // 获取当前选中项对应的page组件
+                    const [Components, _content] = findComponent(content);
+                    onChange({
+                      content: _content,
+                      path: pathList.current,
+                      component: <Components />
+                    });
+                  }}
+                />
+              </Link>
               {isBranch && (
                 <ul
                   className="content-children"
@@ -241,6 +258,7 @@ const Content = forwardRef(function _Content(
                       }
                       visible={childVisible}
                       layer={layer - 1}
+                      fatherPath={_path + '/'}
                       onChange={onChange}
                       changeFatherDeepList={_changeFatherDeepList}
                     />
@@ -269,6 +287,7 @@ const Content = forwardRef(function _Content(
                       ]}
                       visible={childVisible}
                       layer={layer - 1}
+                      fatherPath={_path + '/'}
                       onChange={onChange}
                       changeFatherDeepList={_changeFatherDeepList}
                     />

@@ -6,8 +6,17 @@
 }
 
 .body .main {
+  transition: opacity .2s;
   width: calc(100% - var(--leaveWidthBlank));
   box-sizing: content-box;
   position: relative;
   margin-left: var(--leaveWidthBlank);
+  background-color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.body .main.main-loading {
+  opacity: 0;
 }

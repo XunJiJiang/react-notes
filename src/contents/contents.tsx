@@ -11,5 +11,5 @@ export {
   CompUse2,
   CompUseCallback3,
   CompUseDebugValue4,
-  CompRouter5,
+  CompRouter5
 };

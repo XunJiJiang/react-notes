@@ -58,8 +58,7 @@ const contents = [
                   '/pages/study/reference/react/Hook/useCallback/index.tsx',
                 icon: null,
                 tag: null,
-                component: () => <CompUseCallback3 />,
-                children: [{}, {}]
+                component: () => <CompUseCallback3 />
               },
               {
                 label: 'useDebugValue',

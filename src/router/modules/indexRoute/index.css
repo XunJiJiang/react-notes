@@ -1,0 +1,18 @@
+#zero-state {
+  height: 100VH;
+  width: 100%;
+  position: relative;
+}
+
+#zero-state p {
+  position: relative;
+  top: 30%;
+  transform: translate(0, -50%);
+  text-align: center;
+  color: #7c7c7c;
+  line-height: 26px;
+}
+
+#zero-state p a {
+  color: inherit
+}

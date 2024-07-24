@@ -48,6 +48,7 @@ export default function APopover({
       ref={aRef}
       className={`${className} a-link`}
       {...props}
+      href={href}
       onMouseEnter={() => {
         if (!popoverRef.current) return;
         clearTimeout(timeout.current);
