@@ -1,28 +1,26 @@
 import type { ContentsType } from '@type/modules/contents.d.ts';
-
-import { createBrowserRouter } from 'react-router-dom';
+import { type RouteObject, createBrowserRouter } from 'react-router-dom';
 import Root from '@/App.tsx';
 import ErrorPage from './error/error-page.tsx';
 import Index from './modules/indexRoute/index.tsx';
 import contents from '@/contents/index.tsx';
 
-type flattenReturn = {
-  path: string;
-  element?: JSX.Element;
-  errorElement?: JSX.Element;
-  loader?: () => Promise<unknown>;
-}[];
+type flattenReturns = RouteObject[];
 
-function flattening(contents: ContentsType, basePath = ''): flattenReturn {
-  const _contents: flattenReturn = [];
+function flattening(contents: ContentsType, basePath = ''): flattenReturns {
+  const _contents: flattenReturns = [];
 
   contents.forEach((item) => {
     const _item = {
       path: basePath ? basePath + '/' + item.path.slice(1) : item.path.slice(1),
-      element: item.component?.(),
-      // errorElement: <ErrorPage />
+      element: item.component ? (
+        item.component()
+      ) : (
+        <h1>{item.label} 目录下没有可用的组件</h1>
+      ),
+      // errorElement: <ErrorPage />,
       loader: () => {
-        return new Promise((res) => setTimeout(() => res(null), 300));
+        return new Promise((res) => setTimeout(() => res(null), 0));
       }
     };
     _contents.push(_item);

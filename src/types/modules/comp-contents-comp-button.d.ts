@@ -1,5 +1,4 @@
 import type { ElementTypeFunc } from '@type/utils/modules/Element';
-import React from 'react';
 
 interface SetSelectedStyleFunc {
   (isSelected: boolean | { expand: boolean; selected: boolean }): void;
@@ -12,9 +11,9 @@ interface ButtonProps {
   isBranch: boolean;
   visible: boolean;
   state?: {
-    isExpand: boolean,
-    isSelected: boolean
-  }
+    isExpand: boolean;
+    isSelected: boolean;
+  };
   onClick?: (event: Mouse) => void;
 }
 
