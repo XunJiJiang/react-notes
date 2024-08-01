@@ -55,7 +55,6 @@ interface ChangeEventMapReturnType extends ContentChangeEventType {
     children?: ContentsType;
     component: ElementTypeFunc | null;
   };
-  component: React.JSX.Element | JSX.Element;
 }
 
 interface ChangeEventMapType {
@@ -73,6 +72,7 @@ interface OnChangeFunc {
 interface ContentsProps {
   title: string;
   contents: ContentsType;
+  path?: string;
   onChange: OnChangeFunc;
   onWidthLoad: (width: `${number}px`) => void;
 }

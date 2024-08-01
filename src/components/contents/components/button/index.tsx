@@ -1,12 +1,11 @@
 import type {
   SetSelectedStyleFunc,
   ButtonProps,
-  ButtonRef,
-  ButtonEventTarget
+  ButtonRef
 } from '@type/modules/comp-contents-comp-button';
 
 import './index.css';
-import { useRef, forwardRef, useImperativeHandle } from 'react';
+import { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import Icon from '@components/icon/index';
 
 const Button = forwardRef(function Button(
@@ -16,7 +15,10 @@ const Button = forwardRef(function Button(
     icon,
     isBranch = false,
     visible = false,
-    onClick = () => {}
+    state = {
+      isExpand: false,
+      isSelected: false
+    }
   }: ButtonProps,
   ref: React.ForwardedRef<ButtonRef>
 ) {
@@ -51,6 +53,11 @@ const Button = forwardRef(function Button(
     return null;
   })();
 
+  useEffect(() => {
+    buttonRef.current?.setAttribute('isExpand', `${state.isExpand}`);
+    buttonRef.current?.setAttribute('isSelected', `${state.isSelected}`);
+  });
+
   /**
    * 修改按钮样式
    */
@@ -62,8 +69,14 @@ const Button = forwardRef(function Button(
 
     if (typeof isSelected === 'object' && buttonRef.current) {
       const _isSelected = {
-        expand: isSelected.expand ?? false,
-        selected: isSelected.selected ?? false
+        expand:
+          isSelected.expand ??
+          buttonRef.current.getAttribute('isExpand') ??
+          false,
+        selected:
+          isSelected.selected ??
+          buttonRef.current.getAttribute('isSelected') ??
+          false
       };
 
       buttonRef.current.setAttribute('isExpand', `${_isSelected.expand}`);
@@ -83,14 +96,6 @@ const Button = forwardRef(function Button(
       ref={buttonRef}
       className={`content-button ${isBranch ? 'bold-button' : ''}`}
       tabIndex={visible ? 0 : -1}
-      onClick={(e) => {
-        const event: ButtonEventTarget = {
-          ...e,
-          setSelectedStyle
-        };
-        event.setSelectedStyle = setSelectedStyle;
-        onClick(event);
-      }}
     >
       {icon && (
         <>
@@ -100,6 +105,7 @@ const Button = forwardRef(function Button(
       )}
       <span className="contents-button-main">
         {title}
+        <wbr />
         {_tag}
       </span>
       {isBranch && <Icon name="right" className="contents-button-right-icon" />}

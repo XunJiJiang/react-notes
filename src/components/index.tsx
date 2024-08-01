@@ -5,7 +5,7 @@ import type {
 
 import './index.css';
 import { useRef } from 'react';
-import { Outlet, useLoaderData, useNavigation } from 'react-router-dom';
+import { Outlet, useNavigation, useLocation } from 'react-router-dom';
 // import Transition from './transition/index.tsx';
 import contents from '../contents/index.tsx';
 import Contents from './contents/index.tsx';
@@ -21,7 +21,7 @@ export default function Components() {
 
   const navigation = useNavigation();
 
-  useLoaderData();
+  const location = useLocation();
 
   /**
    * 组件切换事件处理
@@ -30,7 +30,7 @@ export default function Components() {
    * @param {React.JSX.Element} context.component 当前展示的组件
    */
   function changeHandler(context: ChangeEventMapReturnType) {
-    if (context.content === lastContext.current || !context.component) return;
+    if (context.content === lastContext.current) return;
     // setMainNode(context.component);
     lastContext.current = context.content;
   }
@@ -38,9 +38,10 @@ export default function Components() {
   return (
     <div className="body">
       <Contents
-        title="React"
+        title="React 笔记"
         contents={contents}
         onChange={changeHandler}
+        path={location.pathname}
         onWidthLoad={(width) => {
           const widthNum = parseInt(width);
           let _width = Math.min(widthNum, 1024);

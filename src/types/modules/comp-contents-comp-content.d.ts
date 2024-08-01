@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ContentType } from './contents.d.ts';
 import type { ElementTypeFunc } from '@type/utils/modules/Element.js';
 
@@ -31,20 +30,6 @@ interface ContentTypeExtendForChange extends ContentTypeExtend {
 interface ContentChangeEventType {
   content: ContentTypeExtendForChange;
   path: ContentChangePathType;
-  component: React.JSX.Element;
-}
-
-/**
- * 寻找组件
- * 返回最上级存在的最近的组件类型
- */
-interface FindComponentFunc {
-  (
-    content: ContentTypeExtendForChange
-  ): [
-    (props: React.ComponentProps<T>) => React.JSX.Element | JSX.Element,
-    ContentTypeExtendForChange
-  ];
 }
 
 /**
@@ -61,15 +46,14 @@ interface ContentProps {
   visible: boolean;
   fatherPath?: string;
   layer: number;
+  path?: string[];
   onChange: (context: ContentChangeEventType) => void;
-  changeFatherDeepList?: (childDeepList: DeepHeightListType) => void;
 }
 
 /**
  * Content组件ref类型
  */
 interface ContentRef {
-  inVisible: () => void;
   buttonHeight: number;
 }
 
@@ -78,7 +62,6 @@ export type {
   ContentTypeExtendForChange,
   ContentChangeEventType,
   ContentTypeExtend,
-  FindComponentFunc,
   ContentProps,
   ContentRef
 };

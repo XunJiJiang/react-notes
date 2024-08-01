@@ -6,7 +6,6 @@ import type {
   On_ChangeFunc,
   ContentsProps
 } from '@type/modules/comp-contents.d.ts';
-import type { PathListType } from '@type/modules/comp-contents-context-pathList.d.ts';
 
 import './index.css';
 import { useRef } from 'react';
@@ -99,6 +98,7 @@ const changeEventMap: ChangeEventMapType = {
 export default function Contents({
   title = '目录',
   contents = [],
+  path = '',
   onChange = () => {},
   onWidthLoad = () => {}
 }: ContentsProps) {
@@ -136,10 +136,11 @@ export default function Contents({
       <h1>{title}</h1>
       <nav className="contents-body">
         <ul className="contents-body">
-          <PathList.Provider value={pathList}>
+          <PathList.Provider value={path.split('/').slice(1)}>
             <Content
               contents={contents}
               visible={true}
+              path={path.split('/').slice(1)}
               layer={getDeepestLayer(contents) - 1}
               onChange={_changeHandler}
             />

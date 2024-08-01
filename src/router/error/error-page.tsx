@@ -6,8 +6,6 @@ export default function ErrorPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(location.pathname, useRouteError());
-
   useEffect(() => {
     if (location.pathname !== '/error') navigate('/error');
   });
