@@ -134,7 +134,7 @@ async function createConfig (title, notePath, type = 'note') {
   const config = {
     label,
     path: '/' + relativePath,
-    entryFilePath: `/pages/study${(notePath.replace(/\\/g, '/').split('/src/pages/study')[1] || '')}/index.tsx`,
+    entryFilePath: component ? `/pages/study${(notePath.replace(/\\/g, '/').split('/src/pages/study')[1] || '')}/index.tsx` : '',
     icon: icon.trim() === '' ? null : icon,
     tag: tagType ? {
       type: tagType,

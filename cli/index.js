@@ -14,6 +14,8 @@ const __dirname = get__dirname();
 
 csl.title('Create Note');
 
+const rootPageDirectoryPath = path.resolve(__dirname, './src/pages/study');
+
 /** 创建和处理选择文件夹的选项 */
 async function logSelect (message, directoryPath = './src/pages/study') {
 
@@ -71,7 +73,7 @@ async function logSelect (message, directoryPath = './src/pages/study') {
     }
   } else if (answer === '退出') {
     csl.color('期待与您的再次相遇');
-    await updateContents(studyPath);
+    await updateContents(rootPageDirectoryPath);
     execSync(`npx prettier --write ${path.resolve(__dirname, './src/contents/index.tsx')}`);
     return;
   } else if (answer === '返回上一级') {
