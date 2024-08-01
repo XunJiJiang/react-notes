@@ -8,6 +8,7 @@ import type {
 import './index.css';
 import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useForceReRendering } from '@utils/index.ts';
 
 function createHref(label: ContentLabelType): string {
   if (typeof label === 'string') {
@@ -35,6 +36,8 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
 
   const deHash = decodeURI(hash);
 
+  const forceReRendering = useForceReRendering();
+
   useEffect(() => {
     const content = contents.find((v) => v.hash === deHash);
     if (!content) return;
@@ -45,7 +48,7 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
     } else {
       console.warn('目录项对应的节点不存在');
     }
-  }, [deHash, contents]);
+  }, [deHash, contents, forceReRendering.value]);
 
   const ulRef = useRef<HTMLUListElement>(null);
 
@@ -111,6 +114,7 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
                 <Link
                   to={`#${createHref(content.label)}`}
                   className={`contents-in-page-item contents-in-page-item-${content.level}`}
+                  onClick={forceReRendering}
                 >
                   {content.label}
                 </Link>

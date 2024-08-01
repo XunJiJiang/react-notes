@@ -6,6 +6,7 @@ import type { ContentType } from '@type/modules/comp-markdown.d.ts';
 
 import './index.css';
 import { useId } from 'react';
+import { Link } from 'react-router-dom';
 import { createId, flatChild } from '../../utils/index.ts';
 
 export function H1({
@@ -32,12 +33,12 @@ export function H1({
       id={content.id}
       className={`markdown-title markdown-h1 ${className ?? ''}`}
     >
-      <a
+      <Link
         className={`markdown-title-a markdown-title-a-1`}
-        href={encodeURI(content.hash)}
+        to={encodeURI(content.hash)}
       >
         #
-      </a>
+      </Link>
       {children}
     </h1>
   );
@@ -67,12 +68,12 @@ export function H2({
       id={content.id}
       className={`markdown-title markdown-h2 ${className ?? ''}`}
     >
-      <a
+      <Link
         className={`markdown-title-a markdown-title-a-2`}
-        href={encodeURI(content.hash)}
+        to={encodeURI(content.hash)}
       >
         #
-      </a>
+      </Link>
       {children}
     </h2>
   );
@@ -102,12 +103,12 @@ export function H3({
       id={content.id}
       className={`markdown-title markdown-h3 ${className ?? ''}`}
     >
-      <a
+      <Link
         className={`markdown-title-a markdown-title-a-3`}
-        href={encodeURI(content.hash)}
+        to={encodeURI(content.hash)}
       >
         #
-      </a>
+      </Link>
       {children}
     </h3>
   );
