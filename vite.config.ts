@@ -3,22 +3,22 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 // import fs from 'fs';
 
-function imgPath() {
-  return {
-    name: 'img-path',
-    transform(src: string, id: string) {
-      if (
-        id.endsWith('.png') ||
-        id.endsWith('.jpg') ||
-        id.endsWith('.jpeg') ||
-        id.endsWith('.gif')
-      ) {
-        return;
-      }
-      return;
-    }
-  };
-}
+// function imgPath() {
+//   return {
+//     name: 'img-path',
+//     transform(src: string, id: string) {
+//       if (
+//         id.endsWith('.png') ||
+//         id.endsWith('.jpg') ||
+//         id.endsWith('.jpeg') ||
+//         id.endsWith('.gif')
+//       ) {
+//         return;
+//       }
+//       return;
+//     }
+//   };
+// }
 
 // function markdownRaw() {
 //   return {
@@ -44,12 +44,15 @@ const alias = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), imgPath()],
+  plugins: [react()],
   resolve: {
     alias
   },
   server: {
     port: 3000
+  },
+  build: {
+    assetsInlineLimit: 0
   },
   // Github Pages
   base: '/reactnotes/'
