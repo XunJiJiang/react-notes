@@ -7,3 +7,5 @@ export { default as deepCopy } from './modules/deepCopy.ts';
 export { default as markdownImgPathFormatting } from './modules/markdownImgPathFormatting.ts';
 
 export { default as TimeoutTaskQueue } from './modules/timeoutTaskQueue.ts';
+
+export { default as debounce } from './modules/debounce.ts';
