@@ -9,8 +9,8 @@
   margin: 0;
   padding: 1px 16px 1px 20px;
   font-size: 14px;
-  border-radius: 0 0.75rem 0.75rem 0;
-  /* transition: background-color 0.15s; */
+  /* border-radius: 0 0.75rem 0.75rem 0; */
+  transition: background-color 0.2s;
   text-align: left;
   line-height: 32px;
   display: flex;

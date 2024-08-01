@@ -9,6 +9,7 @@ import './index.css';
 import { useRef, useState } from 'react';
 import MarkdownComponent from '../markdown/index.tsx';
 import Contents from './components/contents/index.tsx';
+import { debounce } from '@/utils/index.ts';
 
 const scrollEvent = /* 'onscrollend' in window ? 'scrollend' : */ 'scroll';
 
@@ -35,18 +36,15 @@ export default function PageTemplate({
       const viewHeight = window.innerHeight;
       const inView: ContentsType = [];
       for (let i = markdownContents.length - 1; i >= 0; i--) {
+        if (!scrollRef.current) return;
         const content = markdownContents[i];
         if (
-          scrollRef.current &&
           content.offsetTop <= scrollRef.current.scrollTop + viewHeight / 2 &&
           content.offsetTop >= scrollRef.current.scrollTop - 16
         ) {
           inView.push(content);
         }
-        if (
-          scrollRef.current &&
-          content.offsetTop < scrollRef.current.scrollTop - 16
-        ) {
+        if (content.offsetTop < scrollRef.current.scrollTop - 16) {
           if (inView.length === 0) {
             markdownContentsRef.current.changeLocation(content);
           } else {
@@ -56,6 +54,8 @@ export default function PageTemplate({
             }
           }
           break;
+        } else {
+          markdownContentsRef.current.changeLocation(content);
         }
       }
     }
@@ -72,11 +72,11 @@ export default function PageTemplate({
         }
         scrollRef.current = node;
       }}
-      className="page-template-box"
-      id="page-template-box"
+      className="page-box"
+      id="page-box"
     >
-      <div className="page-template">
-        <div className="page-template-markdown">
+      <div className="page">
+        <div className="page-markdown">
           <MarkdownComponent
             ref={(node) => {
               if (
@@ -91,9 +91,9 @@ export default function PageTemplate({
             markdown={markdown}
           />
         </div>
-        {children && <div className="page-template-render">{children}</div>}
+        {children && <div className="page-render">{children}</div>}
         {markdownContents.filter((c) => c.level !== 1).length > 0 && (
-          <div className="page-template-contents">
+          <div className="page-contents">
             <Contents ref={markdownContentsRef} contents={markdownContents} />
           </div>
         )}

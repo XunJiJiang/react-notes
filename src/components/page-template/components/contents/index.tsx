@@ -64,10 +64,18 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
     }
 
     const index = contents
-      .filter((item) => item.level !== 1)
+      .filter((item) => {
+        return item.level !== 1;
+      })
       .findIndex((item) => {
         return item.label === content.label;
       });
+    if (index === -1) {
+      ulRef.current?.classList.add('contents-in-page-hidden');
+      ulRef.current?.style.setProperty('--side-indicates', '0');
+      return;
+    }
+
     ulRef.current?.classList.remove('contents-in-page-hidden');
     ulRef.current?.style.setProperty('--side-indicates', index + '');
     const liNode =
