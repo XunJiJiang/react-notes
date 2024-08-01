@@ -10,7 +10,7 @@ import { useRef, useState } from 'react';
 import MarkdownComponent from '../markdown/index.tsx';
 import Contents from './components/contents/index.tsx';
 
-const scrollEvent = 'scroll';
+const scrollEvent = 'onscrollend' in window ? 'scrollend' : 'scroll';
 
 export default function PageTemplate({
   children,
