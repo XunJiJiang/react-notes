@@ -10,7 +10,7 @@ import { useRef, useState } from 'react';
 import MarkdownComponent from '../markdown/index.tsx';
 import Contents from './components/contents/index.tsx';
 
-const scrollEvent = 'onscrollend' in window ? 'scrollend' : 'scroll';
+const scrollEvent = /* 'onscrollend' in window ? 'scrollend' : */ 'scroll';
 
 export default function PageTemplate({
   children,
@@ -61,12 +61,14 @@ export default function PageTemplate({
     }
   }
 
+  const scrollHandlerDebounce = debounce(scrollHandler, 100);
+
   return (
     <div
       ref={(node) => {
         if (node) {
-          node.removeEventListener(scrollEvent, scrollHandler);
-          node.addEventListener(scrollEvent, scrollHandler);
+          node.removeEventListener(scrollEvent, scrollHandlerDebounce);
+          node.addEventListener(scrollEvent, scrollHandlerDebounce);
         }
         scrollRef.current = node;
       }}
