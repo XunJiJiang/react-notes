@@ -239,7 +239,7 @@ function _generateContentsImportFile (componentPathList) {
     return `  ${key},`;
   }).join('\n');
 
-  const contentsImportText = `${contentsImport}\n\nexport {\n${contentsExport}\n};`;
+  const contentsImportText = `${contentsImport}\n\nexport {\n${contentsExport.slice(0, contentsExport.length - 1)}\n};\n`;
 
   fs.writeFileSync(CONTENTS_IMPORT_FILE_PATH, contentsImportText);
 }
