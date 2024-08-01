@@ -44,9 +44,7 @@ export default function Components() {
         path={location.pathname}
         onWidthLoad={(width) => {
           const widthNum = parseInt(width);
-          let _width = Math.min(widthNum, 1024);
-          _width = Math.max(widthNum, 256);
-          contentsWidth.current = _width;
+          contentsWidth.current = widthNum;
         }}
       />
       {/* <Transition mode="out-in"> */}

@@ -57,7 +57,7 @@ const getContentsWidthCache: GetContentsWidthCacheFunc = (
       Arial, sans-serif`
       }) +
       16 + // + 右侧箭头的宽度
-      26 + // + 按钮左右侧padding
+      36 + // + 按钮左右侧padding
       (content.icon ? 30 : 0) + // + 图标宽度
       28; // + 预留冗余
     if (_stringWidth > maxStringWidth) {
@@ -68,6 +68,8 @@ const getContentsWidthCache: GetContentsWidthCacheFunc = (
     }
   };
   contents.forEach(_getContentWidth);
+  maxStringWidth = Math.min(maxStringWidth, 1024);
+  maxStringWidth = Math.max(maxStringWidth, 100);
   widthCache.current = `${maxStringWidth}px`;
   return widthCache.current;
 };
@@ -102,19 +104,15 @@ export default function Contents({
   onChange = () => {},
   onWidthLoad = () => {}
 }: ContentsProps) {
-  const pathList = useRef<PathListType>(
-    new Array(getDeepestLayer(contents)).fill(null)
-  );
-
   const widthCache = useRef(null);
 
   /** 目录的宽度 */
   const width = getContentsWidthCache(contents, widthCache);
 
-  (() => {
-    // 每深一层, 增加28px
-    return 150 + 44 + 28 * getDeepestLayer(contents) - 1 + 'px';
-  })();
+  // (() => {
+  //   // 每深一层, 增加28px
+  //   return 150 + 44 + /* 28 * getDeepestLayer(contents) */ - 1 + 'px';
+  // })();
 
   onWidthLoad(width);
 
