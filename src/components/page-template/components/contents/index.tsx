@@ -7,6 +7,7 @@ import type {
 
 import './index.css';
 import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 function createHref(label: ContentLabelType): string {
   if (typeof label === 'string') {
@@ -30,13 +31,45 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
   { contents }: ContentsINPageProps,
   ref: React.ForwardedRef<ContentsINPageRef>
 ) {
-  const ulRef = useRef(null);
+  const { hash = '' } = useLocation();
+
+  const deHash = decodeURI(hash);
+
+  useEffect(() => {
+    const content = contents.find((v) => v.hash === deHash);
+    if (!content) return;
+    const id = content.id;
+    const node = content.node;
+    if (id && node) {
+      node.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      console.warn('目录项对应的节点不存在');
+    }
+  }, [deHash, contents]);
+
+  const ulRef = useRef<HTMLUListElement>(null);
 
   const liList = useRef<HTMLElement[]>([]);
 
   const lastFocusLi = useRef<HTMLElement | null>(null);
 
   const changeLocation: ChangeLocationFunc = (content) => {
+    if (!content || content.level === 1) {
+      ulRef.current?.classList.add('contents-in-page-hidden');
+      ulRef.current?.style.setProperty('--side-indicates', '0');
+      lastFocusLi.current &&
+        lastFocusLi.current.setAttribute('data-active', `${false}`);
+      lastFocusLi.current = null;
+      return;
+    }
+
+    const index = contents
+      .filter((item) => item.level !== 1)
+      .findIndex((item) => {
+        return item.label === content.label;
+      });
+    ulRef.current?.classList.remove('contents-in-page-hidden');
+    ulRef.current?.style.setProperty('--side-indicates', index + '');
     const liNode =
       document.getElementById(`contents-in-page-${content.id}`) ?? content.node;
     lastFocusLi.current &&
@@ -45,21 +78,14 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
     lastFocusLi.current = liNode;
   };
 
-  useEffect(() => {
-    const viewHeight = window.innerHeight;
-    if (liList.current[0] && contents[0].offsetTop <= viewHeight / 2) {
-      liList.current[0].setAttribute('data-active', `${true}`);
-    }
-  });
-
   useImperativeHandle(ref, () => ({
     changeLocation
   }));
 
   return (
     <nav className="contents-in-page">
-      <span className="contents-in-page-title">目录</span>
-      <ul ref={ulRef}>
+      <span className="contents-in-page-title">此页内</span>
+      <ul ref={ulRef} className={'contents-in-page-hidden'}>
         {contents
           .filter((content) => {
             return content.level !== 1;
@@ -73,22 +99,13 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
                   node && liList.current.push(node);
                 }}
                 key={index}
-                onClick={() => {
-                  const id = content.id;
-                  const node = content.node;
-                  if (id && node) {
-                    node.scrollIntoView({ behavior: 'smooth' });
-                  } else {
-                    console.warn('目录项对应的节点不存在');
-                  }
-                }}
               >
-                <a
-                  href={`#${createHref(content.label)}`}
+                <Link
+                  to={`#${createHref(content.label)}`}
                   className={`contents-in-page-item contents-in-page-item-${content.level}`}
                 >
                   {content.label}
-                </a>
+                </Link>
               </li>
             );
           })}

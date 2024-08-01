@@ -11,7 +11,11 @@ interface ButtonProps {
   icon?: string | null;
   isBranch: boolean;
   visible: boolean;
-  onClick: (event: ButtonEventTarget) => void;
+  state?: {
+    isExpand: boolean,
+    isSelected: boolean
+  }
+  onClick?: (event: Mouse) => void;
 }
 
 interface ButtonRef {
@@ -19,9 +23,4 @@ interface ButtonRef {
   clientHeight: number | null;
 }
 
-interface ButtonEventTarget
-  extends React.MouseEvent<HTMLButtonElement, MouseEvent> {
-  setSelectedStyle: SetSelectedStyleFunc;
-}
-
-export type { SetSelectedStyleFunc, ButtonProps, ButtonRef, ButtonEventTarget };
+export type { SetSelectedStyleFunc, ButtonProps, ButtonRef };
