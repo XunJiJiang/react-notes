@@ -6,6 +6,7 @@ type ContentLabelType = React.ReactNode | Array<React.ReactNode>;
 interface ContentType {
   id: string;
   label: ContentLabelType;
+  hash: string;
   level: number;
   node: HTMLElement;
   offsetTop: number;
