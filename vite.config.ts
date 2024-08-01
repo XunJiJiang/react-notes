@@ -50,7 +50,9 @@ export default defineConfig({
   },
   server: {
     port: 3000
-  }
+  },
+  // Github Pages
+  base: '/reactnotes/'
 });
 
 export const viteConfig = {

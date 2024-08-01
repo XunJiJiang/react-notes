@@ -32,17 +32,22 @@ function flattening(contents: ContentsType, basePath = ''): flattenReturns {
   return _contents;
 }
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      children: [
+        { index: true, element: <Index /> },
+        { path: 'error', element: <ErrorPage /> },
+        ...flattening(contents)
+      ]
+    }
+  ],
   {
-    path: '/',
-    element: <Root />,
-    errorElement: <ErrorPage />,
-    children: [
-      { index: true, element: <Index /> },
-      { path: 'error', element: <ErrorPage /> },
-      ...flattening(contents)
-    ]
+    basename: '/reactnotes/'
   }
-]);
+);
 
 export default router;
