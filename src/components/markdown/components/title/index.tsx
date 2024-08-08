@@ -28,6 +28,7 @@ export function H1({
       ref={(node) => {
         if (!node) return;
         content.node = node;
+        content.id = node.id;
         setContents(content as ContentType);
       }}
       id={content.id}
@@ -63,6 +64,7 @@ export function H2({
       ref={(node) => {
         if (!node) return;
         content.node = node;
+        content.id = node.id;
         setContents(content as ContentType);
       }}
       id={content.id}
@@ -98,6 +100,7 @@ export function H3({
       ref={(node) => {
         if (!node) return;
         content.node = node;
+        content.id = node.id;
         setContents(content as ContentType);
       }}
       id={content.id}
