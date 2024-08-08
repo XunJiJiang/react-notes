@@ -19,13 +19,17 @@
   color: #a3a3a388;
   background-color: #00000000;
   padding: 2px 6px 4px 6px;
-  border-radius: 5px 10px 5px 10px;
+  /* border-radius: 5px 10px 5px 10px; */
+  border-radius: 5px;
   font-style: normal;
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   font-size: 14px;
+  -webkit-user-select: none;
   user-select: none;
   cursor: pointer;
   transition: color 0.3s;
+  border: 0;
+  /* outline: none; */
   /* z-index: 1; */
 }
 
@@ -99,6 +103,7 @@
   right: 5px;
   color: #a3a3a388;
   transition: all 0.3s;
+  /* -webkit-user-select: none; */
   /* user-select: none; */
   z-index: 1;
 }

@@ -14,5 +14,6 @@
 }
 
 #zero-state p a {
-  color: inherit
+  color: inherit;
+  text-decoration: underline;
 }

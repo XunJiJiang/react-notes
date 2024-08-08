@@ -94,6 +94,7 @@ const Button = forwardRef(function Button(
   return (
     <button
       ref={buttonRef}
+      title={title}
       className={`content-button ${isBranch ? 'bold-button' : ''}`}
       tabIndex={visible ? 0 : -1}
     >

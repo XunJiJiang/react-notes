@@ -1,5 +1,11 @@
+.contents-box {
+  position: fixed;
+  z-index: 1;
+  transition: all .2s;
+}
+
 .contents {
-  width: 250px;
+  max-width: 250px;
   height: 100vh;
   color: #000000;
   justify-content: left;
@@ -8,8 +14,6 @@
   padding: 20px 12px 0 0;
   font-size: 12px;
   overflow-y: scroll;
-  position: fixed;
-  z-index: 1;
 }
 
 .contents h1 {

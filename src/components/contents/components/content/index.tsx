@@ -101,7 +101,7 @@ const Content = forwardRef(function _Content(
           const childVisible = visibleIndex.current === index;
           const _path = fatherPath + content.path.slice(1);
           return (
-            <li className={`content`} key={'' + content.label + index}>
+            <li className={`menu-content`} key={'' + content.label + index}>
               <Link
                 to={_path}
                 tabIndex={-1}
@@ -137,7 +137,7 @@ const Content = forwardRef(function _Content(
                     if (!node) return;
                     ulRefList.current[index] = node;
                   }}
-                  className="content-children"
+                  className="menu-content-children"
                   style={{
                     height: childVisible ? 'auto' : '0'
                   }}

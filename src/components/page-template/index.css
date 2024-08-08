@@ -9,23 +9,37 @@
 }
 
 .page-box .page {
-  display: flex;
+  --right-aside-width: 224px;
   position: relative;
   width: 100%;
-  padding: 32px 32px 0;
+  padding: 32px 32px 128px;
   box-sizing: border-box;
 }
 
 .page-box .page .page-markdown {
-  flex: 1;
+  display: flex;
   padding: 0 32px;
-  max-width: 800px;
+  padding-right: calc(var(--right-aside-width) + 32px);
+  max-width: 1000px;
+  min-width: 600px;
+  width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
-.page-box .page .page-render {
+.page-box .page .page-markdown .page-render {
   flex: 1;
   padding: 0 20px;
+}
+
+.page-box .page .page-footer {
+  margin: 64px auto 0 auto;
+  padding: 0 32px;
+  padding-right: calc(var(--right-aside-width) + 32px);
+  max-width: 1000px;
+  min-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .page-box .page .page-contents {

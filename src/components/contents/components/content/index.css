@@ -1,4 +1,4 @@
-li.content {
+li.menu-content {
   width: 100%;
   box-sizing: border-box;
   padding: 0 5px 0 0;
@@ -6,7 +6,7 @@ li.content {
   background-color: #00000005;
 }
 
-li.content ul.content-children {
+li.menu-content ul.menu-content-children {
   position: relative;
   transition: height 0.2s;
   /* background-color: #00000007; */
@@ -16,7 +16,7 @@ li.content ul.content-children {
   margin: 0;
 }
 
-/* li.content button.content-button[isExpand='true'] + ul.content-children::after {
+/* li.menu-content button[isExpand='true'] + ul.menu-content-children::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -26,7 +26,7 @@ li.content ul.content-children {
   background-color: #00000022;
 }
 
-li.content button.content-button + ul.content-children::before {
+li.menu-content button + ul.menu-content-children::before {
   content: '';
   position: absolute;
   top: 0;
@@ -35,8 +35,3 @@ li.content button.content-button + ul.content-children::before {
   height: 2px;
   background-color: #00000022;
 } */
-
-li.content li.content-li {
-  padding: 0;
-  margin: 0;
-}

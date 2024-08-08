@@ -29,7 +29,7 @@ a.a-link span.a-popover.a-popover-show {
 
 a.a-link span.a-popover::-webkit-scrollbar {
   width: 6px;
-  height: 4px;
+  height: 3px;
 }
 
 a.a-link span.a-popover::-webkit-scrollbar-thumb {
@@ -42,6 +42,6 @@ a.a-link span.a-popover::-webkit-scrollbar-track {
 }
 
 a.a-link span.a-popover::-webkit-scrollbar-button {
-  width: 0;
-  height: 0;
+  width: 2px;
+  height: 3px;
 }

@@ -16,56 +16,65 @@ function Pre({ className = '', children, ...props }: PreProps) {
   }
   const match = /language-(\w+)/.exec(children.props.className ?? '');
   const preRef = useRef<HTMLPreElement | null>(null);
-  const iRef = useRef<HTMLElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const taskQueue = new TimeoutTaskQueue();
   taskQueue
     .addTask({
       callback: () => {
-        iRef.current?.style.setProperty('--icon-opacity', '0');
+        buttonRef.current?.style.setProperty('--icon-opacity', '0');
       },
       delay: 0
     })
     .addTask({
       callback: () => {
-        iRef.current?.style.setProperty('--svg-opacity', '1');
+        buttonRef.current?.style.setProperty('--svg-opacity', '1');
       },
       delay: 100
     })
     .addTask({
       callback: () => {
-        iRef.current?.style.setProperty('--circle-stroke-dashoffset', '0');
+        buttonRef.current?.style.setProperty('--circle-stroke-dashoffset', '0');
       },
       delay: 300
     })
     .addTask({
       callback: () => {
-        iRef.current?.style.setProperty('--polyline-stroke-dashoffset', '0');
+        buttonRef.current?.style.setProperty(
+          '--polyline-stroke-dashoffset',
+          '0'
+        );
       },
       delay: 300
     })
     .addTask({
       callback: () => {
-        iRef.current?.style.setProperty('--svg-opacity', '0');
+        buttonRef.current?.style.setProperty('--svg-opacity', '0');
       },
       delay: 700
     })
     .addTask({
       callback: () => {
-        iRef.current?.style.setProperty('--icon-opacity', '1');
+        buttonRef.current?.style.setProperty('--icon-opacity', '1');
       },
       delay: 300
     })
     .addTask({
       callback: () => {
-        iRef.current?.style.setProperty('--circle-stroke-dashoffset', '38');
-        iRef.current?.style.setProperty('--polyline-stroke-dashoffset', '11');
-        iRef.current?.style.setProperty('--svg-transition', 'all 0s');
+        buttonRef.current?.style.setProperty(
+          '--circle-stroke-dashoffset',
+          '38'
+        );
+        buttonRef.current?.style.setProperty(
+          '--polyline-stroke-dashoffset',
+          '11'
+        );
+        buttonRef.current?.style.setProperty('--svg-transition', 'all 0s');
       },
       delay: 600
     })
     .addTask({
       callback: () => {
-        iRef.current?.style.setProperty('--svg-transition', 'all 0.6s');
+        buttonRef.current?.style.setProperty('--svg-transition', 'all 0.6s');
       },
       delay: 10
     });
@@ -82,9 +91,10 @@ function Pre({ className = '', children, ...props }: PreProps) {
       {...props}
     >
       {children}
-      <i
-        ref={iRef}
+      <button
+        ref={buttonRef}
         className={'markdown-pre-copy'}
+        title="Copy code"
         onClick={() => {
           if (preRef.current === null) return;
           try {
@@ -119,7 +129,7 @@ function Pre({ className = '', children, ...props }: PreProps) {
             points="4.6,8 6.6,11 10.6,6"
           />
         </svg>
-      </i>
+      </button>
     </pre>
   );
 }

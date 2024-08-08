@@ -37,16 +37,18 @@ export default function Components() {
 
   return (
     <div className="body">
-      <Contents
-        title="React 笔记"
-        contents={contents}
-        onChange={changeHandler}
-        path={location.pathname}
-        onWidthLoad={(width) => {
-          const widthNum = parseInt(width);
-          contentsWidth.current = widthNum;
-        }}
-      />
+      <div className="contents-box">
+        <Contents
+          title="React 笔记"
+          contents={contents}
+          onChange={changeHandler}
+          path={location.pathname}
+          onWidthLoad={(width) => {
+            const widthNum = parseInt(width);
+            contentsWidth.current = widthNum;
+          }}
+        />
+      </div>
       {/* <Transition mode="out-in"> */}
       <div
         className={`main ${navigation.state === 'loading' ? 'main-loading' : ''}`}

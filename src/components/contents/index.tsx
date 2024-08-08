@@ -130,6 +130,10 @@ export default function Contents({
       style={{
         width
       }}
+      ref={(node) => {
+        node?.style.setProperty('--leaveWidthBlank', width);
+        return node;
+      }}
     >
       <h1>{title}</h1>
       <nav className="contents-body">
