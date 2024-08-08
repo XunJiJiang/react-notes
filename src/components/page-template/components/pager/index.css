@@ -1,0 +1,73 @@
+.prev-next {
+  border-top: 1px solid #cacaca;
+  padding-top: 24px;
+  display: grid;
+  grid-row-gap: 8px;
+}
+
+@media (min-width: 640px) {
+  .prev-next {
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 16px;
+  }
+}
+
+.prev-next .pager {
+  height: 66px;
+}
+
+.prev-next .pager .pager-link {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  /* border: 1px solid #bebebe; */
+  border-radius: 8px;
+  padding: 11px 0 13px;
+  height: 100%;
+  width: 100%;
+  transition: border-color 0.25s, background-color 0.25s;
+  background-color: #00000000;
+  box-sizing: border-box;
+}
+
+.prev-next .pager .pager-link:hover {
+  /* border-color: #53c5f1; */
+  background-color: #e7e7e7;
+}
+
+/* .prev-next .pager .pager-link.prev {
+
+} */
+
+.prev-next .pager .pager-link.next {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.prev-next .pager .pager-link .pager-icon {
+  display: block;
+  line-height: 40px;
+  padding: 0 12px;
+  color: #868686;
+}
+
+.prev-next .pager .pager-link .pager-desc {
+  width: 100%;
+}
+
+.prev-next .pager .pager-link .pager-desc .desc {
+  display: block;
+  width: 100%;
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #868686;
+  transition: color .25s;
+}
+
+.prev-next .pager .pager-link .pager-desc .desc.pager-title {
+  display: block;
+  font-size: 14px;
+  color: #087ea4;
+  transition: color .25s;
+}

@@ -9,6 +9,7 @@ import './index.css';
 import { useRef, useState } from 'react';
 import MarkdownComponent from '../markdown/index.tsx';
 import Contents from './components/contents/index.tsx';
+import Pager from './components/pager/index.tsx';
 import { debounce } from '@/utils/index.ts';
 
 const scrollEvent = /* 'onscrollend' in window ? 'scrollend' : */ 'scroll';
@@ -61,7 +62,7 @@ export default function PageTemplate({
     }
   }
 
-  const scrollHandlerDebounce = debounce(scrollHandler, 100);
+  const scrollHandlerDebounce = debounce(scrollHandler, 10);
 
   return (
     <div
@@ -76,7 +77,7 @@ export default function PageTemplate({
       id="page-box"
     >
       <div className="page">
-        <div className="page-markdown">
+        <main className="page-markdown">
           <MarkdownComponent
             ref={(node) => {
               if (
@@ -90,12 +91,15 @@ export default function PageTemplate({
             }}
             markdown={markdown}
           />
-        </div>
-        {children && <div className="page-render">{children}</div>}
+          {children && <div className="page-render">{children}</div>}
+        </main>
+        <footer className="page-footer">
+          <Pager />
+        </footer>
         {markdownContents.filter((c) => c.level !== 1).length > 0 && (
-          <div className="page-contents">
+          <aside className="page-contents">
             <Contents ref={markdownContentsRef} contents={markdownContents} />
-          </div>
+          </aside>
         )}
       </div>
     </div>
