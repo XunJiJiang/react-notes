@@ -157,7 +157,13 @@ export default function Contents({
           className="contents-body"
           ref={(node) => {
             if (node) {
-              node.style.setProperty('--indicates', ulIndicatesIndex[0] + '');
+              if (ulIndicatesIndex[0] === -1) {
+                node.style.setProperty('--indicates-opacity', '0');
+                node.style.setProperty('--indicates', '0');
+              } else {
+                node.style.setProperty('--indicates-opacity', '1');
+                node.style.setProperty('--indicates', ulIndicatesIndex[0] + '');
+              }
             }
           }}
         >
