@@ -14,3 +14,4 @@ export { default as useForceReRendering } from './modules/useForceReRendering.ts
 
 export { default as AnyMap } from './modules/anyMap.ts';
 
+export { default as useLoaderDataWithType } from './modules/useLoaderDataWithType.ts';
