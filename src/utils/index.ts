@@ -11,3 +11,6 @@ export { default as TimeoutTaskQueue } from './modules/timeoutTaskQueue.ts';
 export { default as debounce } from './modules/debounce.ts';
 
 export { default as useForceReRendering } from './modules/useForceReRendering.ts';
+
+export { default as AnyMap } from './modules/anyMap.ts';
+
