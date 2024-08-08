@@ -7,6 +7,7 @@ import type { ContentType } from '@type/modules/comp-markdown.d.ts';
 import './index.css';
 import { useId } from 'react';
 import { Link } from 'react-router-dom';
+import Icon from '@components/icon';
 import { createId, flatChild } from '../../utils/index.ts';
 
 export function H1({
@@ -38,7 +39,7 @@ export function H1({
         className={`markdown-title-a markdown-title-a-1`}
         to={encodeURI(content.hash)}
       >
-        #
+        <Icon name="link" size={32} />
       </Link>
       {children}
     </h1>
@@ -74,7 +75,7 @@ export function H2({
         className={`markdown-title-a markdown-title-a-2`}
         to={encodeURI(content.hash)}
       >
-        #
+        <Icon name="link" size={24} />
       </Link>
       {children}
     </h2>
@@ -110,7 +111,7 @@ export function H3({
         className={`markdown-title-a markdown-title-a-3`}
         to={encodeURI(content.hash)}
       >
-        #
+        <Icon name="link" size={16} />
       </Link>
       {children}
     </h3>

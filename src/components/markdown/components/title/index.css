@@ -6,16 +6,17 @@
   position: absolute;
   color: #a8b1ff00;
   transition: all 0.3s;
+  padding-right: 4px;
 }
 
 .markdown-title .markdown-title-a-1 {
-  left: -24px;
+  left: -36px;
 }
 .markdown-title .markdown-title-a-2 {
-  left: -20px;
+  left: -28px;
 }
 .markdown-title .markdown-title-a-3 {
-  left: -16px;
+  left: -20px;
 }
 
 .markdown-title:hover .markdown-title-a {
