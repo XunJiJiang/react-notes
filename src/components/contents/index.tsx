@@ -8,7 +8,7 @@ import type {
 } from '@type/modules/comp-contents.d.ts';
 
 import './index.css';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { getStringWidth } from '@utils/index.ts';
 import PathList from './context/pathList.ts';
 import Content from './components/content/index.tsx';
@@ -52,23 +52,33 @@ const getContentsWidthCache: GetContentsWidthCacheFunc = (
     const _deepestLayer = getDeepestLayer(content);
     const _stringWidth =
       getStringWidth(content.label, {
-        fontSize: 16,
+        fontSize: content.children ? 16 : 14,
         fontFamily: `Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑,
       Arial, sans-serif`
       }) +
       16 + // + 右侧箭头的宽度
       36 + // + 按钮左右侧padding
       (content.icon ? 30 : 0) + // + 图标宽度
+      (content.tag
+        ? typeof content.tag === 'object' && content.tag.icon
+          ? 30
+          : getStringWidth(content.tag as string, {
+              fontSize: content.children ? 16 : 14,
+              fontFamily: `Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑,
+      Arial, sans-serif`
+            })
+        : 0) + // tag 宽度
+      8 * _deepestLayer + // + 深度缩进
       28; // + 预留冗余
     if (_stringWidth > maxStringWidth) {
-      maxStringWidth = _stringWidth + 5 * (maxDeepestLayer - _deepestLayer);
+      maxStringWidth = _stringWidth + 8 * (maxDeepestLayer - 1);
     }
     if (Array.isArray(content.children)) {
       content.children.forEach(_getContentWidth);
     }
   };
   contents.forEach(_getContentWidth);
-  maxStringWidth = Math.min(maxStringWidth, 1024);
+  maxStringWidth = Math.min(maxStringWidth, 400);
   maxStringWidth = Math.max(maxStringWidth, 100);
   widthCache.current = `${maxStringWidth}px`;
   return widthCache.current;
@@ -124,6 +134,12 @@ export default function Contents({
     );
   };
 
+  const deepestLayer = getDeepestLayer(contents) - 1;
+
+  // const ulSild --indicates: 1;
+
+  const ulIndicatesIndex = useState(0);
+
   return (
     <div
       className="contents"
@@ -137,14 +153,24 @@ export default function Contents({
     >
       <h1>{title}</h1>
       <nav className="contents-body">
-        <ul className="contents-body">
+        <ul
+          className="contents-body"
+          ref={(node) => {
+            if (node) {
+              node.style.setProperty('--indicates', ulIndicatesIndex[0] + '');
+            }
+          }}
+        >
           <PathList.Provider value={path.split('/').slice(1)}>
             <Content
               contents={contents}
               visible={true}
               path={path.split('/').slice(1)}
-              layer={getDeepestLayer(contents) - 1}
+              layer={deepestLayer}
               onChange={_changeHandler}
+              onChildHeightChange={(_, index) => {
+                ulIndicatesIndex[1](index);
+              }}
             />
           </PathList.Provider>
         </ul>

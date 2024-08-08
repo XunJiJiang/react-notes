@@ -10,13 +10,18 @@
   padding: 1px 16px 1px 20px;
   font-size: 14px;
   /* border-radius: 0 0.75rem 0.75rem 0; */
-  transition: background-color 0.2s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   text-align: left;
   line-height: 32px;
   display: flex;
   font-family: Inter, 'Helvetica Neue', Helvetica, 'PingFang SC',
     'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, Arial, sans-serif;
   justify-content: space-between;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .content-button.bold-button {
@@ -30,7 +35,7 @@
 
 .content-button i.contents-button-right-icon {
   position: relative;
-  transition: all 0.2s;
+  transition: all 0.3s;
   height: 100%;
 }
 
@@ -43,6 +48,10 @@
 .content-button span.contents-button-main {
   width: calc(100% - 16px);
   word-wrap: break-word;
+  /* 禁止换行超出省略 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .content-button span.contents-button-main i {
@@ -58,16 +67,17 @@
   background-color: #99a1b359;
 }
 
-.content-button:hover {
-  background-color: #f6f7f9;
+.content-button[isSelected='false']:hover {
+  /* background-color: #a0a0a022; */
+  color: #087ea4;
 }
 
-.content-button:active {
+/* .content-button:active {
   background-color: #ededee;
-}
+} */
 
 .content-button[isSelected='true'] {
-  background-color: #e6f7ff;
+  /* background-color: #e6f7ff; */
   color: #087ea4;
 }
 

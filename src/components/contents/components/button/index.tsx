@@ -106,7 +106,7 @@ const Button = forwardRef(function Button(
       )}
       <span className="contents-button-main">
         {title}
-        <wbr />
+        {/* <wbr /> */}
         {_tag}
       </span>
       {isBranch && <Icon name="right" className="contents-button-right-icon" />}

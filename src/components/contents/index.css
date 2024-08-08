@@ -1,11 +1,11 @@
 .contents-box {
   position: fixed;
   z-index: 1;
-  transition: all .2s;
+  transition: all 0.3s;
 }
 
 .contents {
-  max-width: 250px;
+  /* max-width: 250px; */
   height: 100vh;
   color: #000000;
   justify-content: left;
@@ -31,9 +31,22 @@
 }
 
 .contents nav.contents-body ul.contents-body {
+  --indicates: 0;
+  position: relative;
   list-style: none;
   padding: 0px 5px 0 0;
   margin: 0;
+}
+
+.contents nav.contents-body ul.contents-body::before {
+  content: '';
+  position: absolute;
+  display: block;
+  transform: translateY(calc(var(--indicates) * 34px));
+  transition: all 0.3s;
+  height: 34px;
+  width: calc(var(--leaveWidthBlank) - 21px);
+  background-color: #e6f7ff;
 }
 
 .contents nav.contents-body li {

@@ -47,6 +47,7 @@ interface ContentProps {
   fatherPath?: string;
   layer: number;
   path?: string[];
+  onChildHeightChange?: (height: number, index: number) => void;
   onChange: (context: ContentChangeEventType) => void;
 }
 

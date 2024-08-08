@@ -8,11 +8,13 @@ import type { ButtonRef } from '@type/modules/comp-contents-comp-button.d.ts';
 import './index.css';
 import {
   useRef,
+  useState,
   // useContext,
   forwardRef,
-  useImperativeHandle
+  useImperativeHandle,
+  useEffect
 } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 // import PathList from '../../context/pathList';
 import Button from '../button/index.tsx';
 import NotFound from '@pages/404/index.tsx';
@@ -24,12 +26,20 @@ const Content = forwardRef(function _Content(
     visible = false,
     layer,
     path = [],
+    onChildHeightChange = () => {},
     onChange
   }: ContentProps,
   ref: React.ForwardedRef<ContentRef>
 ) {
   //  储存当前组件和每个子选项组件的路径信息. 下标高位为父组件的路径, 低位为子组件的路径.
   // const pathList = useContext(PathList);
+
+  // 最后一次路由变化后的目录展开高度
+  const [heightAfterRoute, setHeightAfterRoute] = useState(0);
+
+  // 最后一次路由变化后的目录展开高度的加载状态, 在路由变化时为'pending', 同时触发子组件高度变化事件, 事件触发后为'fulfilled'
+  // 当为'pending'时, 不会修改子组件的高度
+  // const heightStateAfterRoute = useRef<'pending' | 'fulfilled'>('pending');
 
   // 存储每个选项的按钮的引用
   const buttonRefList: ButtonRef[] = [];
@@ -49,6 +59,7 @@ const Content = forwardRef(function _Content(
   // const ulHeightList = useRef<number[]>([]);
   const ulRefList = useRef<HTMLUListElement[]>([]);
 
+  // if (heightStateAfterRoute.current === 'fulfilled') {
   if (path.length > 0) {
     const _path = path[0];
     const _index = contents.findIndex((item) => {
@@ -79,6 +90,32 @@ const Content = forwardRef(function _Content(
       isSelected: false
     };
   }
+  // }
+
+  function _onChildHeightChange(height: number, index: number) {
+    const _height =
+      height +
+      (contentRefList.current[visibleIndex.current]?.buttonHeight ?? 0);
+    setHeightAfterRoute(_height);
+    onChildHeightChange(
+      _height,
+      index === -1 ? -1 : index + visibleIndex.current + 1
+    );
+  }
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (path.length === 1) {
+      onChildHeightChange(
+        contentRefList.current[visibleIndex.current]?.buttonHeight ?? 0,
+        visibleIndex.current
+      );
+      setHeightAfterRoute(
+        contentRefList.current[visibleIndex.current]?.buttonHeight ?? 0
+      );
+    }
+  }, [layer, location.pathname, onChildHeightChange, path.length]);
 
   useImperativeHandle(ref, () => {
     return {
@@ -139,7 +176,7 @@ const Content = forwardRef(function _Content(
                   }}
                   className="menu-content-children"
                   style={{
-                    height: childVisible ? 'auto' : '0'
+                    height: childVisible ? heightAfterRoute + 'px' : '0'
                   }}
                 >
                   {hasChildren ? (
@@ -156,6 +193,7 @@ const Content = forwardRef(function _Content(
                       fatherPath={_path + '/'}
                       path={path.slice(1)}
                       onChange={onChange}
+                      onChildHeightChange={_onChildHeightChange}
                     />
                   ) : (
                     <Content
@@ -186,6 +224,7 @@ const Content = forwardRef(function _Content(
                       fatherPath={_path + '/'}
                       path={path.slice(1)}
                       onChange={onChange}
+                      onChildHeightChange={_onChildHeightChange}
                     />
                   )}
                 </ul>

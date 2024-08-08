@@ -3,16 +3,17 @@ li.menu-content {
   box-sizing: border-box;
   padding: 0 5px 0 0;
   overflow: hidden;
-  background-color: #00000005;
+  /* background-color: #00000005; */
 }
 
 li.menu-content ul.menu-content-children {
   position: relative;
-  transition: height 0.2s;
+  transition: height 0.3s;
   /* background-color: #00000007; */
   /* border-right: 2px solid #00000022; */
   list-style: none;
   padding: 0;
+  padding-left: 8px;
   margin: 0;
 }
 
