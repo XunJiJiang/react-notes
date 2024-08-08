@@ -4,6 +4,6 @@
   "entryFilePath": "/pages/study/reference/react/index.tsx",
   "icon": null,
   "tag": null,
-  "component": "() => <h1>react@18.2.0</h1>",
+  "component": "() => <React />",
   "type": "directory"
 }

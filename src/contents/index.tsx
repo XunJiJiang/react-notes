@@ -1,10 +1,12 @@
 import {
   CompLearn0,
   CompReference1,
-  CompUse2,
-  CompUseCallback3,
-  CompUseDebugValue4,
-  CompRouter5
+  CompReact18202,
+  CompHook3,
+  CompUse4,
+  CompUseCallback5,
+  CompUseDebugValue6,
+  CompRouter7
 } from './contents.tsx';
 
 const contents = [
@@ -30,7 +32,7 @@ const contents = [
         entryFilePath: '/pages/study/reference/react/index.tsx',
         icon: null,
         tag: null,
-        component: () => <h1>react@18.2.0</h1>,
+        component: () => <CompReact18202 />,
         children: [
           {
             label: 'Hook',
@@ -38,7 +40,7 @@ const contents = [
             entryFilePath: '/pages/study/reference/react/Hook/index.tsx',
             icon: null,
             tag: null,
-            component: () => <h1>react Hook</h1>,
+            component: () => <CompHook3 />,
             children: [
               {
                 label: 'use',
@@ -49,7 +51,7 @@ const contents = [
                 tag: {
                   icon: 'experiment'
                 },
-                component: () => <CompUse2 />
+                component: () => <CompUse4 />
               },
               {
                 label: 'useCallback',
@@ -58,7 +60,7 @@ const contents = [
                   '/pages/study/reference/react/Hook/useCallback/index.tsx',
                 icon: null,
                 tag: null,
-                component: () => <CompUseCallback3 />
+                component: () => <CompUseCallback5 />
               },
               {
                 label: 'useDebugValue',
@@ -67,7 +69,7 @@ const contents = [
                   '/pages/study/reference/react/Hook/useDebugValue/index.tsx',
                 icon: null,
                 tag: null,
-                component: () => <CompUseDebugValue4 />
+                component: () => <CompUseDebugValue6 />
               }
             ]
           }
@@ -81,7 +83,7 @@ const contents = [
     entryFilePath: '/pages/study/router/index.tsx',
     icon: null,
     tag: null,
-    component: () => <CompRouter5 />
+    component: () => <CompRouter7 />
   }
 ];
 

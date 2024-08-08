@@ -4,6 +4,6 @@
   "entryFilePath": "/pages/study/reference/react/Hook/index.tsx",
   "icon": null,
   "tag": null,
-  "component": "() => <h1>react Hook</h1>",
+  "component": "() => <Hook />",
   "type": "directory"
 }
