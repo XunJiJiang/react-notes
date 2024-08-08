@@ -38,13 +38,16 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
 
   const forceReRendering = useForceReRendering();
 
+  const contentsWithoutLevel1 = contents.filter((item) => item.level !== 1);
+
   useEffect(() => {
     const content = contents.find((v) => v.hash === deHash);
     if (!content) return;
     const id = content.id;
     const node = content.node;
     if (id && node) {
-      node.scrollIntoView({ behavior: 'smooth' });
+      // TODO: 设置滚动至标题的过度 smooth | instant
+      node.scrollIntoView({ behavior: 'instant' });
     } else {
       console.warn('目录项对应的节点不存在');
     }
@@ -66,13 +69,9 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
       return;
     }
 
-    const index = contents
-      .filter((item) => {
-        return item.level !== 1;
-      })
-      .findIndex((item) => {
-        return item.label === content.label;
-      });
+    const index = contentsWithoutLevel1.findIndex((item) => {
+      return item.label === content.label;
+    });
     if (index === -1) {
       ulRef.current?.classList.add('contents-in-page-hidden');
       ulRef.current?.style.setProperty('--side-indicates', '0');
@@ -97,30 +96,26 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
     <nav className="contents-in-page">
       <span className="contents-in-page-title">此页内</span>
       <ul ref={ulRef} className={'contents-in-page-hidden'}>
-        {contents
-          .filter((content) => {
-            return content.level !== 1;
-          })
-          .map((content, index) => {
-            return (
-              <li
-                id={`contents-in-page-${content.id}`}
-                className="contents-in-page-item-box"
-                ref={(node) => {
-                  node && liList.current.push(node);
-                }}
-                key={index}
+        {contentsWithoutLevel1.map((content, index) => {
+          return (
+            <li
+              id={`contents-in-page-${content.id}`}
+              className="contents-in-page-item-box"
+              ref={(node) => {
+                node && liList.current.push(node);
+              }}
+              key={index}
+            >
+              <Link
+                to={`#${createHref(content.label)}`}
+                className={`contents-in-page-item contents-in-page-item-${content.level}`}
+                onClick={forceReRendering}
               >
-                <Link
-                  to={`#${createHref(content.label)}`}
-                  className={`contents-in-page-item contents-in-page-item-${content.level}`}
-                  onClick={forceReRendering}
-                >
-                  {content.label}
-                </Link>
-              </li>
-            );
-          })}
+                {content.label}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
