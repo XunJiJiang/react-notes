@@ -29,7 +29,7 @@ function _readContentsStructure (directoryPath) {
 
 function _readContentsConfigFile (structure, directoryPath = __dirname) {
   const configFile = structure.files.find((file) => {
-    return file === 'noteConfig.json';
+    return file === 'nodeConfig.json';
   });
 
   let config = {};
@@ -166,7 +166,7 @@ function _convertComponentToFunction (config) {
       if (matchRegex(functionRegex, value) !== null) return value;
       else return `<function>${value}</function>`;
     } else if (key === 'tag' && value !== null) {
-      if (value.type === 'string') {
+      if (value.type === 'text') {
         return value.value;
       } else if (value.type === 'icon') {
         return {

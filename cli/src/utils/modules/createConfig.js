@@ -26,13 +26,13 @@ function checkIcon (icon, canEmpty = false) {
 /**
  * 创建配置
  * @param {*} title 
- * @param {*} notePath 
+ * @param {*} nodePath 
  * @param {*} type 
  * @returns 
  */
-async function createConfig (title, notePath, type = 'note') {
+async function createConfig (title, nodePath, type = 'node') {
 
-  const typeName = type === 'note' ? '笔记' : '目录';
+  const typeName = type === 'node' ? '笔记' : '目录';
 
   const label = await input({
     message: `${typeName}显示名称:`,
@@ -106,26 +106,8 @@ async function createConfig (title, notePath, type = 'note') {
   })());
 
   const component = await ((async () => {
-    if (type === 'note') {
+    if (type === 'node') {
       return `() => <${capitalizeFirstLetter(title)} />`;
-    } else if (type === 'directory') {
-      const whether = await select({
-        message: '是否添加目录组件?',
-        choices: [{
-          name: '是',
-          value: true
-        }, {
-          name: '否',
-          value: false
-        }]
-      });
-      return whether ? (await input({
-        message: '目录组件名称:',
-        default: `() => <h1>${label}</h1>`,
-        validate: (component) => {
-          return component.trim() === '' ? '不能为空' : true;
-        }
-      })) : null;
     } else {
       return null;
     }
@@ -134,7 +116,7 @@ async function createConfig (title, notePath, type = 'note') {
   const config = {
     label,
     path: '/' + relativePath,
-    entryFilePath: component ? `/pages/study${(notePath.replace(/\\/g, '/').split('/src/pages/study')[1] || '')}/index.tsx` : '',
+    entryFilePath: component ? `/pages/study${(nodePath.replace(/\\/g, '/').split('/src/pages/study')[1] || '')}/index.tsx` : '',
     icon: icon.trim() === '' ? null : icon,
     tag: tagType ? {
       type: tagType,
@@ -144,7 +126,7 @@ async function createConfig (title, notePath, type = 'note') {
     type
   };
 
-  const configPath = path.join(notePath, 'noteConfig.json');
+  const configPath = path.join(nodePath, 'nodeConfig.json');
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 
   return config;

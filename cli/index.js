@@ -4,8 +4,7 @@ import {
   csl,
   getDirectory,
   createSelect,
-  createNote,
-  createDirectory,
+  createNode,
   updateContents,
   get__dirname
 } from './src/utils/index.js';
@@ -24,7 +23,7 @@ async function logSelect (message, directoryPath = './src/pages/study') {
 
   const studyDirs = getDirectory(studyPath);
 
-  const choices = ['创建笔记', '创建目录', '退出', '返回上一级', ...studyDirs].map((choice) => {
+  const choices = ['创建节点', '退出', '返回上一级', ...studyDirs].map((choice) => {
     if (choice === '返回上一级' && studyPath.endsWith('\\src\\pages\\study')) {
       return {
         name: choice,
@@ -53,19 +52,10 @@ async function logSelect (message, directoryPath = './src/pages/study') {
   );
 
   
-  if (answer === '创建笔记') {
+  if (answer === '创建节点') {
     try {
-      const result = await createNote(studyPath);
+      const result = await createNode(studyPath);
       csl.success(result);
-    } catch (error) {
-      csl.warn(error);
-    } finally {
-      return await logSelect(message, studyPath);
-    }
-  } else if (answer === '创建目录') {
-    try {
-      const newDirectoryPath = await createDirectory(studyPath);
-      return await logSelect(message, newDirectoryPath);
     } catch (error) {
       csl.warn(error);
     } finally {

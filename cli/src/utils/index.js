@@ -4,13 +4,11 @@ export { default as getDirectory } from './modules/getDirectory.js';
 
 export { default as createSelect } from './modules/createSelect.js';
 
-export { default as createNote } from './modules/createNote.js';
+export { default as createNode } from './modules/createNode.js';
 
 export { default as detectLineEnding } from './modules/detectLineEnding.js';
 
 export { default as capitalizeFirstLetter } from './modules/capitalizeFirstLetter.js';
-
-export { default as createDirectory } from './modules/createDirectory.js';
 
 export { default as updateContents } from './modules/updateContents/index.js';
 

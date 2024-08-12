@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { input } from '@inquirer/prompts';
+import { input, confirm, editor } from '@inquirer/prompts';
 import detectLineEnding from './detectLineEnding.js';
 import capitalizeFirstLetter from './capitalizeFirstLetter.js';
 import get__dirname from './get__dirname.js';
@@ -19,11 +19,11 @@ const CONTENTS_PATH = path.resolve(__dirname, './src/contents/contents.tsx');
 /** 
  * 键入笔记配置并写入文件
  * @param {*} title
- * @param {*} notePath
+ * @param {*} nodePath
 */
-async function _inputNoteConfig (title, notePath) {
+async function _inputNodeConfig (title, nodePath) {
 
-  await createConfig(title, notePath, 'note');
+  await createConfig(title, nodePath, 'node');
 
   return Promise.resolve('配置成功');
 }
@@ -36,54 +36,70 @@ const titleRegex = /^[a-zA-Z][a-zA-Z0-9_-]+$/;
  * @param {*} error 
  * @returns 
  */
-async function _createNote (pathText, error) {
+async function _createNode (pathText, error) {
   const title = await input({
-    message: '笔记标题 (exit 退出):',
+    message: '节点标题 (--exit 退出):',
     validate: (title) => {
       if (title.trim() === '') {
         return '标题不能为空';
-      } else if (title === 'exit') {
+      } else if (title === '--exit') {
         return true;
       }
       return titleRegex.test(title) ? true : '标题只能包含字母、数字、下划线和短横线, 不能以数字或符号开头';
     }
   });
 
-  if (title === 'exit') {
+  if (title === '--exit') {
     return Promise.reject('取消创建');
   }
 
-  const notePath = path.resolve(__dirname, pathText, title);
+  const nodePath = path.resolve(__dirname, pathText, title);
 
-  if (fs.existsSync(notePath)) {
-    const answer = await input({
-      message: '文件夹已存在, 是否覆盖? y/n',
-      default: 'n',
-      validate: (answer) => {
-        return ['y', 'n'].includes(answer) ? true : '请键入 y 或 n';
-      }
+  if (fs.existsSync(nodePath)) {
+    const answer = await confirm({
+      message: '节点已存在, 是否覆盖?',
+      default: false
     });
-    if (answer === 'n') {
-      return await createNote(pathText, error);
+    if (answer === false) {
+      return await createNode(pathText, error);
     }
   } else {
-    fs.mkdirSync(path.resolve(__dirname, notePath));
+    fs.mkdirSync(path.resolve(__dirname, nodePath));
   }
+  
+  await _inputNodeConfig(title, nodePath);
+
+  const isCustomizeMD = await confirm({
+    message: '要自定义初始markdown内容吗?',
+    default: false
+  });
+
+  const markdown = await (async () => {
+    if (isCustomizeMD) {
+      return await editor({
+        message: '编辑markdown内容',
+        postfix: '.md',
+        waitForUseInput: false,
+        default: `# ${title}`
+      });
+    } else {
+      return `# ${title}`;
+    }
+  })();
 
   // 创建\更新md文件
-  const markdownFilePath = path.join(notePath, `${title}.md`);
-  fs.writeFileSync(markdownFilePath, `# ${title}`);
-  // 创建\更新js文件
-  const codeFilePath = path.join(notePath, `index.tsx`);
-  fs.writeFileSync(codeFilePath, createCodeTemplate(title, detectLineEnding(CONTENTS_PATH)));
+  const markdownFilePath = path.join(nodePath, `${title}.md`);
+  fs.writeFileSync(markdownFilePath, markdown);
 
-  await _inputNoteConfig(title, notePath);
+  // 创建\更新js文件
+  const codeFilePath = path.join(nodePath, `index.tsx`);
+  fs.writeFileSync(codeFilePath, createCodeTemplate(title, detectLineEnding(CONTENTS_PATH)));
 
   return Promise.resolve('创建成功');
 }
 
-async function createNote (pathText, error = () => {}) {
-  return await _createNote(pathText, error);
+async function createNode (pathText, error = () => {}) {
+  return await _createNode(pathText, error);
 }
 
-export default createNote;
+export default createNode;
