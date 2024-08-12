@@ -8,7 +8,7 @@ import type {
 } from '@type/modules/comp-contents.d.ts';
 
 import './index.css';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { getStringWidth } from '@utils/index.ts';
 import PathList from './context/pathList.ts';
 import Content from './components/content/index.tsx';
@@ -140,6 +140,13 @@ export default function Contents({
 
   const ulIndicatesIndex = useState(0);
 
+  const onChildHeightChange = useCallback(
+    (_: number, index: number) => {
+      ulIndicatesIndex[1](index);
+    },
+    [ulIndicatesIndex]
+  );
+
   return (
     <div
       className="contents"
@@ -174,9 +181,7 @@ export default function Contents({
               path={path.split('/').slice(1)}
               layer={deepestLayer}
               onChange={_changeHandler}
-              onChildHeightChange={(_, index) => {
-                ulIndicatesIndex[1](index);
-              }}
+              onChildHeightChange={onChildHeightChange}
             />
           </PathList.Provider>
         </ul>

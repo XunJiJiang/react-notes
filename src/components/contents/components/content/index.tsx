@@ -12,7 +12,8 @@ import {
   // useContext,
   forwardRef,
   useImperativeHandle,
-  useEffect
+  useEffect,
+  useCallback
 } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 // import PathList from '../../context/pathList';
@@ -37,10 +38,6 @@ const Content = forwardRef(function _Content(
   // 最后一次路由变化后的目录展开高度
   const [heightAfterRoute, setHeightAfterRoute] = useState(0);
 
-  // 最后一次路由变化后的目录展开高度的加载状态, 在路由变化时为'pending', 同时触发子组件高度变化事件, 事件触发后为'fulfilled'
-  // 当为'pending'时, 不会修改子组件的高度
-  // const heightStateAfterRoute = useRef<'pending' | 'fulfilled'>('pending');
-
   // 存储每个选项的按钮的引用
   const buttonRefList: ButtonRef[] = [];
 
@@ -56,16 +53,16 @@ const Content = forwardRef(function _Content(
     isSelected: false
   });
 
-  // const ulHeightList = useRef<number[]>([]);
   const ulRefList = useRef<HTMLUListElement[]>([]);
 
-  // if (heightStateAfterRoute.current === 'fulfilled') {
-  if (path.length > 0) {
-    const _path = path[0];
-    const _index = contents.findIndex((item) => {
-      return item.path === '/' + _path;
-    });
+  const location = useLocation();
 
+  const _path = path[0];
+  const _index = contents.findIndex((item) => {
+    return item.path === '/' + _path;
+  });
+
+  if (path.length > 0) {
     visibleIndex.current = _index;
 
     if (_index === visibleIndex.current) {
@@ -90,32 +87,31 @@ const Content = forwardRef(function _Content(
       isSelected: false
     };
   }
-  // }
 
-  function _onChildHeightChange(height: number, index: number) {
-    const _height =
-      height +
-      (contentRefList.current[visibleIndex.current]?.buttonHeight ?? 0);
-    setHeightAfterRoute(_height);
-    onChildHeightChange(
-      _height,
-      index === -1 ? -1 : index + visibleIndex.current + 1
-    );
-  }
-
-  const location = useLocation();
+  const _onChildHeightChange = useCallback(
+    (height: number, index: number) => {
+      const childHeight =
+        contentRefList.current[visibleIndex.current]?.buttonHeight;
+      if (typeof childHeight === 'undefined') return;
+      const _height = height + childHeight;
+      setHeightAfterRoute(_height);
+      onChildHeightChange(
+        _height,
+        index === -1 ? -1 : index + visibleIndex.current + 1
+      );
+    },
+    [onChildHeightChange]
+  );
 
   useEffect(() => {
-    if (path.length === 1) {
-      onChildHeightChange(
-        contentRefList.current[visibleIndex.current]?.buttonHeight ?? 0,
-        visibleIndex.current
-      );
-      setHeightAfterRoute(
-        contentRefList.current[visibleIndex.current]?.buttonHeight ?? 0
-      );
+    // 此组件位于路由最后一级, 子组件中包含最后一级路由对应的组件
+    if (path.length === 1 && _index !== -1) {
+      const childHeight =
+        contentRefList.current[visibleIndex.current]?.buttonHeight;
+      onChildHeightChange(childHeight ?? 0, visibleIndex.current);
+      setHeightAfterRoute(childHeight ?? 0);
     }
-  }, [layer, location.pathname, onChildHeightChange, path.length]);
+  }, [_index, layer, location.pathname, onChildHeightChange, path.length]);
 
   useImperativeHandle(ref, () => {
     return {
@@ -235,4 +231,5 @@ const Content = forwardRef(function _Content(
     </>
   );
 });
+
 export default Content;
