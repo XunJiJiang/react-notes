@@ -8,11 +8,7 @@ import './index.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-function FencedCodeBlocks({
-  children,
-  match,
-  ...props
-}: FencedCodeBlocksProps) {
+function FencedCodeBlocks({ children, match }: FencedCodeBlocksProps) {
   return (
     <SyntaxHighlighter
       style={StyleHighlighter}
@@ -24,7 +20,6 @@ function FencedCodeBlocks({
       customStyle={{
         paddingLeft: '0'
       }}
-      {...props}
     >
       {children}
     </SyntaxHighlighter>
@@ -78,16 +73,11 @@ function getShortCodeBlocksConfig(children: string | React.ReactNode) {
   };
 }
 
-function ShortCodeBlocks({
-  children,
-  className,
-  ...props
-}: ShortCodeBlocksProps) {
+function ShortCodeBlocks({ children, className }: ShortCodeBlocksProps) {
   const { children: _children, tag } = getShortCodeBlocksConfig(children);
   return (
     <code
       className={`markdown-code markdown-short-code markdown-short-code-${tag} ${className ?? ''}`}
-      {...props}
     >
       {_children}
     </code>

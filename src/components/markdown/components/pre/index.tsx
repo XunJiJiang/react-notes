@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import Icon from '@components/icon/index.tsx';
 import { TimeoutTaskQueue } from '@utils/index.ts';
 
-function Pre({ className = '', children, ...props }: PreProps) {
+function Pre({ className = '', children }: PreProps) {
   if (
     typeof children === 'undefined' ||
     children === null ||
@@ -88,7 +88,6 @@ function Pre({ className = '', children, ...props }: PreProps) {
         preRef.current = node;
       }}
       className={`markdown-pre ${className ?? ''}`}
-      {...props}
     >
       {children}
       <button
