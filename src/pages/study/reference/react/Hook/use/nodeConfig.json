@@ -8,5 +8,5 @@
     "value": "experiment"
   },
   "component": "() => <Use />",
-  "type": "note"
+  "type": "node"
 }

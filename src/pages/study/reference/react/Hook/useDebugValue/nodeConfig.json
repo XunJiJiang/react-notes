@@ -5,5 +5,5 @@
   "icon": null,
   "tag": null,
   "component": "() => <UseDebugValue />",
-  "type": "note"
+  "type": "node"
 }

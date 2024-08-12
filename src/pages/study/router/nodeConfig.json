@@ -5,5 +5,5 @@
   "icon": null,
   "tag": null,
   "component": "() => <Router />",
-  "type": "note"
+  "type": "node"
 }

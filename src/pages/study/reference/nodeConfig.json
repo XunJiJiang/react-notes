@@ -5,5 +5,5 @@
   "icon": null,
   "tag": null,
   "component": "() => <Reference />",
-  "type": "note"
+  "type": "node"
 }
