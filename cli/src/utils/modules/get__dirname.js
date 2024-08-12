@@ -1,3 +1,5 @@
+// @ts-check
+
 import path from 'path';
 
 function get__dirname () {

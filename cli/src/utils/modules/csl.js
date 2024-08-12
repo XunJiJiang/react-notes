@@ -1,3 +1,5 @@
+// @ts-check
+
 import figlet from 'figlet';
 import chalk from 'chalk';
 import gradient from 'gradient-string';
@@ -55,10 +57,10 @@ csl.log = (...msg) => {
 
 /**
  * 创建颜色
- * @param {string | Array} colors 
+ * @param {string | Array | null} colors 
  * @returns {CslType}
  */
-csl.createColor = (colors) => {
+csl.createColor = (colors = null) => {
   if (typeof colors === 'string') {
     return chalk[colors];
   } else if (Array.isArray(colors)) {
@@ -74,9 +76,9 @@ csl.createColor = (colors) => {
 /**
  * 控制台输出标题
  * @param {string} title 
- * @param {string | Array} colors 
+ * @param {string | Array | null} colors 
  */
-csl.title = (title = 'Hello World', colors) => {
+csl.title = (title = 'Hello World', colors = null) => {
   const titleGradient = csl.createColor(colors);
   const msg = figlet.textSync(title);
   csl(titleGradient(msg));
@@ -108,10 +110,10 @@ csl.success = (message = 'Hello World') => {
 /**
  * 
  * @param {any} message 
- * @param {string | Array} colors 
+ * @param {string | Array | null} colors 
  * @returns 
  */
-csl.color = (message, colors) => {
+csl.color = (message, colors = null) => {
   const color = csl.createColor(colors);
   csl(color(message));
 };
@@ -133,6 +135,8 @@ const _csl = new Proxy(csl, {
     return target(...args);
   },
   get (target, prop, receiver) {
+    if (typeof prop === 'symbol') return;
+
     if (cslFunc.includes(prop)) {
       // target[prop] 存在. 返回 target[prop]
       return target[prop];

@@ -1,3 +1,5 @@
+// @ts-check
+
 import fs from 'fs';
 import path from 'path';
 import get__dirname from './get__dirname.js';
@@ -6,8 +8,8 @@ const __dirname = get__dirname();
 
 /**
  * 获取指定路径下的所有文件夹
- * @param {*} directoryPath 
- * @param {*} error 
+ * @param {string} directoryPath 
+ * @param {(e: string) => void} error 
  * @returns 
  */
 function getDirectory (directoryPath, error = () => {}) {

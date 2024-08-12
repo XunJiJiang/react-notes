@@ -1,13 +1,21 @@
+// @ts-check
+
 import fs from 'fs';
 import path from 'path';
 import { input, confirm, editor } from '@inquirer/prompts';
 import detectLineEnding from './detectLineEnding.js';
-import capitalizeFirstLetter from './capitalizeFirstLetter.js';
+// import capitalizeFirstLetter from './capitalizeFirstLetter.js';
 import get__dirname from './get__dirname.js';
 import createConfig from './createConfig.js';
 
 const __dirname = get__dirname();
 
+/**
+ * 
+ * @param {string} title 
+ * @param {string} lineEnding 
+ * @returns 
+ */
 const createCodeTemplate = (title, lineEnding = '\r\n') => {
   return `import PageTemplate from '@components/page-template/index.tsx';${lineEnding}import markdown from './${title}.md?raw';${lineEnding}${lineEnding}export default function Use () {${lineEnding}  return (${lineEnding}    <>${lineEnding}      <PageTemplate markdown={markdown}>${lineEnding}      </PageTemplate>${lineEnding}    </>${lineEnding}  )${lineEnding}}`
 }
@@ -18,8 +26,8 @@ const CONTENTS_PATH = path.resolve(__dirname, './src/contents/contents.tsx');
 
 /** 
  * 键入笔记配置并写入文件
- * @param {*} title
- * @param {*} nodePath
+ * @param {string} title
+ * @param {string} nodePath
 */
 async function _inputNodeConfig (title, nodePath) {
 
@@ -32,8 +40,8 @@ const titleRegex = /^[a-zA-Z][a-zA-Z0-9_-]+$/;
 
 /**
  * 
- * @param {*} pathText 
- * @param {*} error 
+ * @param {string} pathText 
+ * @param {(e: string) => void} error 
  * @returns 
  */
 async function _createNode (pathText, error) {
@@ -98,6 +106,12 @@ async function _createNode (pathText, error) {
   return Promise.resolve('创建成功');
 }
 
+/**
+ * 
+ * @param {string} pathText 
+ * @param {(e: string) => void} error 
+ * @returns 
+ */
 async function createNode (pathText, error = () => {}) {
   return await _createNode(pathText, error);
 }

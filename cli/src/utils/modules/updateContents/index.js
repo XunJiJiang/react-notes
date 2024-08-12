@@ -1,3 +1,5 @@
+// @ts-check
+
 import fs from 'fs';
 import path from 'path';
 import getDirectory from '../getDirectory.js';
@@ -6,9 +8,16 @@ import get__dirname from '../get__dirname.js';
 import capitalizeFirstLetter from '../capitalizeFirstLetter.js';
 import detectLineEnding from '../detectLineEnding.js';
 
+/** @typedef {{dirName: string; files: string[]; directories: TypeStructure[]}} TypeStructure */
+
 
 const __dirname = get__dirname();
 
+/**
+ * 
+ * @param {string} directoryPath 
+ * @returns {TypeStructure}
+ */
 function _readContentsStructure (directoryPath) {
   const dirPath = path.resolve(__dirname, directoryPath);
 
@@ -27,6 +36,12 @@ function _readContentsStructure (directoryPath) {
   return structure;
 }
 
+/**
+ * 
+ * @param {TypeStructure} structure 
+ * @param {string} directoryPath 
+ * @returns
+ */
 function _readContentsConfigFile (structure, directoryPath = __dirname) {
   const configFile = structure.files.find((file) => {
     return file === 'nodeConfig.json';
@@ -262,7 +277,7 @@ function _generateContentsFile (componentPathList, contentText) {
 
 /**
  * 更新目录结构js文件
- * @param {*} directoryPath 
+ * @param {string} directoryPath 
  */
 async function updateContents (directoryPath) {
   const structure = _readContentsStructure(directoryPath);

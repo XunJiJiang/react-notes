@@ -1,9 +1,11 @@
+// @ts-check
+
 import fs from 'fs';
 
 /**
  * 获取文件的换行符
- * @param {*} filePath path | string
- * @param {*} type path | string
+ * @param {string} file path | string
+ * @param {string} type path | string
  * @returns 
  */
 function detectLineEnding (file, type = 'path') {

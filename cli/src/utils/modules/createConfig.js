@@ -1,3 +1,5 @@
+// @ts-check
+
 import fs from 'fs';
 import path from 'path';
 import { input, select } from '@inquirer/prompts';
@@ -9,8 +11,8 @@ const pathRegex = /^[a-zA-Z0-9_@.-]+$/;
 
 /**
  * 检查图标
- * @param {*} icon 
- * @param {*} canEmpty 是否可以为空
+ * @param {string} icon 
+ * @param {boolean} canEmpty 是否可以为空
  * @returns 
  */
 function checkIcon (icon, canEmpty = false) {
@@ -25,9 +27,9 @@ function checkIcon (icon, canEmpty = false) {
 
 /**
  * 创建配置
- * @param {*} title 
- * @param {*} nodePath 
- * @param {*} type 
+ * @param {string} title 
+ * @param {string} nodePath 
+ * @param {string} type 
  * @returns 
  */
 async function createConfig (title, nodePath, type = 'node') {

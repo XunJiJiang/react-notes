@@ -1,3 +1,5 @@
+// @ts-check
+
 export { default as csl } from './modules/csl.js';
 
 export { default as getDirectory } from './modules/getDirectory.js';

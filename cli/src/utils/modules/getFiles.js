@@ -1,9 +1,17 @@
+// @ts-check
+
 import fs from 'fs';
 import path from 'path';
 import get__dirname from './get__dirname.js';
 
 const __dirname = get__dirname();
 
+/**
+ * 
+ * @param {string} directoryPath 
+ * @param {(e: string) => void} error 
+ * @returns 
+ */
 function getFiles (directoryPath, error = () => {}) {
   const dirPath = path.resolve(__dirname, directoryPath);
 
