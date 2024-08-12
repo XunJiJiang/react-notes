@@ -8,8 +8,7 @@ import { getStringWidth } from '@utils/index.ts';
 export default function APopover({
   className = '',
   children,
-  href = '',
-  ...props
+  href = ''
 }: APopoverProps) {
   const aRef = useRef<HTMLAnchorElement>(null);
   const popoverRef = useRef<HTMLElement>(null);
@@ -43,29 +42,49 @@ export default function APopover({
     }
   }, []);
 
+  const isHover = useRef(false);
+  const isFocus = useRef(false);
+
+  function setVisible(visible = false) {
+    if (visible || isHover.current || isFocus.current) {
+      if (!popoverRef.current) return;
+      clearTimeout(timeout.current);
+      popoverRef.current.style.display = 'block';
+      const _ = popoverRef.current.offsetHeight;
+      Promise.resolve(_).then(() => {
+        if (!popoverRef.current) return;
+        popoverRef.current.classList.add('a-popover-show');
+      });
+    } else {
+      if (!popoverRef.current) return;
+      popoverRef.current.classList.remove('a-popover-show');
+      timeout.current = setTimeout(() => {
+        if (!popoverRef.current) return;
+        popoverRef.current.style.display = 'none';
+      }, 300);
+    }
+  }
+
   return (
     <a
       ref={aRef}
       className={`${className} a-link`}
-      {...props}
       href={href}
       onMouseEnter={() => {
-        if (!popoverRef.current) return;
-        clearTimeout(timeout.current);
-        popoverRef.current.style.display = 'block';
-        const _ = popoverRef.current.offsetHeight;
-        Promise.resolve(_).then(() => {
-          if (!popoverRef.current) return;
-          popoverRef.current.classList.add('a-popover-show');
-        });
+        isHover.current = true;
+        setVisible(true);
       }}
       onMouseLeave={() => {
-        if (!popoverRef.current) return;
-        popoverRef.current.classList.remove('a-popover-show');
-        timeout.current = setTimeout(() => {
-          if (!popoverRef.current) return;
-          popoverRef.current.style.display = 'none';
-        }, 300);
+        isHover.current = false;
+        setVisible(false);
+      }}
+      onFocus={() => {
+        isFocus.current = true;
+        setVisible(true);
+      }}
+      onBlur={() => {
+        isFocus.current = false;
+        setVisible(false);
       }}
     >
       {children}
