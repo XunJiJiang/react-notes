@@ -23,6 +23,7 @@
   color: #b6b6b6;
 }
 
-.markdown-title .markdown-title-a:hover {
+.markdown-title .markdown-title-a:hover,
+.markdown-title .markdown-title-a:focus {
   color: #6e6e6e;
 }

@@ -47,7 +47,7 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
     const node = content.node;
     if (id && node) {
       // TODO: 设置滚动至标题的过度 smooth | instant
-      node.scrollIntoView({ behavior: 'instant' });
+      node.scrollIntoView({ behavior: 'smooth' });
     } else {
       console.warn('目录项对应的节点不存在');
     }

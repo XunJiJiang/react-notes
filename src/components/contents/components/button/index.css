@@ -35,7 +35,7 @@
 
 .content-button i.contents-button-right-icon {
   position: relative;
-  transition: all 0.3s;
+  transition: transform 0.3s;
   height: 100%;
 }
 

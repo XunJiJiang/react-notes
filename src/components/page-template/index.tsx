@@ -62,7 +62,7 @@ export default function PageTemplate({
     }
   }
 
-  const scrollHandlerDebounce = debounce(scrollHandler, 10);
+  const scrollHandlerDebounce = debounce(scrollHandler, 100);
 
   return (
     <div

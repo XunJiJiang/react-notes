@@ -99,7 +99,7 @@ const router = createBrowserRouter(
                         }
                       }
                     });
-                  }, 0);
+                  }, 300);
                 });
               };
               return route;
