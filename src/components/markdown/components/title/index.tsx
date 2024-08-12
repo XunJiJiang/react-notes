@@ -17,10 +17,11 @@ export function H1({
   // ...props
 }: TitleProps) {
   const id = createId(children) + useId();
+  const flattedChild = flatChild(children);
   const content: ContentNodeNullType = {
     id,
     label: children,
-    hash: '#' + flatChild(children),
+    hash: '#' + flattedChild,
     level: 1,
     node: null
   };
@@ -38,6 +39,7 @@ export function H1({
       <Link
         className={`markdown-title-a markdown-title-a-1`}
         to={encodeURI(content.hash)}
+        title={flattedChild}
       >
         <Icon name="link" size={32} />
       </Link>
@@ -53,10 +55,11 @@ export function H2({
   // ...props
 }: TitleProps) {
   const id = createId(children) + useId();
+  const flattedChild = flatChild(children);
   const content: ContentNodeNullType = {
     id,
     label: children,
-    hash: '#' + flatChild(children),
+    hash: '#' + flattedChild,
     level: 2,
     node: null
   };
@@ -74,6 +77,7 @@ export function H2({
       <Link
         className={`markdown-title-a markdown-title-a-2`}
         to={encodeURI(content.hash)}
+        title={flattedChild}
       >
         <Icon name="link" size={24} />
       </Link>
@@ -89,10 +93,11 @@ export function H3({
   // ...props
 }: TitleProps) {
   const id = createId(children) + useId();
+  const flattedChild = flatChild(children);
   const content: ContentNodeNullType = {
     id,
     label: children,
-    hash: '#' + flatChild(children),
+    hash: '#' + flattedChild,
     level: 3,
     node: null
   };
@@ -110,6 +115,7 @@ export function H3({
       <Link
         className={`markdown-title-a markdown-title-a-3`}
         to={encodeURI(content.hash)}
+        title={flattedChild}
       >
         <Icon name="link" size={16} />
       </Link>
