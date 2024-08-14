@@ -73,12 +73,14 @@ csl.createColor = (colors = null) => {
   }
 }
 
+const DEFAULT_TEXT = 'Hello World > 没有任何内容';
+
 /**
  * 控制台输出标题
  * @param {string} title 
  * @param {string | Array | null} colors 
  */
-csl.title = (title = 'Hello World', colors = null) => {
+csl.title = (title = DEFAULT_TEXT, colors = null) => {
   const titleGradient = csl.createColor(colors);
   const msg = figlet.textSync(title);
   csl(titleGradient(msg));
@@ -91,19 +93,19 @@ csl.title = (title = 'Hello World', colors = null) => {
 // 问号图标： \u2753
 // 叹号图标： \u2757
 
-csl.error = (message = 'Hello World') => {
+csl.error = (message = DEFAULT_TEXT) => {
   csl(chalk.red('\u2718 ' + message));
 };
 
-csl.warn = (message = 'Hello World') => {
+csl.warn = (message = DEFAULT_TEXT) => {
   csl(chalk.yellow('! ' + message));
 };
 
-csl.info = (message = 'Hello World') => {
+csl.info = (message = DEFAULT_TEXT) => {
   csl(chalk.white('\u2170 ' + message));
 };
 
-csl.success = (message = 'Hello World') => {
+csl.success = (message = DEFAULT_TEXT) => {
   csl(chalk.green('\u2713 ' + message));
 };
 

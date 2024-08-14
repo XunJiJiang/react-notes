@@ -1,12 +1,13 @@
 // @ts-check
 
 import { execSync } from 'child_process';
-import path from 'path';
+import path from 'node:path';
 import {
   csl,
   getDirectory,
   createSelect,
   createNode,
+  editNode,
   updateContents,
   get__dirname
 } from './src/utils/index.js';
@@ -26,12 +27,12 @@ async function logSelect (message, directoryPath = './src/pages/study') {
 
     const studyDirs = getDirectory(studyPath);
 
-    const choices = ['创建节点', '退出', '返回上一级', ...studyDirs].map((choice) => {
-      if (choice === '返回上一级' && studyPath.endsWith('\\src\\pages\\study')) {
+    const choices = ['创建节点', '编辑节点', '退出', '返回上一级', ...studyDirs].map((choice) => {
+      if (['编辑节点', '返回上一级'].includes(choice) && studyPath.endsWith('\\src\\pages\\study')) {
         return {
           name: choice,
           value: choice,
-          disabled: '已经是根目录了'
+          disabled: ' '
         };
       } else {
         return {
@@ -60,8 +61,13 @@ async function logSelect (message, directoryPath = './src/pages/study') {
         csl.success(result);
       } catch (error) {
         csl.warn(error);
-      } finally {
-        return await logSelect(message, studyPath);
+      }
+    } else if (answer === '编辑节点') {
+      try {
+        const result = await editNode(studyPath);
+        csl.success(result);
+      } catch (error) {
+        csl.warn(error);
       }
     } else if (answer === '退出') {
       csl.color('期待与您的再次相遇');

@@ -1,8 +1,11 @@
 // @ts-check
 
-import fs from 'fs';
-import path from 'path';
+import { statSync, readdirSync, existsSync, readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+// import { createRequire } from 'node:module';
 import get__dirname from './get__dirname.js';
+
+// const require = createRequire(import.meta.url);
 
 const __dirname = get__dirname();
 
@@ -14,15 +17,30 @@ const __dirname = get__dirname();
  */
 function getDirectory (directoryPath, error = () => {}) {
 
-  const dirPath = path.resolve(__dirname, directoryPath);
+  const dirPath = resolve(__dirname, directoryPath);
 
-  if (!fs.existsSync(dirPath)) {
+  const configFilePath = join(dirPath, 'nodeConfig.json');
+  const configFileContent = existsSync(configFilePath) ? readFileSync(configFilePath, 'utf-8') : (() => {
+    error(`The path ${configFilePath} does not exist.`);
+    return '{}';
+  })();
+  const config = JSON.parse(configFileContent);
+
+  const childrenSort = config.childrenSort ?? {};
+
+  if (!existsSync(dirPath)) {
     error(`The path ${dirPath} does not exist.`);
     return [];
   }
 
-  const directory = fs.readdirSync(dirPath).filter((file) => {
-    return fs.statSync(path.resolve(dirPath, file)).isDirectory();
+  const directory = []
+
+  readdirSync(dirPath).forEach((file) => {
+    const isDir = statSync(resolve(dirPath, file)).isDirectory();
+    const inBrotherDirNames = file in childrenSort;
+    if (isDir && inBrotherDirNames) {
+      directory[childrenSort[file]] = file;
+    }
   });
 
   return directory;

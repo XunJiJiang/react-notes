@@ -1,12 +1,16 @@
 // @ts-check
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+// import { createRequire } from 'node:module';
 import getDirectory from '../getDirectory.js';
 import getFiles from '../getFiles.js';
 import get__dirname from '../get__dirname.js';
 import capitalizeFirstLetter from '../capitalizeFirstLetter.js';
 import detectLineEnding from '../detectLineEnding.js';
+import csl from '../csl.js';
+
+// const require = createRequire(import.meta.url);
 
 /** @typedef {{dirName: string; files: string[]; directories: TypeStructure[]}} TypeStructure */
 
@@ -51,15 +55,34 @@ function _readContentsConfigFile (structure, directoryPath = __dirname) {
 
   if (configFile) {
     const configFilePath = path.resolve(__dirname, directoryPath, configFile);
-    const configFileContent = fs.readFileSync(configFilePath, 'utf-8');
+    const configFileContent = fs.existsSync(configFilePath) ? fs.readFileSync(configFilePath, 'utf-8') : (() => {
+      csl.error(`The path ${configFilePath} does not exist.`);
+      return '{}';
+    })();
     config = JSON.parse(configFileContent);
   }
 
   if (structure.directories.length > 0) {
+    const initDirIndex = [];
     config.children = structure.directories.map((directory) => {
       const child = _readContentsConfigFile(directory, path.resolve(directoryPath, directory.dirName));
+      initDirIndex.push(directory.dirName);
       return Object.keys(child).length === 0 ? null : child;
-    }).filter((item) => item !== null);
+    }).filter((item) => item !== null).reduce(
+      /**
+       * 
+       * @param {*} p 
+       * @param {*} c 
+       * @param {*} i 
+       * @returns {*}
+       */
+      (p, c, i) => {
+        const index = config.childrenSort[initDirIndex[i]];
+        p[index] = c;
+        return p;
+      },
+      []
+    );
   }
 
   return config;
@@ -107,6 +130,21 @@ function replaceSpecialSymbol (str) {
   return str.replace(/[^a-zA-Z0-9_]/g, '_').replace(/_+/g, '_').split('_').map((word) => {
     return capitalizeFirstLetter(word);
   }).join('');
+}
+
+/**
+ * @returns {(path: string) => string}
+ */
+function createPathMap() {
+  const map = new Map();
+  let mapI = 0;
+  let trailingI = 0;
+  return function (path) {
+    if (!map.has(path)) {
+      map.set(path, '_' + mapI++ + '');
+    }
+    return map.get(path) + '_' + trailingI++;
+  }
 }
 
 /** 
@@ -171,8 +209,8 @@ function isReactElement (component) {
  * }} contentText: 转换后的内容, componentPathList: 组件路径列表
  */
 function _convertComponentToFunction (config) {
-
-  let componentIndex = 0;
+  
+  const uniqueKey = createPathMap();
 
   const componentPathList = [];
 
@@ -203,7 +241,7 @@ function _convertComponentToFunction (config) {
       }
     } else if (!isNaN(parseInt(key))) {
       if (value.component !== null && value.component && isReactElement(value.component)) {
-        const _key = 'Comp' + replaceSpecialSymbol(value.path) + componentIndex++;
+        const _key = 'Comp' + uniqueKey(value.path);
         componentPathList.push([_key, `@${value.entryFilePath.slice(1)}`]);
         return {
           ...value,

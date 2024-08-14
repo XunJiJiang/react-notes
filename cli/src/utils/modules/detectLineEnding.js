@@ -1,6 +1,6 @@
 // @ts-check
 
-import fs from 'fs';
+import fs from 'node:fs';
 
 /**
  * 获取文件的换行符

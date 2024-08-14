@@ -1,6 +1,6 @@
 // @ts-check
 
-import path from 'path';
+import path from 'node:path';
 
 function get__dirname () {
   const arg = process.argv[2];

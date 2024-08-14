@@ -1,7 +1,7 @@
 // @ts-check
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { input, confirm, editor } from '@inquirer/prompts';
 import detectLineEnding from './detectLineEnding.js';
 // import capitalizeFirstLetter from './capitalizeFirstLetter.js';
@@ -16,8 +16,9 @@ const __dirname = get__dirname();
  * @param {string} lineEnding 
  * @returns 
  */
+// TODO: 将组件名Use改为基于title的组件名
 const createCodeTemplate = (title, lineEnding = '\r\n') => {
-  return `import PageTemplate from '@components/page-template/index.tsx';${lineEnding}import markdown from './${title}.md?raw';${lineEnding}${lineEnding}export default function Use () {${lineEnding}  return (${lineEnding}    <>${lineEnding}      <PageTemplate markdown={markdown}>${lineEnding}      </PageTemplate>${lineEnding}    </>${lineEnding}  )${lineEnding}}`
+  return `import PageTemplate from '@components/page-template/index.tsx';${lineEnding}import markdown from './${title}.md?raw';${lineEnding}${lineEnding}const Component = () => {${lineEnding}  return (${lineEnding}    <>${lineEnding}      <PageTemplate markdown={markdown}>${lineEnding}      </PageTemplate>${lineEnding}    </>${lineEnding}  )${lineEnding}};\n\nexport default Component;\n`
 }
 
 const CONTENTS_OBJECT = path.resolve(__dirname, './src/contents/index.tsx');
@@ -28,12 +29,17 @@ const CONTENTS_PATH = path.resolve(__dirname, './src/contents/contents.tsx');
  * 键入笔记配置并写入文件
  * @param {string} title
  * @param {string} nodePath
-*/
+ * @returns {Promise<{massage: string; status: string; task: () => void}>}
+  */
 async function _inputNodeConfig (title, nodePath) {
 
-  await createConfig(title, nodePath, 'node');
+  const createConfigTask = (await createConfig(title, nodePath, 'node'))[1];
 
-  return Promise.resolve('配置成功');
+  return {
+    massage: '配置成功',
+    status: '200',
+    task: createConfigTask
+  };
 }
 
 const titleRegex = /^[a-zA-Z][a-zA-Z0-9_-]+$/;
@@ -45,23 +51,26 @@ const titleRegex = /^[a-zA-Z][a-zA-Z0-9_-]+$/;
  * @returns 
  */
 async function _createNode (pathText, error) {
-  const title = await input({
-    message: '节点标题 (--exit 退出):',
-    validate: (title) => {
-      if (title.trim() === '') {
-        return '标题不能为空';
-      } else if (title === '--exit') {
+  // 被用于真实文件夹命名
+  const dirName = await input({
+    message: '节点文件夹名 (--exit 退出):',
+    validate: (name) => {
+      if (name.trim() === '') {
+        return '文件夹名不能为空';
+      } else if (name === '--exit') {
         return true;
       }
-      return titleRegex.test(title) ? true : '标题只能包含字母、数字、下划线和短横线, 不能以数字或符号开头';
+      return titleRegex.test(name) ? true : '文件夹名只能包含字母、数字、下划线和短横线, 不能以数字或符号开头';
     }
   });
 
-  if (title === '--exit') {
+  if (dirName === '--exit') {
     return Promise.reject('取消创建');
   }
 
-  const nodePath = path.resolve(__dirname, pathText, title);
+  const nodePath = path.resolve(__dirname, pathText, dirName);
+
+  let createDir = () => {};
 
   if (fs.existsSync(nodePath)) {
     const answer = await confirm({
@@ -72,10 +81,12 @@ async function _createNode (pathText, error) {
       return await createNode(pathText, error);
     }
   } else {
-    fs.mkdirSync(path.resolve(__dirname, nodePath));
+    createDir = () => {
+      fs.mkdirSync(path.resolve(__dirname, nodePath));
+    };    
   }
   
-  await _inputNodeConfig(title, nodePath);
+  const { task: writeConfig } = await _inputNodeConfig(dirName, nodePath);
 
   const isCustomizeMD = await confirm({
     message: '要自定义初始markdown内容吗?',
@@ -88,20 +99,26 @@ async function _createNode (pathText, error) {
         message: '编辑markdown内容',
         postfix: '.md',
         waitForUseInput: false,
-        default: `# ${title}`
+        default: `# ${dirName}`
       });
     } else {
-      return `# ${title}`;
+      return `# ${dirName}`;
     }
   })();
 
+  // 创建文件夹
+  createDir();
+
+  // 创建配置文件
+  writeConfig();
+
   // 创建\更新md文件
-  const markdownFilePath = path.join(nodePath, `${title}.md`);
+  const markdownFilePath = path.join(nodePath, `${dirName}.md`);
   fs.writeFileSync(markdownFilePath, markdown);
 
   // 创建\更新js文件
   const codeFilePath = path.join(nodePath, `index.tsx`);
-  fs.writeFileSync(codeFilePath, createCodeTemplate(title, detectLineEnding(CONTENTS_PATH)));
+  fs.writeFileSync(codeFilePath, createCodeTemplate(dirName, detectLineEnding(CONTENTS_PATH)));
 
   return Promise.resolve('创建成功');
 }

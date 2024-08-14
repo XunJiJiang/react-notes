@@ -1,7 +1,7 @@
 // @ts-check
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import get__dirname from './get__dirname.js';
 
 const __dirname = get__dirname();

@@ -19,3 +19,5 @@ export { default as getFiles } from './modules/getFiles.js';
 export { default as get__dirname } from './modules/get__dirname.js';
 
 export { default as createConfig } from './modules/createConfig.js';
+
+export { default as editNode } from './modules/editConfig.js';
