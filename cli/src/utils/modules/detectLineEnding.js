@@ -6,10 +6,10 @@ import fs from 'node:fs';
  * 获取文件的换行符
  * @param {string} file path | string
  * @param {string} type path | string
- * @returns 
+ * @returns
  */
-function detectLineEnding (file, type = 'path') {
-  const content = ((() => {
+function detectLineEnding(file, type = 'path') {
+  const content = (() => {
     if (type === 'path') {
       return fs.readFileSync(file, 'utf-8');
     } else if (type === 'string') {
@@ -17,7 +17,7 @@ function detectLineEnding (file, type = 'path') {
     } else {
       return '';
     }
-  })());
+  })();
   if (content.includes('\r\n')) {
     // crlf
     return '\r\n';

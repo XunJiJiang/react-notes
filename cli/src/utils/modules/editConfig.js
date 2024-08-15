@@ -3,10 +3,31 @@
 
 // import { createRequire } from 'node:module';
 import { join } from 'node:path';
-import { existsSync, writeFileSync, readFileSync } from 'node:fs';
+import { writeFileSync } from 'node:fs';
 import { input, select } from '@inquirer/prompts';
 import capitalizeFirstLetter from './capitalizeFirstLetter.js';
-import csl from './csl.js';
+import getConfig, { getParentConfig } from './getConfig.js';
+// import csl from './csl.js';
+
+/**
+ * @typedef {{
+ *   type: string;
+ *   value: string | null
+ * } | null} Tag
+ */
+
+/**
+ * @typedef {{
+ *   label: string | null;
+ *   path: string;
+ *   entryFilePath: string | null;
+ *   icon: string | null;
+ *   tag: Tag;
+ *   component: string | null;
+ *   type: string;
+ *   childrenSort: { [key: string]: number }
+ * }} Config
+ */
 
 // const require = createRequire(import.meta.url);
 
@@ -17,11 +38,11 @@ const pathRegex = /^[a-zA-Z0-9_@.-]+$/;
 /**
  * TODO: 此函数是重复函数, 在createConfig已经存在
  * 检查图标
- * @param {string} icon 
+ * @param {string} icon
  * @param {boolean} canEmpty 是否可以为空
- * @returns 
+ * @returns
  */
-function checkIcon (icon, canEmpty = false) {
+function checkIcon(icon, canEmpty = false) {
   if (icon.trim() === '') {
     return canEmpty ? true : '图标不能为空';
   } else if (!iconRegex.test(icon)) {
@@ -32,29 +53,34 @@ function checkIcon (icon, canEmpty = false) {
 }
 
 /**
- * 
+ *
+ * @param {string} nodePath
+ * @param {Config} config
+ */
+export function editParentConfig(nodePath, config) {
+  const parentConfigPath = join(
+    nodePath.replace(/\\/g, '/').split('/').slice(0, -1).join('/'),
+    'nodeConfig.json'
+  );
+  writeFileSync(parentConfigPath, JSON.stringify(config, null, 2));
+}
+
+/**
+ *
  * @param {string} pathText
  * @returns {Promise<string>}
  */
-async function editNode (pathText) {
-  if (!existsSync(join(pathText, 'nodeConfig.json'))) {
-    throw `节点 <${pathText}> 不存在.`
-  }
+async function editNode(pathText) {
+  const dirName = pathText.replace(/\\/g, '/').split('/').pop() + '';
 
-  const dirName = pathText.replace(/\\/g, '/').split('/').pop() + '';;
-  // const fatherDirName = pathText.replace(/\\/g, '/').split('/').slice(0, -1).pop();
-  // join(pathText.replace(/\\/g, '/').split('/').slice(0, -1).join('/'), 'nodeConfig.json');
-
-  // const config = require(join(pathText, 'nodeConfig.json'));
-  const configFileContent = readFileSync(join(pathText, 'nodeConfig.json'), 'utf-8');
-  const config = JSON.parse(configFileContent);
+  const config = getConfig(pathText);
 
   const typeName = config.type === 'node' ? '节点' : '根';
-  
+
   const label = await input({
     message: `${typeName}显示名称:`,
-    default: config.label,
-    validate: (label) => label.trim() === '' ? '名称不能为空' : true
+    default: config.label ?? '',
+    validate: (label) => (label && label.trim() === '' ? '名称不能为空' : true)
   });
 
   const relativePath = await input({
@@ -71,11 +97,12 @@ async function editNode (pathText) {
     }
   });
 
-  const icon = (await input({
-    message: `${typeName}图标(置空为没有图标):`,
-    default: config.icon ?? '',
-    validate: (icon) => checkIcon(icon ?? '', true)
-  })) ?? '';
+  const icon =
+    (await input({
+      message: `${typeName}图标(置空为没有图标):`,
+      default: config.icon ?? '',
+      validate: (icon) => checkIcon(icon ?? '', true)
+    })) ?? '';
 
   const oldTagType = config.tag ? config.tag.type : null;
   const oldTagValue = config.tag ? config.tag.value : null;
@@ -83,62 +110,65 @@ async function editNode (pathText) {
   const tagType = await select({
     message: `${typeName}标签类型:`,
     default: oldTagType,
-    choices: [{
-      name: '不设置标签',
-      value: null
-    }, {
-      name: '文本',
-      value: 'text'
-    }, {
-      name: 'icon',
-      value: 'icon'
-    }, {
-      name: 'react组件',
-      value: 'component',
-      disabled: '暂不支持由脚本创建'
-    }]
+    choices: [
+      {
+        name: '不设置标签',
+        value: null
+      },
+      {
+        name: '文本',
+        value: 'text'
+      },
+      {
+        name: 'icon',
+        value: 'icon'
+      },
+      {
+        name: 'react组件',
+        value: 'component',
+        disabled: '暂不支持由脚本创建'
+      }
+    ]
   });
 
-  const tag = await ((async () => {
+  const tag = await (async () => {
     const defaultTagValue = oldTagType === tagType ? oldTagValue : null;
     if (tagType === 'text') {
       return await input({
         message: '标签文本:',
-        default: defaultTagValue,
-        validate: (tag) => tag?.trim() === '' ? '标签文本不能为空' : true
+        default: defaultTagValue ?? '',
+        validate: (tag) =>
+          tag && tag.trim() === '' ? '标签文本不能为空' : true
       });
     } else if (tagType === 'icon') {
       return await input({
         message: '标签图标:',
-        default: defaultTagValue,
-        validate: (icon) => checkIcon(icon ?? '', false)
+        default: defaultTagValue ?? '',
+        validate: (icon) => icon && checkIcon(icon ?? '', false)
       });
     } else if (tagType === 'component') {
       return await input({
         message: '标签组件:',
-        default: defaultTagValue,
-        validate: (component) => component.trim() === '' ? '不能为空' : true
+        default: defaultTagValue ?? '',
+        validate: (component) =>
+          component && component.trim() === '' ? '不能为空' : true
       });
     } else {
       return null;
     }
-  })());
+  })();
 
-  const component = await ((async () => {
+  const component = await (async () => {
     if (config.type === 'node') {
       return `() => <${capitalizeFirstLetter(dirName)} />`;
     } else {
       return null;
     }
-  })());
+  })();
 
   const changeFather = await (async () => {
-    const fatherConfigPath = join(pathText.replace(/\\/g, '/').split('/').slice(0, -1).join('/'), 'nodeConfig.json');
-    const fatherConfigContent = existsSync(fatherConfigPath) ? readFileSync(fatherConfigPath, 'utf-8') : (() => {
-      csl.error(`The path ${fatherConfigPath} does not exist.`);
-      return '{}';
-    })();
-    const fatherConfig = JSON.parse(fatherConfigContent);
+    const fatherConfig = getParentConfig(pathText);
+
     const childrenSort = fatherConfig.childrenSort ?? {};
 
     const choices = [];
@@ -158,10 +188,10 @@ async function editNode (pathText) {
     if (choices.length === 0) {
       fatherConfig.childrenSort = {
         [dirName]: 0
-      }
+      };
       return () => {
-        writeFileSync(fatherConfigPath, JSON.stringify(fatherConfig, null, 2));
-      }
+        editParentConfig(pathText, fatherConfig);
+      };
     }
 
     const defaultIndex = fatherConfig.childrenSort[dirName];
@@ -171,10 +201,10 @@ async function editNode (pathText) {
       default: defaultIndex,
       choices: choices.reduce(
         /**
-         * 
-         * @param {{value: number, name: string}[]} p 
-         * @param {string} c 
-         * @param {number} i 
+         *
+         * @param {{value: number, name: string}[]} p
+         * @param {string} c
+         * @param {number} i
          * @returns {{value: number, name: string}[]}
          */
         (p, c, i) => {
@@ -187,43 +217,45 @@ async function editNode (pathText) {
           p.push({
             value: i + 1,
             name: c + '后'
-          })
+          });
           return p;
         },
         []
       )
     });
-    
-    fatherConfig.childrenSort = choices.reduce(
-      /**
-       * 
-       * @param {string[]} p 
-       * @param {string} c 
-       * @param {number} i 
-       * @returns {string[]}
-       */
-      (p, c, i) => {
-        if (i === answer) {
-          p.push(dirName);
-        }
-        p.push(c);
-        return p;
-      },
-      []
-    ).reduce(
-      /**
-       * 
-       * @param {{[key: string]: number}} p 
-       * @param {string} key 
-       * @param {number} i 
-       * @returns {{[key: string]: number}}
-       */
-      (p, key, i) => {
-        p[key] = i;
-        return p;
-      },
-      {}
-    );
+
+    fatherConfig.childrenSort = choices
+      .reduce(
+        /**
+         *
+         * @param {string[]} p
+         * @param {string} c
+         * @param {number} i
+         * @returns {string[]}
+         */
+        (p, c, i) => {
+          if (i === answer) {
+            p.push(dirName);
+          }
+          p.push(c);
+          return p;
+        },
+        []
+      )
+      .reduce(
+        /**
+         *
+         * @param {{[key: string]: number}} p
+         * @param {string} key
+         * @param {number} i
+         * @returns {{[key: string]: number}}
+         */
+        (p, key, i) => {
+          p[key] = i;
+          return p;
+        },
+        {}
+      );
 
     // 当插入结尾时, 第一个reduce内的i === answer不会触发, 所以需要在这里判断
     if (choices.length === answer) {
@@ -231,19 +263,23 @@ async function editNode (pathText) {
     }
 
     return () => {
-      writeFileSync(fatherConfigPath, JSON.stringify(fatherConfig, null, 2));
-    }
+      editParentConfig(pathText, fatherConfig);
+    };
   })();
 
   const newConfig = {
     label,
     path: '/' + relativePath,
-    entryFilePath: component ? `/pages/study${(pathText.replace(/\\/g, '/').split('/src/pages/study')[1] || '')}/index.tsx` : '',
+    entryFilePath: component
+      ? `/pages/study${pathText.replace(/\\/g, '/').split('/src/pages/study')[1] || ''}/index.tsx`
+      : '',
     icon: icon.trim() === '' ? null : icon,
-    tag: tagType ? {
-      type: tagType,
-      value: tag
-    } : null,
+    tag: tagType
+      ? {
+          type: tagType,
+          value: tag
+        }
+      : null,
     component,
     type: config.type,
     childrenSort: config.childrenSort

@@ -1,9 +1,10 @@
 // @ts-check
 
-import { statSync, readdirSync, existsSync, readFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { statSync, readdirSync, existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 // import { createRequire } from 'node:module';
 import get__dirname from './get__dirname.js';
+import getConfig from './getConfig.js';
 
 // const require = createRequire(import.meta.url);
 
@@ -11,20 +12,14 @@ const __dirname = get__dirname();
 
 /**
  * 获取指定路径下的所有文件夹
- * @param {string} directoryPath 
- * @param {(e: string) => void} error 
- * @returns 
+ * @param {string} directoryPath
+ * @param {(e: string) => void} error
+ * @returns
  */
-function getDirectory (directoryPath, error = () => {}) {
-
+function getDirectory(directoryPath, error = () => {}) {
   const dirPath = resolve(__dirname, directoryPath);
 
-  const configFilePath = join(dirPath, 'nodeConfig.json');
-  const configFileContent = existsSync(configFilePath) ? readFileSync(configFilePath, 'utf-8') : (() => {
-    error(`The path ${configFilePath} does not exist.`);
-    return '{}';
-  })();
-  const config = JSON.parse(configFileContent);
+  const config = getConfig(dirPath);
 
   const childrenSort = config.childrenSort ?? {};
 
@@ -33,7 +28,7 @@ function getDirectory (directoryPath, error = () => {}) {
     return [];
   }
 
-  const directory = []
+  const directory = [];
 
   readdirSync(dirPath).forEach((file) => {
     const isDir = statSync(resolve(dirPath, file)).isDirectory();

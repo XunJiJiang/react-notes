@@ -10,25 +10,24 @@ import { select, Separator } from '@inquirer/prompts';
 
 /**
  * 创建选择框
- * @param {string} message 
- * @param {TypeChoices} choices 
- * @param {number | number[] | Function | boolean} separator 
+ * @param {string} message
+ * @param {TypeChoices} choices
+ * @param {number | number[] | Function | boolean} separator
  * @returns
  */
-async function createSelect (message, choices, separator = false) {
+async function createSelect(message, choices, separator = false) {
   choices = createSelect.addSeparator(choices, separator);
   return await select({
     message,
-    choices,
+    choices
   });
 }
 
-
 /**
  * 在选择框的选项中添加分隔符
- * @param {TypeChoices} choices 
- * @param {number | number[] | Function | boolean} separator 
- * @returns 
+ * @param {TypeChoices} choices
+ * @param {number | number[] | Function | boolean} separator
+ * @returns
  */
 createSelect.addSeparator = (choices, separator) => {
   if (typeof separator === 'number' && separator > 0) {
@@ -43,8 +42,8 @@ createSelect.addSeparator = (choices, separator) => {
     choices = separator(choices);
   } else if (typeof separator === 'boolean' && separator) {
     choices = choices.reduce(
-      /** 
-       * @param {TypeChoices} acc 
+      /**
+       * @param {TypeChoices} acc
        * @param {TypeChoice} cur
        */
       (acc, cur) => {
@@ -56,6 +55,6 @@ createSelect.addSeparator = (choices, separator) => {
   }
 
   return choices;
-}
+};
 
 export default createSelect;

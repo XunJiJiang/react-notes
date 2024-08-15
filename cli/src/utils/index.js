@@ -21,3 +21,11 @@ export { default as get__dirname } from './modules/get__dirname.js';
 export { default as createConfig } from './modules/createConfig.js';
 
 export { default as editNode } from './modules/editConfig.js';
+
+export { editParentConfig } from './modules/editConfig.js';
+
+export { default as getConfig } from './modules/getConfig.js';
+
+export { getParentConfig } from './modules/getConfig.js';
+
+export { default as deleteNode } from './modules/deleteNode.js';

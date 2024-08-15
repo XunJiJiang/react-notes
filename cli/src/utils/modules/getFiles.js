@@ -7,12 +7,12 @@ import get__dirname from './get__dirname.js';
 const __dirname = get__dirname();
 
 /**
- * 
- * @param {string} directoryPath 
- * @param {(e: string) => void} error 
- * @returns 
+ *
+ * @param {string} directoryPath
+ * @param {(e: string) => void} error
+ * @returns
  */
-function getFiles (directoryPath, error = () => {}) {
+function getFiles(directoryPath, error = () => {}) {
   const dirPath = path.resolve(__dirname, directoryPath);
 
   if (!fs.existsSync(dirPath)) {

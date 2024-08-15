@@ -13,8 +13,8 @@ import gradient from 'gradient-string';
 /**
  * @typedef CslTitle
  * @type {Function}
- * @param {string} title 
- * @param {string | Array} colors 
+ * @param {string} title
+ * @param {string | Array} colors
  */
 
 /**
@@ -41,15 +41,24 @@ import gradient from 'gradient-string';
  * 控制台输出
  * @param  {...any} msg
  */
-function csl (...msg) {
+function csl(...msg) {
   csl.log(...msg);
-};
+}
 
-const cslFunc = ['log', 'title', 'error', 'warn', 'info', 'success', 'color', 'createColor'];
+const cslFunc = [
+  'log',
+  'title',
+  'error',
+  'warn',
+  'info',
+  'success',
+  'color',
+  'createColor'
+];
 
 /**
  * 控制台输出
- * @param {...any} msg 
+ * @param {...any} msg
  */
 csl.log = (...msg) => {
   console.log(...msg);
@@ -57,7 +66,7 @@ csl.log = (...msg) => {
 
 /**
  * 创建颜色
- * @param {string | Array | null} colors 
+ * @param {string | Array | null} colors
  * @returns {CslType}
  */
 csl.createColor = (colors = null) => {
@@ -67,18 +76,18 @@ csl.createColor = (colors = null) => {
     return gradient(colors);
   } else {
     return gradient([
-      {color: 'cyan', pos: 0},
-      {color: 'pink', pos: 0.9}
+      { color: 'cyan', pos: 0 },
+      { color: 'pink', pos: 0.9 }
     ]);
   }
-}
+};
 
 const DEFAULT_TEXT = 'Hello World > 没有任何内容';
 
 /**
  * 控制台输出标题
- * @param {string} title 
- * @param {string | Array | null} colors 
+ * @param {string} title
+ * @param {string | Array | null} colors
  */
 csl.title = (title = DEFAULT_TEXT, colors = null) => {
   const titleGradient = csl.createColor(colors);
@@ -110,10 +119,10 @@ csl.success = (message = DEFAULT_TEXT) => {
 };
 
 /**
- * 
- * @param {any} message 
- * @param {string | Array | null} colors 
- * @returns 
+ *
+ * @param {any} message
+ * @param {string | Array | null} colors
+ * @returns
  */
 csl.color = (message, colors = null) => {
   const color = csl.createColor(colors);
@@ -122,8 +131,8 @@ csl.color = (message, colors = null) => {
 
 /**
  * 控制台输出
- * @param  {...any} msg 
- * @property {CslLog} log 
+ * @param  {...any} msg
+ * @property {CslLog} log
  * @property {CslTitle} title
  * @property {CslType} error
  * @property {CslType} warn
@@ -133,10 +142,10 @@ csl.color = (message, colors = null) => {
  * @property {CslCreateColor} createColor
  */
 const _csl = new Proxy(csl, {
-  apply (target, thisArg, args) {
+  apply(target, thisArg, args) {
     return target(...args);
   },
-  get (target, prop, receiver) {
+  get(target, prop) {
     if (typeof prop === 'symbol') return;
 
     if (cslFunc.includes(prop)) {
