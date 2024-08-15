@@ -5,5 +5,10 @@
   "icon": null,
   "tag": null,
   "component": "() => <Hook />",
-  "type": "node"
+  "type": "node",
+  "childrenSort": {
+    "use": 0,
+    "useCallback": 1,
+    "useDebugValue": 2
+  }
 }

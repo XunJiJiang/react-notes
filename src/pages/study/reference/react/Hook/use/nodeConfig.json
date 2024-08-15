@@ -8,5 +8,6 @@
     "value": "experiment"
   },
   "component": "() => <Use />",
-  "type": "node"
+  "type": "node",
+  "childrenSort": {}
 }

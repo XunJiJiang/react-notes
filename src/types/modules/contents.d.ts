@@ -1,7 +1,7 @@
 import type { ElementTypeFunc } from '../utils/modules/Element.d.ts';
 
 type ContentTagType =
-  | 'string'
+  | string
   | {
       icon: string;
     }
@@ -15,6 +15,7 @@ interface ContentType {
   tag: ContentTagType;
   component: ElementTypeFunc | null;
   children?: ContentsType;
+  childrenSort: { [key: string]: number | undefined };
 }
 
 interface ContentsType extends Array<ContentType> {}

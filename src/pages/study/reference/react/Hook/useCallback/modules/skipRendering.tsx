@@ -2,10 +2,7 @@ import type { TestProps } from '../types/skipRendering.d.ts';
 
 import React from 'react';
 
-const Test = React.memo(function _Test({
-  testHandler,
-  isUseCallback
-}: TestProps) {
+const _Test = ({ testHandler, isUseCallback }: TestProps) => {
   const title = isUseCallback ? 'useCallback' : 'not useCallback';
   testHandler(title);
   return (
@@ -13,9 +10,11 @@ const Test = React.memo(function _Test({
       <p>{title}</p>
     </div>
   );
-});
+};
 
-function SkipRendering() {
+const Test = React.memo(_Test);
+
+const SkipRendering = () => {
   const [a, setA] = React.useState(1);
   const [b] = React.useState(
     new (class B {
@@ -44,6 +43,6 @@ function SkipRendering() {
       <Test testHandler={testHandlerUseCallback} isUseCallback={true} />
     </>
   );
-}
+};
 
 export default SkipRendering;

@@ -38,6 +38,7 @@ interface ChangeEventMapReturnContentType extends ContentType {
   icon?: string | null;
   tag?: ContentTagType;
   children?: ContentsType;
+  childrenSort?: { [key: string]: number | undefined };
   component: ElementTypeFunc | null;
 }
 

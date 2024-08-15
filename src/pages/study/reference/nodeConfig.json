@@ -5,5 +5,8 @@
   "icon": null,
   "tag": null,
   "component": "() => <Reference />",
-  "type": "node"
+  "type": "node",
+  "childrenSort": {
+    "react": 0
+  }
 }

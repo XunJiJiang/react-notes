@@ -5,5 +5,6 @@
   "icon": null,
   "tag": null,
   "component": "() => <UseCallback />",
-  "type": "node"
+  "type": "node",
+  "childrenSort": {}
 }
