@@ -1,0 +1,148 @@
+import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
+import react from 'eslint-plugin-react';
+import _import from 'eslint-plugin-import';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import eslintTs from 'typescript-eslint';
+import prettier from 'eslint-plugin-prettier';
+import globals from 'globals';
+import tsParser from '@typescript-eslint/parser';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import js from '@eslint/js';
+import { FlatCompat } from '@eslint/eslintrc';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all
+});
+// const jsCompat = new FlatCompat({
+//   baseDirectory: __dirname,
+//   recommendedConfig: js.configs.recommended,
+//   allConfig: js.configs.all
+// });
+
+export default [
+  ...eslintTs.config(
+    {
+      ignores: [
+        '**/.eslintrc.cjs',
+        'node_modules',
+        '**/node_modules',
+        '**/node_modules/',
+        'dist',
+        '**/dist',
+        '**/dist/',
+        'cli',
+        '**/cli',
+        '**/cli/'
+      ]
+    },
+    ...fixupConfigRules(
+      compat.extends(
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:react-hooks/recommended',
+        'plugin:react/recommended',
+        'plugin:prettier/recommended'
+      )
+    ),
+    {
+      plugins: {
+        'eslint-plugin-react': react,
+        import: fixupPluginRules(_import),
+        'react-refresh': reactRefresh,
+        // '@typescript-eslint': fixupPluginRules(typescriptEslint),
+        'eslint-plugin-prettier': prettier
+      },
+
+      languageOptions: {
+        globals: {
+          ...globals.browser
+        },
+
+        parser: tsParser,
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true
+          }
+        }
+      },
+
+      settings: {
+        react: {
+          version: 'detect'
+        },
+
+        'import/parsers': {
+          '@typescript-eslint/parser': ['.ts', '.tsx']
+        },
+
+        'import/resolver': {
+          vite: {
+            viteConfig: {
+              resolve: {
+                alias: {
+                  '@': path.resolve(__dirname, 'src'),
+                  '@components': path.resolve(__dirname, 'src/components'),
+                  '@utils': path.resolve(__dirname, 'src/utils'),
+                  '@pages': path.resolve(__dirname, 'src/pages'),
+                  '@img': path.resolve(__dirname, 'src/assets/images'),
+                  '@type': path.resolve(__dirname, 'src/types')
+                }
+              }
+            }
+          },
+
+          typescript: {
+            alwaysTryTypes: true
+          }
+        }
+      },
+
+      rules: {
+        'react-refresh/only-export-components': [
+          'warn',
+          {
+            allowConstantExport: true
+          }
+        ],
+
+        'import/no-unresolved': 'error',
+
+        'prettier/prettier': [
+          'error',
+          {
+            singleQuote: true
+          }
+        ],
+
+        'react/react-in-jsx-scope': 'off',
+        'react/jsx-uses-react': 'off'
+      }
+    }
+  ),
+  // {
+  //   files: ['cli/**/*.js'],
+  //   ...fixupConfigRules(
+  //     jsCompat.extends('eslint:recommended', 'plugin:prettier/recommended')
+  //   )
+  // },
+  {
+    files: ['cli/**/*.js'],
+    plugins: {
+      import: fixupPluginRules(_import),
+      'eslint-plugin-prettier': prettier
+    },
+    languageOptions: {
+      globals: { ...globals.browser },
+      sourceType: 'module',
+      ecmaVersion: 'latest'
+    }
+  }
+];

@@ -2,7 +2,6 @@ const path = require('path');
 
 module.exports = {
   root: true,
-  plugins: ['import'],
   env: { browser: true, es2020: true },
   extends: [
     'eslint:recommended',

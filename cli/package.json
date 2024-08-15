@@ -5,12 +5,17 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "create:note": "node index.js in-cli"
+    "create:note": "node index.js in-cli",
+    "lint": "eslint --cache .",
+    "format": "prettier --write .",
+    "format-check": "prettier --check ."
   },
   "keywords": [],
   "author": "xunji",
   "license": "ISC",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "dependencies": {
     "@inquirer/prompts": "^5.0.2",
     "chalk": "^5.3.0",
