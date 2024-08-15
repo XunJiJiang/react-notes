@@ -29,7 +29,7 @@
       "@pages/*": ["pages/*"],
       "@img/*": ["assets/images/*"],
       "@type/*": ["types/*"],
-      "@router/*": ["router/*"],
+      "@router/*": ["router/*"]
     }
   },
   "include": ["src"],
