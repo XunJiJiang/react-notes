@@ -18,27 +18,25 @@ const compat = new FlatCompat({
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all
 });
-// const jsCompat = new FlatCompat({
-//   baseDirectory: __dirname,
-//   recommendedConfig: js.configs.recommended,
-//   allConfig: js.configs.all
-// });
+
+// const addFiles = (files, ...configs) => {
+//   return configs.map((config) => {
+//     const _files = config.files || [];
+//     const newFiles = [...new Set([...files, ..._files])];
+//     return {
+//       ...config,
+//       files: newFiles
+//     };
+//   });
+// };
 
 export default [
+  {
+    ignores: ['**/.eslintrc.cjs', 'node_modules', 'dist']
+  },
   ...eslintTs.config(
     {
-      ignores: [
-        '**/.eslintrc.cjs',
-        'node_modules',
-        '**/node_modules',
-        '**/node_modules/',
-        'dist',
-        '**/dist',
-        '**/dist/',
-        'cli',
-        '**/cli',
-        '**/cli/'
-      ]
+      ignores: ['**/.eslintrc.cjs', 'node_modules', 'dist', 'cli']
     },
     ...fixupConfigRules(
       compat.extends(
@@ -54,7 +52,6 @@ export default [
         'eslint-plugin-react': react,
         import: fixupPluginRules(_import),
         'react-refresh': reactRefresh,
-        // '@typescript-eslint': fixupPluginRules(typescriptEslint),
         'eslint-plugin-prettier': prettier
       },
 
@@ -126,23 +123,22 @@ export default [
         'react/jsx-uses-react': 'off'
       }
     }
-  ),
-  // {
-  //   files: ['cli/**/*.js'],
+  )
+  // ...addFiles(
+  //   ['cli/**/*.js'],
   //   ...fixupConfigRules(
-  //     jsCompat.extends('eslint:recommended', 'plugin:prettier/recommended')
-  //   )
-  // },
-  {
-    files: ['cli/**/*.js'],
-    plugins: {
-      import: fixupPluginRules(_import),
-      'eslint-plugin-prettier': prettier
-    },
-    languageOptions: {
-      globals: { ...globals.browser },
-      sourceType: 'module',
-      ecmaVersion: 'latest'
-    }
-  }
+  //     compat.extends('eslint:recommended', 'plugin:prettier/recommended')
+  //   ),
+  //   {
+  //     plugins: {
+  //       import: fixupPluginRules(_import),
+  //       'eslint-plugin-prettier': prettier
+  //     },
+  //     languageOptions: {
+  //       globals: { ...globals.browser },
+  //       sourceType: 'module',
+  //       ecmaVersion: 'latest'
+  //     }
+  //   }
+  // )
 ];
