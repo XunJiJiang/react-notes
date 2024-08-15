@@ -1,10 +1,12 @@
 import PageTemplate from '@components/page-template/index.tsx';
 import markdown from './React.md?raw';
 
-export default function Reference() {
+const ReactNote = () => {
   return (
     <>
       <PageTemplate markdown={markdown}></PageTemplate>
     </>
   );
-}
+};
+
+export default ReactNote;

@@ -17,7 +17,7 @@ errorTypeMap.set('NOT_FOUND', () => {
 });
 // TODO: 预计支持注册错误类型
 
-function useError(type?: string) {
+const useError = (type?: string) => {
   const routeError = useRouteError();
 
   if (errorTypeMap.has(type)) {
@@ -30,9 +30,9 @@ function useError(type?: string) {
   }) as {
     statusText: string;
   };
-}
+};
 
-export default function ErrorPage({ type }: { type?: string }) {
+const ErrorPage = ({ type }: { type?: string }) => {
   // const navigate = useNavigate();
 
   // useEffect(() => {
@@ -44,4 +44,6 @@ export default function ErrorPage({ type }: { type?: string }) {
   // const errorValue = errorTypeMap.get(error.statusText);
 
   return <NotFound info={error!.statusText || error!.message || void 0} />;
-}
+};
+
+export default ErrorPage;

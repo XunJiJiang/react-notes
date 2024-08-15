@@ -107,13 +107,13 @@ const changeEventMap: ChangeEventMapType = {
   }
 };
 
-export default function Contents({
+const Contents = ({
   title = '目录',
   contents = [],
   path = '',
   onChange = () => {},
   onWidthLoad = () => {}
-}: ContentsProps) {
+}: ContentsProps) => {
   const widthCache = useRef(null);
 
   /** 目录的宽度 */
@@ -188,4 +188,6 @@ export default function Contents({
       </nav>
     </div>
   );
-}
+};
+
+export default Contents;

@@ -100,10 +100,10 @@ async function _createNode(pathText, error) {
         message: '编辑markdown内容',
         postfix: '.md',
         waitForUseInput: false,
-        default: `# ${dirName}`
+        default: `# ${dirName}\n`
       });
     } else {
-      return `# ${dirName}`;
+      return `# ${dirName}\n`;
     }
   })();
 

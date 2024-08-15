@@ -113,12 +113,12 @@ const getBlockquoteConfig: GetBlockquoteConfigFunc = (node) => {
   return [tag, title !== '', title, attributes];
 };
 
-export default function Blockquote({
+const Blockquote = ({
   node,
   className = '',
   children = [''],
   ...props
-}: BlockquoteProps) {
+}: BlockquoteProps) => {
   const [_children, _className] = (() => {
     if (node && node.children && node.children[1]) {
       const [key, hasTitle, title, attributes] = getBlockquoteConfig(
@@ -154,4 +154,6 @@ export default function Blockquote({
       {_children}
     </blockquote>
   );
-}
+};
+
+export default Blockquote;

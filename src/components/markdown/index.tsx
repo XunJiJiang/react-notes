@@ -19,10 +19,10 @@ import Pre from './components/pre/index.tsx';
 import Img from './components/img/index.tsx';
 import { H1, H2, H3 } from './components/title/index.tsx';
 
-const MarkdownComponent = forwardRef(function _MarkdownComponent(
+const _MarkdownComponent = (
   { markdown }: MarkdownComponentProps,
   ref: React.ForwardedRef<MarkdownComponentRef>
-) {
+) => {
   // 保存目录项
   const contents = useRef<ContentsType>([]);
 
@@ -45,7 +45,7 @@ const MarkdownComponent = forwardRef(function _MarkdownComponent(
   /**
    * 设置 contents
    */
-  function setContents(content: ContentType) {
+  const setContents = (content: ContentType) => {
     // 当前目录项已经存入目录项列表时, 更新其对应的节点
     if (contents.current[contentsIndex.current] && content.node) {
       contents.current[contentsIndex.current].node = content.node;
@@ -60,7 +60,7 @@ const MarkdownComponent = forwardRef(function _MarkdownComponent(
     if (content.node) {
       contentsIndex.current++;
     }
-  }
+  };
 
   const components: Components = {
     code(props) {
@@ -106,6 +106,8 @@ const MarkdownComponent = forwardRef(function _MarkdownComponent(
       {markdown}
     </Markdown>
   );
-});
+};
+
+const MarkdownComponent = forwardRef(_MarkdownComponent);
 
 export default MarkdownComponent;

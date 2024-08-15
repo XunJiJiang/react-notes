@@ -14,10 +14,10 @@ import { debounce } from '@/utils/index.ts';
 
 const scrollEvent = /* 'onscrollend' in window ? 'scrollend' : */ 'scroll';
 
-export default function PageTemplate({
+const PageTemplate = ({
   children,
   markdown = '> 没有 markdown 文本'
-}: PageTemplateProps) {
+}: PageTemplateProps) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const markdownRef = useRef<MarkdownComponentRef | null>(null);
@@ -29,7 +29,7 @@ export default function PageTemplate({
   /**
    * 滚动事件处理
    */
-  function scrollHandler() {
+  const scrollHandler = () => {
     if (
       markdownContentsRef.current &&
       markdownContentsRef.current.changeLocation
@@ -60,7 +60,7 @@ export default function PageTemplate({
         }
       }
     }
-  }
+  };
 
   const scrollHandlerDebounce = debounce(scrollHandler, 100);
 
@@ -104,4 +104,6 @@ export default function PageTemplate({
       </div>
     </div>
   );
-}
+};
+
+export default PageTemplate;

@@ -49,7 +49,7 @@ export const createId: CreateIdFunc = (children) => {
 /**
  * 将children扁平化为一个字符串
  */
-export function flatChild(
+export const flatChild = (
   children:
     | ContentLabelType
     | {
@@ -57,7 +57,7 @@ export function flatChild(
           children: string;
         };
       }
-): string {
+): string => {
   if (children === null) {
     throw console.error('markdown.comp.title.utils flatChild 未知类型 null');
   }
@@ -79,4 +79,4 @@ export function flatChild(
   throw console.error(
     `markdown.comp.title.utils flatChild 未知类型 ${typeof children}`
   );
-}
+};

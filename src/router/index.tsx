@@ -11,11 +11,11 @@ type flattenReturns = Array<{
   route: RouteObject;
 }>;
 
-function flattening(
+const flattening = (
   contents: ContentsType,
   basePath = '',
   layer = 1
-): { flattedContents: flattenReturns; layer: number } {
+): { flattedContents: flattenReturns; layer: number } => {
   const _contents: flattenReturns = [];
 
   let deeperLayer = layer;
@@ -54,9 +54,9 @@ function flattening(
     flattedContents: _contents,
     layer: deeperLayer
   };
-}
+};
 
-function createCatchRoute(layer = 0) {
+const createCatchRoute = (layer = 0) => {
   const catchRoutes: RouteObject[] = [];
   for (let i = 1; i <= layer; i++) {
     catchRoutes.push({
@@ -65,7 +65,7 @@ function createCatchRoute(layer = 0) {
     });
   }
   return catchRoutes;
-}
+};
 
 const { flattedContents, layer } = flattening(contents);
 

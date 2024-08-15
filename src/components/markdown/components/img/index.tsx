@@ -2,7 +2,7 @@ import type { ImgProps } from '@type/modules/comp-markdown-comp-img.d.ts';
 
 import './index.css';
 
-function Img({ src = '', alt = '', className = '' }: ImgProps) {
+const Img = ({ src = '', alt = '', className = '' }: ImgProps) => {
   return (
     <img
       className={`markdown-img ${className ?? ''}`}
@@ -24,6 +24,6 @@ function Img({ src = '', alt = '', className = '' }: ImgProps) {
       }}
     />
   );
-}
+};
 
 export default Img;

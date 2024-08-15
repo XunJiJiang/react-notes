@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Icon from '@/components/icon';
 import { useLoaderDataWithType } from '@utils/index.ts';
 
-export default function Pager() {
+const Pager = () => {
   const { prev, next } = useLoaderDataWithType<LoaderData>().pages;
 
   return (
@@ -34,4 +34,6 @@ export default function Pager() {
       </div>
     </nav>
   );
-}
+};
+
+export default Pager;

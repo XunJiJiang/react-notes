@@ -10,12 +10,12 @@ import { Link } from 'react-router-dom';
 import Icon from '@components/icon';
 import { createId, flatChild } from '../../utils/index.ts';
 
-export function H1({
+export const H1 = ({
   className = '',
   children = '',
   setContents
   // ...props
-}: TitleProps) {
+}: TitleProps) => {
   const id = createId(children) + useId();
   const flattedChild = flatChild(children);
   const content: ContentNodeNullType = {
@@ -46,14 +46,14 @@ export function H1({
       {children}
     </h1>
   );
-}
+};
 
-export function H2({
+export const H2 = ({
   className,
   children = '',
   setContents
   // ...props
-}: TitleProps) {
+}: TitleProps) => {
   const id = createId(children) + useId();
   const flattedChild = flatChild(children);
   const content: ContentNodeNullType = {
@@ -84,14 +84,14 @@ export function H2({
       {children}
     </h2>
   );
-}
+};
 
-export function H3({
+export const H3 = ({
   className,
   children = '',
   setContents
   // ...props
-}: TitleProps) {
+}: TitleProps) => {
   const id = createId(children) + useId();
   const flattedChild = flatChild(children);
   const content: ContentNodeNullType = {
@@ -122,4 +122,6 @@ export function H3({
       {children}
     </h3>
   );
-}
+};
+
+// export { H1, H2, H3 };

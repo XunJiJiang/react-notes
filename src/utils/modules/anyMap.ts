@@ -3,19 +3,19 @@ import type { AllType } from '@type/index.d.ts';
 
 type WeakMapKey = object | ((...args: AllType[]) => AllType);
 
-function isWeakMapKey(key: AllType): key is WeakMapKey {
+const isWeakMapKey = (key: AllType): key is WeakMapKey => {
   return ['object', 'function'].includes(typeof key);
-}
+};
 
-function isSymbolKey(key: AllType): key is symbol {
+const isSymbolKey = (key: AllType): key is symbol => {
   return typeof key === 'symbol';
-}
+};
 
 type inferKeyType<T extends AllType> = T extends WeakMapKey ? 'weakMap' : 'map';
 
 const unNeedReturnValue = ['object', 'function', 'symbol'];
 
-function keyOfMap<T extends AllType>(key: T): inferKeyType<T> {
+const keyOfMap = <T extends AllType>(key: T): inferKeyType<T> => {
   if (isWeakMapKey(key)) {
     return 'weakMap' as inferKeyType<T>;
   }
@@ -25,7 +25,7 @@ function keyOfMap<T extends AllType>(key: T): inferKeyType<T> {
     ) as inferKeyType<T>;
   }
   return 'map' as inferKeyType<T>;
-}
+};
 
 const insMap = new WeakMap<AnyMap, MapInstance>();
 

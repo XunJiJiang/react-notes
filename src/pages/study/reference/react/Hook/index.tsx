@@ -1,10 +1,12 @@
 import PageTemplate from '@components/page-template/index.tsx';
 import markdown from './Hook.md?raw';
 
-export default function Reference() {
+const Hook = () => {
   return (
     <>
       <PageTemplate markdown={markdown}></PageTemplate>
     </>
   );
-}
+};
+
+export default Hook;

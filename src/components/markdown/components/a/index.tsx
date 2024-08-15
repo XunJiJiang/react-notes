@@ -5,11 +5,7 @@ import { useRef, useEffect } from 'react';
 import Icon from '@components/icon/index.tsx';
 import { getStringWidth } from '@utils/index.ts';
 
-export default function APopover({
-  className = '',
-  children,
-  href = ''
-}: APopoverProps) {
+const APopover = ({ className = '', children, href = '' }: APopoverProps) => {
   const aRef = useRef<HTMLAnchorElement>(null);
   const popoverRef = useRef<HTMLElement>(null);
   const timeout = useRef<number | undefined>();
@@ -45,7 +41,7 @@ export default function APopover({
   const isHover = useRef(false);
   const isFocus = useRef(false);
 
-  function setVisible(visible = false) {
+  const setVisible = (visible = false) => {
     if (visible || isHover.current || isFocus.current) {
       if (!popoverRef.current) return;
       clearTimeout(timeout.current);
@@ -63,7 +59,7 @@ export default function APopover({
         popoverRef.current.style.display = 'none';
       }, 300);
     }
-  }
+  };
 
   return (
     <a
@@ -94,4 +90,6 @@ export default function APopover({
       </span>
     </a>
   );
-}
+};
+
+export default APopover;

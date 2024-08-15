@@ -3,13 +3,13 @@ import type { TransitionProps } from '@type/modules/comp-transition.d.ts';
 import { useState, useRef, useEffect } from 'react';
 import runAnimate, { _keyframes } from './hooks/useTransition.ts';
 
-export default function Transition({
+const Transition = ({
   mode = 'out-in',
   children,
   keyframe = _keyframes[mode],
   duration = 300,
   easing = 'ease-in-out'
-}: TransitionProps) {
+}: TransitionProps) => {
   if (!children) {
     throw new Error('Transition 组件必须有一个子元素');
   }
@@ -38,4 +38,6 @@ export default function Transition({
   }, [children]);
 
   return <>{nowChild}</>;
-}
+};
+
+export default Transition;

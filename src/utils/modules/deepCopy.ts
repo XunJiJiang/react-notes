@@ -12,7 +12,7 @@ type AllType =
 const deepCopy = (obj: AllType): AllType => {
   const map = new WeakMap();
 
-  function _deepCopy(_obj: AllType): AllType {
+  const _deepCopy = (_obj: AllType): AllType => {
     if (
       _obj &&
       (_obj as Node).nodeType &&
@@ -36,7 +36,7 @@ const deepCopy = (obj: AllType): AllType => {
     }
 
     return result;
-  }
+  };
 
   return _deepCopy(obj);
 };

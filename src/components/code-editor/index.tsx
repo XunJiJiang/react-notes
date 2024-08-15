@@ -5,7 +5,7 @@ import 'highlight.js/styles/atom-one-dark.css';
 // const { highlight } = hljs;
 
 // const code = highlight(
-//   `function CodeEditor () {
+//   `const CodeEditor = () => {
 //   return {
 //     test: true
 //   };
@@ -16,13 +16,13 @@ import 'highlight.js/styles/atom-one-dark.css';
 //   },
 // );
 
-function CodeEditor() {
+const CodeEditor = () => {
   return (
     <pre>
       {/* <code
         ref={node => {
           if (node) {
-            function inputHandler(e: InputEvent) {
+            const inputHandler = (e: InputEvent) => {
               const code = highlight(e.target?.innerText, {
                 language: 'javascript',
                 ignoreIllegals: true,
@@ -40,6 +40,6 @@ function CodeEditor() {
       ></code> */}
     </pre>
   );
-}
+};
 
 export default CodeEditor;

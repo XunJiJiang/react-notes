@@ -45,12 +45,12 @@ const CHARACTERS_map = new Map<keys, value>([
  * @param param.symbol
  * @returns
  */
-function getCharacters({
+const getCharacters = ({
   uppercase = true,
   lowercase = true,
   number = true,
   symbol = false
-}) {
+}) => {
   let result = '';
   let length = 0;
   if (uppercase) {
@@ -70,7 +70,7 @@ function getCharacters({
     length += CHARACTERS_map.get('symbol')!.length;
   }
   return [result, length];
-}
+};
 
 /**
  * 随机字符

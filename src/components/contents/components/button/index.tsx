@@ -8,7 +8,7 @@ import './index.css';
 import { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import Icon from '@components/icon/index';
 
-const Button = forwardRef(function Button(
+const _Button = (
   {
     title = '',
     tag,
@@ -21,7 +21,7 @@ const Button = forwardRef(function Button(
     }
   }: ButtonProps,
   ref: React.ForwardedRef<ButtonRef>
-) {
+) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const _tag = (() => {
@@ -112,6 +112,6 @@ const Button = forwardRef(function Button(
       {isBranch && <Icon name="right" className="contents-button-right-icon" />}
     </button>
   );
-});
+};
 
 export default Button;

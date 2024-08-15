@@ -8,7 +8,7 @@ import './index.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-function FencedCodeBlocks({ children, match }: FencedCodeBlocksProps) {
+const FencedCodeBlocks = ({ children, match }: FencedCodeBlocksProps) => {
   return (
     <SyntaxHighlighter
       style={StyleHighlighter}
@@ -24,11 +24,11 @@ function FencedCodeBlocks({ children, match }: FencedCodeBlocksProps) {
       {children}
     </SyntaxHighlighter>
   );
-}
+};
 
 const styleKeyList = ['success', 'warn', 'danger', 'info'];
 
-function getShortCodeBlocksConfig(children: string | React.ReactNode) {
+const getShortCodeBlocksConfig = (children: string | React.ReactNode) => {
   if (!children)
     return {
       children: '',
@@ -71,9 +71,9 @@ function getShortCodeBlocksConfig(children: string | React.ReactNode) {
     children: content,
     tag: 'info'
   };
-}
+};
 
-function ShortCodeBlocks({ children, className }: ShortCodeBlocksProps) {
+const ShortCodeBlocks = ({ children, className }: ShortCodeBlocksProps) => {
   const { children: _children, tag } = getShortCodeBlocksConfig(children);
   return (
     <code
@@ -82,9 +82,9 @@ function ShortCodeBlocks({ children, className }: ShortCodeBlocksProps) {
       {_children}
     </code>
   );
-}
+};
 
-function Code({ className = '', children = '', ...props }: CodeProps) {
+const Code = ({ className = '', children = '', ...props }: CodeProps) => {
   const match = /language-(\w+)/.exec(className ?? '');
   const _children = children ? String(children).replace(/\n$/, '') : ' ';
   return match ? (
@@ -96,6 +96,6 @@ function Code({ className = '', children = '', ...props }: CodeProps) {
       {children}
     </ShortCodeBlocks>
   );
-}
+};
 
 export default Code;

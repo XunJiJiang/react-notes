@@ -7,7 +7,7 @@ interface UseForceReRendering {
 
 const symbol = Symbol('useForceReRendering');
 
-export default function useForceReRendering() {
+const useForceReRendering = () => {
   const [v_, set_] = useState({
     [symbol]: true
   });
@@ -23,4 +23,6 @@ export default function useForceReRendering() {
       }
     }
   });
-}
+};
+
+export default useForceReRendering;

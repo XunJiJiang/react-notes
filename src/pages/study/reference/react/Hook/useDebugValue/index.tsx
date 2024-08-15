@@ -28,13 +28,13 @@ const imgPaths = [
 
 const markdown = markdownImgPathFormatting(_markdown, imgPaths);
 
-function useMyHook() {
+const useMyHook = () => {
   const [state] = useState(0);
   // useDebugValue(state > 0 ? 'Positive' : 'Non-positive');
   return state;
-}
+};
 
-export default function UseCallback() {
+const UseCallback = () => {
   useMyHook();
 
   return (
@@ -44,4 +44,6 @@ export default function UseCallback() {
       </PageTemplate>
     </>
   );
-}
+};
+
+export default UseCallback;

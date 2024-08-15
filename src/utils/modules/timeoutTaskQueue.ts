@@ -4,13 +4,13 @@ interface Task {
   callback: () => void | Promise<void>;
 }
 
-function isAsyncFunction<T>(
+const isAsyncFunction = <T>(
   value: unknown
-): value is (...args: unknown[]) => Promise<T> {
+): value is (...args: unknown[]) => Promise<T> => {
   return (
     typeof value === 'function' && value.constructor.name === 'AsyncFunction'
   );
-}
+};
 
 /**
  * 创建延时任务队列，按照添加任务的顺序执行

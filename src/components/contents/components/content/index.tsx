@@ -20,7 +20,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Button from '../button/index.tsx';
 import NotFound from '@pages/404/index.tsx';
 
-const Content = forwardRef(function _Content(
+const _Content = (
   {
     contents = [],
     fatherPath = '',
@@ -31,7 +31,7 @@ const Content = forwardRef(function _Content(
     onChange
   }: ContentProps,
   ref: React.ForwardedRef<ContentRef>
-) {
+) => {
   //  储存当前组件和每个子选项组件的路径信息. 下标高位为父组件的路径, 低位为子组件的路径.
   // const pathList = useContext(PathList);
 
@@ -230,6 +230,8 @@ const Content = forwardRef(function _Content(
         })}
     </>
   );
-});
+};
+
+const Content = forwardRef(_Content);
 
 export default Content;

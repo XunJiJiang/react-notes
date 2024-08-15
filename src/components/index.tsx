@@ -10,7 +10,7 @@ import { Outlet, useNavigation, useLocation } from 'react-router-dom';
 import contents from '../contents/index.tsx';
 import Contents from './contents/index.tsx';
 
-export default function Components() {
+const Components = () => {
   // 当前展示的组件
   // const [mainNode, setMainNode] = useState<null | React.JSX.Element>(null);
 
@@ -29,11 +29,11 @@ export default function Components() {
    * @param {Content} context.content 当前点击的项目的菜单项
    * @param {React.JSX.Element} context.component 当前展示的组件
    */
-  function changeHandler(context: ChangeEventMapReturnType) {
+  const changeHandler = (context: ChangeEventMapReturnType) => {
     if (context.content === lastContext.current) return;
     // setMainNode(context.component);
     lastContext.current = context.content;
-  }
+  };
 
   return (
     <div className="body">
@@ -66,4 +66,6 @@ export default function Components() {
       {/* </Transition> */}
     </div>
   );
-}
+};
+
+export default Components;

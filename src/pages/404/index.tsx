@@ -1,6 +1,6 @@
 import './index.css';
 
-export default function NotFound({ info = '' }: { info?: string }) {
+const NotFound = ({ info = '' }: { info?: string }) => {
   return (
     <div className="not-found">
       <div>
@@ -14,4 +14,6 @@ export default function NotFound({ info = '' }: { info?: string }) {
       </div>
     </div>
   );
-}
+};
+
+export default NotFound;

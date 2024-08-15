@@ -10,7 +10,7 @@ import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useForceReRendering } from '@utils/index.ts';
 
-function createHref(label: ContentLabelType): string {
+const createHref = (label: ContentLabelType): string => {
   if (typeof label === 'string') {
     return label;
   }
@@ -26,12 +26,12 @@ function createHref(label: ContentLabelType): string {
   }
 
   throw new Error('createHref 发生未知错误');
-}
+};
 
-const ContentsINPage = forwardRef(function _ContentsINPage(
+const _ContentsINPage = (
   { contents }: ContentsINPageProps,
   ref: React.ForwardedRef<ContentsINPageRef>
-) {
+) => {
   const { hash = '' } = useLocation();
 
   const deHash = decodeURI(hash);
@@ -119,6 +119,8 @@ const ContentsINPage = forwardRef(function _ContentsINPage(
       </ul>
     </nav>
   );
-});
+};
+
+const ContentsINPage = forwardRef(_ContentsINPage);
 
 export default ContentsINPage;

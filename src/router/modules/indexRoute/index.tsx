@@ -1,7 +1,7 @@
 import './index.css';
 import Icon from '@components/icon/index.tsx';
 
-export default function Index() {
+const Index = () => {
   return (
     <div id="zero-state">
       <p>
@@ -17,4 +17,6 @@ export default function Index() {
       </p>
     </div>
   );
-}
+};
+
+export default Index;

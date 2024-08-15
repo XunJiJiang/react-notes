@@ -1,5 +1,7 @@
 import { useLoaderData } from 'react-router-dom';
 
-export default function useLoaderDataWithType<T>() {
+const useLoaderDataWithType = <T>() => {
   return useLoaderData() as T extends Promise<unknown> ? Awaited<T> : T;
-}
+};
+
+export default useLoaderDataWithType;
