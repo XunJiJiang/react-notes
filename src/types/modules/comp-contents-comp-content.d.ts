@@ -36,7 +36,7 @@ interface ContentChangeEventType {
  * DeepHeightList类型
  * 储存当前组件和每个子选项组件的深度展开的高度信息. 下标高位为父级的深度, 低位为子级的深度
  */
-interface DeepHeightListType extends Array<number> {}
+type DeepHeightListType = Array<number>;
 
 /**
  * Content组件props类型

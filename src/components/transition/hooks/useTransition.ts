@@ -104,11 +104,10 @@ const runAnimate: RunAnimateFunc = (
         setNowChild(children);
         // 3. 执行新组件的动画
         const mainPage = document.getElementById(children.props.id);
-        mainPage &&
-          mainPage.animate(keyframe.in ?? _keyframes['out-in'].in, {
-            duration: duration,
-            easing: easing
-          });
+        mainPage?.animate(keyframe.in ?? _keyframes['out-in'].in, {
+          duration: duration,
+          easing: easing
+        });
         // 4. 设置新组件 isVisible
         setTimeout(() => {
           isVisible.current = children;

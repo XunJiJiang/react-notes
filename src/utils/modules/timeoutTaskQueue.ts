@@ -169,7 +169,7 @@ class TimeoutTaskQueue {
     }
   ) {
     if (this._state === 'running' || this._isRunning) {
-      callback && callback();
+      if (callback) callback();
       return;
     }
     this._queuedNumber += 1;

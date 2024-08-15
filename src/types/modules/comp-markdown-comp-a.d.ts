@@ -4,6 +4,6 @@ interface APopoverProps {
   href?: string;
 }
 
-interface ARef {}
+// interface ARef {}
 
 export type { APopoverProps };

@@ -21,7 +21,6 @@ const rootPageDirectoryPath = path.resolve(__dirname, './src/pages/study');
 
 /** 创建和处理选择文件夹的选项 */
 async function logSelect(message, directoryPath = './src/pages/study') {
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     // 获取 ../src/pages/study 目录下的所有文件夹
     const studyPath = path.resolve(__dirname, directoryPath);
@@ -82,8 +81,8 @@ async function logSelect(message, directoryPath = './src/pages/study') {
       }
     } else if (answer === '删除节点') {
       try {
-        const resule = await deleteNode(studyPath);
-        csl.success(resule);
+        const result = await deleteNode(studyPath);
+        csl.success(result);
         return '--delete';
       } catch (error) {
         csl.warn(error);

@@ -63,8 +63,7 @@ const _ContentsINPage = (
     if (!content || content.level === 1) {
       ulRef.current?.classList.add('contents-in-page-hidden');
       ulRef.current?.style.setProperty('--side-indicates', '0');
-      lastFocusLi.current &&
-        lastFocusLi.current.setAttribute('data-active', `${false}`);
+      lastFocusLi.current?.setAttribute('data-active', `${false}`);
       lastFocusLi.current = null;
       return;
     }
@@ -82,8 +81,7 @@ const _ContentsINPage = (
     ulRef.current?.style.setProperty('--side-indicates', index + '');
     const liNode =
       document.getElementById(`contents-in-page-${content.id}`) ?? content.node;
-    lastFocusLi.current &&
-      lastFocusLi.current.setAttribute('data-active', `${false}`);
+    lastFocusLi.current?.setAttribute('data-active', `${false}`);
     liNode.setAttribute('data-active', `${true}`);
     lastFocusLi.current = liNode;
   };
@@ -102,7 +100,8 @@ const _ContentsINPage = (
               id={`contents-in-page-${content.id}`}
               className="contents-in-page-item-box"
               ref={(node) => {
-                node && liList.current.push(node);
+                if (!node) return;
+                liList.current.push(node);
               }}
               key={index}
             >

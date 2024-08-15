@@ -1,3 +1,3 @@
-interface PathListType extends Array<string | null> {}
+type PathListType = Array<string | null>;
 
 export type { PathListType };

@@ -5,7 +5,7 @@ const debounce = <T extends unknown[]>(
   let timeout: number | null = null;
 
   return function (this: unknown, ...args: T) {
-    timeout && clearTimeout(timeout);
+    if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => {
       task.apply(this, args);
     }, delay);

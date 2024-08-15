@@ -18,6 +18,6 @@ interface ContentType {
   childrenSort: { [key: string]: number | undefined };
 }
 
-interface ContentsType extends Array<ContentType> {}
+type ContentsType = ContentType[];
 
 export type { ContentType, ContentTagType, ContentsType };

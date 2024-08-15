@@ -82,8 +82,7 @@ const Pre = ({ className = '', children }: PreProps) => {
   return (
     <pre
       ref={(node) => {
-        node &&
-          node.children &&
+        if (node && node.children)
           node.setAttribute('data-language', match ? match[1] : '');
         preRef.current = node;
       }}

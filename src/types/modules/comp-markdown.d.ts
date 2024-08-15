@@ -12,7 +12,7 @@ interface ContentType {
   offsetTop: number;
 }
 
-interface ContentsType extends Array<ContentType> {}
+type ContentsType = ContentType[];
 
 interface MarkdownComponentProps {
   markdown: string;
