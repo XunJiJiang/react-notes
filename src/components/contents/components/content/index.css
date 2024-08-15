@@ -7,14 +7,20 @@ li.menu-content {
 }
 
 li.menu-content ul.menu-content-children {
+  --visible: 0;
   position: relative;
-  transition: height 0.3s;
+  /* transition: height 0.3s, transform 0.3s, opacity 0.3s; */
+  transition-property: height, transform, opacity;
+  transition-duration: 0.45s;
   /* background-color: #00000007; */
   /* border-right: 2px solid #00000022; */
   list-style: none;
   padding: 0;
   padding-left: 8px;
   margin: 0;
+  transform: scale(calc(max(var(--visible), 0.7)));
+  opacity: var(--visible);
+  transform-origin: 10% top;
 }
 
 /* li.menu-content button[isExpand='true'] + ul.menu-content-children::after {

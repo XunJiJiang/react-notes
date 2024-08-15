@@ -8,7 +8,7 @@ import type {
 } from '@type/modules/comp-contents.d.ts';
 
 import './index.css';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getStringWidth } from '@utils/index.ts';
 import PathList from './context/pathList.ts';
 import Content from './components/content/index.tsx';
@@ -56,6 +56,7 @@ const getContentsWidthCache: GetContentsWidthCacheFunc = (
         fontFamily: `Inter, 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑,
       Arial, sans-serif`
       }) +
+      10 + // label冗余
       16 + // + 右侧箭头的宽度
       36 + // + 按钮左右侧padding
       (content.icon ? 30 : 0) + // + 图标宽度
@@ -68,6 +69,7 @@ const getContentsWidthCache: GetContentsWidthCacheFunc = (
       Arial, sans-serif`
             })
         : 0) + // tag 宽度
+      10 + // tag冗余
       8 * _deepestLayer + // + 深度缩进
       28; // + 预留冗余
     if (_stringWidth > maxStringWidth) {
@@ -136,16 +138,26 @@ const Contents = ({
 
   const deepestLayer = getDeepestLayer(contents) - 1;
 
-  // const ulSild --indicates: 1;
+  const isChildHeightChangeRun = useRef(false);
 
-  const ulIndicatesIndex = useState(0);
+  const ulIndicatesIndex = useState(-1);
 
   const onChildHeightChange = useCallback(
     (_: number, index: number) => {
       ulIndicatesIndex[1](index);
+      isChildHeightChangeRun.current = true;
     },
     [ulIndicatesIndex]
   );
+
+  useEffect(() => {
+    if (!isChildHeightChangeRun.current) {
+      ulIndicatesIndex[1](-1);
+      isChildHeightChangeRun.current = true;
+    } else {
+      isChildHeightChangeRun.current = false;
+    }
+  });
 
   return (
     <div

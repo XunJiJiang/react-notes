@@ -35,8 +35,8 @@
   --indicates-opacity: 0;
   position: relative;
   list-style: none;
-  padding: 0px 5px 0 0;
-  margin: 0;
+  padding: 0 5px 0 0;
+  margin: 0 0 64px 0;
 }
 
 .contents nav.contents-body ul.contents-body::before {
@@ -44,7 +44,7 @@
   position: absolute;
   display: block;
   transform: translateY(calc(var(--indicates) * 34px));
-  transition: all 0.3s;
+  transition: all 0.45s;
   height: 34px;
   width: calc(var(--leaveWidthBlank) - 21px);
   background-color: #e6f7ff;

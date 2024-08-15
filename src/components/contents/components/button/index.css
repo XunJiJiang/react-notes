@@ -29,6 +29,10 @@
   font-size: 16px;
 }
 
+.content-button .contents-button-left-icon {
+  font-weight: normal;
+}
+
 .content-button .contents-button-left-icon-right-margin {
   margin: 0 10px 0 0;
 }
@@ -37,6 +41,7 @@
   position: relative;
   transition: transform 0.3s;
   height: 100%;
+  font-weight: normal;
 }
 
 .content-button i.contents-button-right-icon::before {
@@ -81,6 +86,6 @@
   color: #087ea4;
 }
 
-.content-button[isExpand='true'] i.contents-button-right-icon {
+/* .content-button[isExpand='true'] i.contents-button-right-icon {
   transform: rotate(90deg);
-}
+} */

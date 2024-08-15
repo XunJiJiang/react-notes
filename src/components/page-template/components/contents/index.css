@@ -39,7 +39,7 @@
   position: absolute;
   transition:
     opacity 0.2s,
-    top 0.2s cubic-bezier(0, 0.825, 0.225, 1);
+    top 0.2s cubic-bezier(0, 1, 0.5, 1);
   left: 0;
   border-radius: 5px;
   top: calc(var(--side-indicates) * var(--button-height) + 6px);

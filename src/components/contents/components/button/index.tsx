@@ -98,20 +98,33 @@ const _Button = (
       className={`content-button ${isBranch ? 'bold-button' : ''}`}
       tabIndex={visible ? 0 : -1}
     >
-      {icon && (
-        <>
-          <Icon name={icon} className="contents-button-left-icon" />
-          <span className="contents-button-left-icon-right-margin" />
-        </>
-      )}
+      <Icon
+        name={
+          isBranch
+            ? state.isExpand
+              ? 'folder-open'
+              : 'folder'
+            : 'file-markdown'
+        }
+        className="contents-button-left-icon"
+      />
+      <span className="contents-button-left-icon-right-margin" />
+
       <span className="contents-button-main">
         {title}
         {/* <wbr /> */}
         {_tag}
       </span>
-      {isBranch && <Icon name="right" className="contents-button-right-icon" />}
+
+      {icon && (
+        <>
+          <Icon name={icon} className="contents-button-right-icon" />
+        </>
+      )}
     </button>
   );
 };
+
+const Button = forwardRef(_Button);
 
 export default Button;
