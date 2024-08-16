@@ -1,32 +1,35 @@
 .markdown-blockquote {
-  padding: 0.5em 1em;
-  margin: 0;
-  border-width: 1px;
+  padding: 0.1em 1em;
+  border-width: 0px;
   border-style: solid;
-  border-radius: 1em;
+  /* border-radius: 1em; */
   color: #797a7c;
-  margin: 1em 0;
+  margin: 1em 0 0.8em 0;
   border-color: #e5e7eb;
 }
 
 .markdown-blockquote.markdown-blockquote-success {
-  background-color: #ecf8f2;
-  border: 3px solid #87aaa4;
+  /* background-color: #ecf8f2; */
+  background-color: #2b6e6209;
+  border-left: 3px solid #9dd1c0;
 }
 
 .markdown-blockquote.markdown-blockquote-warn {
-  background-color: #fef5e7;
-  border: 3px solid #ebc855;
+  /* background-color: #fef5e7; */
+  background-color: #db7e2709;
+  border-left: 3px solid #f7e4a6;
 }
 
 .markdown-blockquote.markdown-blockquote-danger {
-  background-color: #ffe9e9;
-  border: 3px solid #d47474;
+  /* background-color: #ffe9e9; */
+  background-color: #d9303009;
+  border-left: 3px solid #ec9b9b;
 }
 
 .markdown-blockquote.markdown-blockquote-info {
-  background-color: #f6f7f9;
-  border: 3px solid #acb0b8;
+  /* background-color: #f6f7f9; */
+  background-color: #99a1b309;
+  border-left: 3px solid #cecece;
 }
 
 .markdown-blockquote .markdown-blockquote-title {
@@ -43,20 +46,20 @@
 
 .markdown-blockquote
   .markdown-blockquote-title.markdown-blockquote-title-success {
-  color: #2b6e62;
+  color: #45a190;
 }
 
 .markdown-blockquote .markdown-blockquote-title.markdown-blockquote-title-warn {
-  color: #c76a15;
+  color: #da985b;
 }
 
 .markdown-blockquote
   .markdown-blockquote-title.markdown-blockquote-title-danger {
-  color: #d93030;
+  color: #dd5959;
 }
 
 .markdown-blockquote .markdown-blockquote-title.markdown-blockquote-title-info {
-  color: #4e5769;
+  color: #798192;
 }
 
 .markdown-blockquote .markdown-blockquote-blank-block {

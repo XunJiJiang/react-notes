@@ -3,7 +3,7 @@
 }
 
 .markdown-pre div {
-  border-radius: 10px;
+  border-radius: 8px;
   /* box-shadow: 0 0 8px #44444477; */
 }
 
@@ -16,7 +16,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  color: #a3a3a388;
+  color: #a3a3a300;
   background-color: #00000000;
   padding: 2px 6px 4px 6px;
   /* border-radius: 5px 10px 5px 10px; */
@@ -30,7 +30,13 @@
   transition: color 0.3s;
   border: 0;
   /* outline: none; */
-  /* z-index: 1; */
+  z-index: 1;
+}
+
+.markdown-pre:hover .markdown-pre-copy,
+.markdown-pre:hover .markdown-pre-copy.markdown-pre-copy-active,
+.markdown-pre .markdown-pre-copy:focus {
+  color: #a3a3a388;
 }
 
 .markdown-pre .markdown-pre-copy .markdown-pre-copy-icon {
@@ -99,8 +105,9 @@
 .markdown-pre::before {
   content: attr(data-language);
   position: absolute;
-  bottom: 3px;
-  right: 5px;
+  top: 0;
+  right: 0;
+  margin: 3px 5px 0 0;
   color: #a3a3a388;
   transition: all 0.3s;
   /* -webkit-user-select: none; */
@@ -108,6 +115,8 @@
   z-index: 1;
 }
 
-.markdown-pre:hover::before {
-  color: #a3a3a3;
+.markdown-pre:hover::before,
+.markdown-pre:has(.markdown-pre-copy:focus)::before,
+.markdown-pre:has(.markdown-pre-copy.markdown-pre-copy-active)::before {
+  color: #a3a3a300;
 }

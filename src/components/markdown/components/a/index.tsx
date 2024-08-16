@@ -1,11 +1,15 @@
-import type { APopoverProps } from '@type/modules/comp-markdown-comp-a.d.ts';
+import type { AnchorPopoverProps } from '@type/modules/comp-markdown-comp-a.d.ts';
 
 import './index.css';
 import { useRef, useEffect } from 'react';
 import Icon from '@components/icon/index.tsx';
 import { getStringWidth } from '@utils/index.ts';
 
-const APopover = ({ className = '', children, href = '' }: APopoverProps) => {
+const AnchorPopover = ({
+  className = '',
+  children,
+  href = ''
+}: AnchorPopoverProps) => {
   const aRef = useRef<HTMLAnchorElement>(null);
   const popoverRef = useRef<HTMLElement>(null);
   const timeout = useRef<number | undefined>();
@@ -46,9 +50,9 @@ const APopover = ({ className = '', children, href = '' }: APopoverProps) => {
       if (!popoverRef.current) return;
       clearTimeout(timeout.current);
       popoverRef.current.style.display = 'block';
-      const _ = popoverRef.current.offsetHeight;
-      Promise.resolve(_).then(() => {
+      requestAnimationFrame(() => {
         if (!popoverRef.current) return;
+        (() => popoverRef.current.offsetHeight)();
         popoverRef.current.classList.add('a-popover-show');
       });
     } else {
@@ -92,4 +96,4 @@ const APopover = ({ className = '', children, href = '' }: APopoverProps) => {
   );
 };
 
-export default APopover;
+export default AnchorPopover;

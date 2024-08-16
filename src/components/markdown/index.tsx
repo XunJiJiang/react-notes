@@ -13,10 +13,11 @@ import Markdown from 'react-markdown';
 // import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import Code from './components/code/index.tsx';
-import A from './components/a/index.tsx';
+import Anchor from './components/a/index.tsx';
 import Blockquote from './components/blockquote/index.tsx';
 import Pre from './components/pre/index.tsx';
 import Img from './components/img/index.tsx';
+import Paragraph from './components/p/index.tsx';
 import { H1, H2, H3 } from './components/title/index.tsx';
 
 const _MarkdownComponent = (
@@ -68,9 +69,9 @@ const _MarkdownComponent = (
     },
     a({ className, children, ...props }) {
       return (
-        <A className={`markdown-link ${className ?? ''}`} {...props}>
+        <Anchor className={`markdown-link ${className ?? ''}`} {...props}>
           {children}
-        </A>
+        </Anchor>
       );
     },
     blockquote(props) {
@@ -81,6 +82,9 @@ const _MarkdownComponent = (
     },
     img(props) {
       return <Img {...props} />;
+    },
+    p(props) {
+      return <Paragraph {...props} />;
     },
     h1(props) {
       return <H1 {...props} setContents={setContents} />;

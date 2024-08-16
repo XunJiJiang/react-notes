@@ -21,6 +21,7 @@ const Pre = ({ className = '', children }: PreProps) => {
   taskQueue
     .addTask({
       callback: () => {
+        buttonRef.current?.classList.add('markdown-pre-copy-active');
         buttonRef.current?.style.setProperty('--icon-opacity', '0');
       },
       delay: 0
@@ -54,6 +55,7 @@ const Pre = ({ className = '', children }: PreProps) => {
     })
     .addTask({
       callback: () => {
+        buttonRef.current?.classList.remove('markdown-pre-copy-active');
         buttonRef.current?.style.setProperty('--icon-opacity', '1');
       },
       delay: 300
@@ -76,7 +78,7 @@ const Pre = ({ className = '', children }: PreProps) => {
       callback: () => {
         buttonRef.current?.style.setProperty('--svg-transition', 'all 0.6s');
       },
-      delay: 10
+      delay: 20
     });
 
   return (
