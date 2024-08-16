@@ -3,6 +3,7 @@ import type { AnchorPopoverProps } from '@type/modules/comp-markdown-comp-a.d.ts
 import './index.css';
 import { useRef, useEffect } from 'react';
 import Icon from '@components/icon/index.tsx';
+import XScroll from '@components/x-scroll/index.tsx';
 import { getStringWidth } from '@utils/index.ts';
 
 const AnchorPopover = ({
@@ -89,8 +90,9 @@ const AnchorPopover = ({
     >
       {children}
       <Icon name="link" className="a-popover-icon" />
+
       <span ref={popoverRef} className="a-popover">
-        {href}
+        <XScroll>{decodeURI(href)}</XScroll>
       </span>
     </a>
   );
