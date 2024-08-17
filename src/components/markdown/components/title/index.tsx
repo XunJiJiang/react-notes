@@ -7,8 +7,9 @@ import type { ContentType } from '@type/modules/comp-markdown.d.ts';
 import './index.css';
 import { useId } from 'react';
 import { Link } from 'react-router-dom';
-import Icon from '@components/icon';
-import { createId, flatChild } from '../../utils/index.ts';
+import Icon from '@components/icon/index.tsx';
+import { createId } from '../../utils/index.ts';
+import { flatChildren } from '@utils/index.ts';
 
 export const H1 = ({
   className = '',
@@ -17,7 +18,7 @@ export const H1 = ({
   // ...props
 }: TitleProps) => {
   const id = createId(children) + useId();
-  const flattedChild = flatChild(children);
+  const flattedChild = flatChildren(children);
   const content: ContentNodeNullType = {
     id,
     label: children,
@@ -55,7 +56,7 @@ export const H2 = ({
   // ...props
 }: TitleProps) => {
   const id = createId(children) + useId();
-  const flattedChild = flatChild(children);
+  const flattedChild = flatChildren(children);
   const content: ContentNodeNullType = {
     id,
     label: children,
@@ -93,7 +94,7 @@ export const H3 = ({
   // ...props
 }: TitleProps) => {
   const id = createId(children) + useId();
-  const flattedChild = flatChild(children);
+  const flattedChild = flatChildren(children);
   const content: ContentNodeNullType = {
     id,
     label: children,

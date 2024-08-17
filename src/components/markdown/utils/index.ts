@@ -2,7 +2,6 @@ import type {
   CreateIdSlicesFunc,
   CreateIdFunc
 } from '@type/modules/comp-markdown-utils.d.ts';
-import type { ContentLabelType } from '@type/modules/comp-markdown.d.ts';
 
 // 记录每个标题的 id 的由空格分割的字符串对应的 key
 const idSliceMap = new Map();
@@ -44,39 +43,4 @@ export const createId: CreateIdFunc = (children) => {
   });
   return 'markdown-title' + id + '-';
   // + randomCharacters(20);
-};
-
-/**
- * 将children扁平化为一个字符串
- */
-export const flatChild = (
-  children:
-    | ContentLabelType
-    | {
-        props: {
-          children: string;
-        };
-      }
-): string => {
-  if (children === null) {
-    throw console.error('markdown.comp.title.utils flatChild 未知类型 null');
-  }
-
-  if (typeof children === 'string') {
-    return children;
-  }
-
-  if (Array.isArray(children)) {
-    return children.reduce((p: string, c) => {
-      return p + flatChild(c);
-    }, '');
-  }
-
-  if (typeof children === 'object' && 'props' in children) {
-    return flatChild(children.props.children);
-  }
-
-  throw console.error(
-    `markdown.comp.title.utils flatChild 未知类型 ${typeof children}`
-  );
 };
