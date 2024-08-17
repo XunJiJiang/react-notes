@@ -19,6 +19,7 @@ import Pre from './components/pre/index.tsx';
 import Img from './components/img/index.tsx';
 import Paragraph from './components/p/index.tsx';
 import { H1, H2, H3 } from './components/title/index.tsx';
+import { flatChildren } from '@utils/index.ts';
 
 const _MarkdownComponent = (
   { markdown }: MarkdownComponentProps,
@@ -31,6 +32,22 @@ const _MarkdownComponent = (
   const contentsIndex = useRef(0);
 
   useEffect(() => {
+    /*@__PURE__*/ (() => {
+      const labels = contents.current.map((content) => content.label);
+      const set = new Set(labels);
+      if (set.size !== labels.length) {
+        const title = labels[0];
+        for (const label of labels) {
+          if (set.has(label)) {
+            set.delete(label);
+          } else {
+            throw new Error(
+              `markdown文件 "${flatChildren(title)}" 的标题 "${flatChildren(label)}" 重复`
+            );
+          }
+        }
+      }
+    })();
     contents.current.forEach((content) => {
       const { node } = content;
       if (!node) return;
