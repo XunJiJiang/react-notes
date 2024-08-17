@@ -7,6 +7,7 @@ import type {
 import './index.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
+// import XScroll from '@/components/x-scroll/index.tsx';
 
 const FencedCodeBlocks = ({ children, match }: FencedCodeBlocksProps) => {
   return (
@@ -18,8 +19,8 @@ const FencedCodeBlocks = ({ children, match }: FencedCodeBlocksProps) => {
       showLineNumbers={true}
       showInlineLineNumbers={true}
       customStyle={{
-        paddingLeft: '0',
-        backgroundColor: '#f6f6f7'
+        backgroundColor: '#f6f6f7',
+        padding: '19px 19px 19px 0'
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import type { XScrollProps } from '@/types/modules/comp-x-scroll.d.ts';
 import './index.css';
 import { useEffect, useRef } from 'react';
 
-const XScroll = ({ children, scrollStyle }: XScrollProps) => {
+const XScroll = ({ children /*, scrollStyle */ }: XScrollProps) => {
   const spanRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
