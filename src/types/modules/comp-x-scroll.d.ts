@@ -1,5 +1,3 @@
-import React from 'react';
-
 type RectStyle = {
   width?: string;
   height?: string;

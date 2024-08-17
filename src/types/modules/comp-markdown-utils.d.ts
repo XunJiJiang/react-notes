@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface CreateIdSlicesFunc {
   (children: React.ReactNode | string): string[];
 }

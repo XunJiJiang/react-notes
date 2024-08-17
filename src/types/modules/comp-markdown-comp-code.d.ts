@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface FencedCodeBlocksProps {
   children: string;
   match: RegExpExecArray;

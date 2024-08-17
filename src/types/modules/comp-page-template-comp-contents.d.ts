@@ -1,5 +1,4 @@
 import type { ContentType, ContentsType } from './comp-markdown.d.ts';
-import React from 'react';
 
 interface ChangeLocationFunc {
   (content: ContentType | null): void;

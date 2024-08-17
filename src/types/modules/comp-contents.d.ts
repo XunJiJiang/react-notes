@@ -5,7 +5,6 @@ import type {
   ContentsType
 } from './contents.d.ts';
 import type { ContentChangeEventType } from './comp-contents-comp-content.d.ts';
-import React from 'react';
 
 /**
  * 获取目录的最深层级类型

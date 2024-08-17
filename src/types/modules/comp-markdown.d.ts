@@ -1,4 +1,3 @@
-import React from 'react';
 // import type { Components, ExtraProps } from 'react-markdown';
 
 type ContentLabelType = React.ReactNode | Array<React.ReactNode>;

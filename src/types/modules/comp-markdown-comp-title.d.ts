@@ -1,5 +1,4 @@
 import type { ContentType } from './comp-markdown.d.ts';
-import React from 'react';
 
 interface ContentNodeNullType extends ContentType {
   node: null | HTMLElement;

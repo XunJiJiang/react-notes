@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 export interface MountToBodyProps {
   children: React.ReactNode;
@@ -20,7 +20,7 @@ const MountToBody = ({ children, rootClass }: MountToBodyProps) => {
     };
   }, [container]);
 
-  return ReactDOM.createPortal(children, container);
+  return createPortal(children, container);
 };
 
 export default MountToBody;
