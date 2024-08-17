@@ -20,7 +20,7 @@ const FencedCodeBlocks = ({ children, match }: FencedCodeBlocksProps) => {
       showInlineLineNumbers={true}
       customStyle={{
         backgroundColor: '#f6f6f7',
-        padding: '19px 19px 19px 0'
+        padding: '21px 0 16px 0'
       }}
     >
       {children}
