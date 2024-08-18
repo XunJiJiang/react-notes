@@ -20,3 +20,5 @@ export { default as flatChildren } from './modules/flatChildren.ts';
 
 export { default as hasValue } from './modules/hasValue.ts';
 
+export { default as isNumber } from './modules/isNumber.ts';
+
