@@ -24,3 +24,4 @@ export { default as isNumber } from './modules/isNumber.ts';
 
 export { default as isSame } from './modules/isSame.ts';
 
+export { default as useWindowMouseEvent } from './modules/useWindowMouseEvent.ts';
