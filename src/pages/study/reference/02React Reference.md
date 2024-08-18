@@ -103,7 +103,6 @@ const handleAddTodo = useCallback(
 
 ```js
 function ChatRoom({ roomId }) {
-
   const createOptions = useCallback(() => {
     return {
       serverUrl: 'https://localhost:1234',
@@ -115,6 +114,7 @@ function ChatRoom({ roomId }) {
     createOptions();
   }, [createOptions]);
   // ...
+}
 ```
 
 > <warn icon='error'>注意</warn>

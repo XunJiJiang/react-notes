@@ -1,10 +1,9 @@
 import type { AnchorPopoverProps } from '@type/modules/comp-markdown-comp-a.d.ts';
 
 import './index.css';
-import { useRef, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import Icon from '@components/icon/index.tsx';
-import XScroll from '@components/x-scroll/index.tsx';
-import { getStringWidth } from '@utils/index.ts';
+import Tooltip from '@/components/tooltip/index.tsx';
 
 const AnchorPopover = ({
   className = '',
@@ -12,89 +11,50 @@ const AnchorPopover = ({
   href = ''
 }: AnchorPopoverProps) => {
   const aRef = useRef<HTMLAnchorElement>(null);
-  const popoverRef = useRef<HTMLElement>(null);
-  const timeout = useRef<number | undefined>();
-
-  useEffect(() => {
-    if (!aRef.current || !aRef.current.parentNode || !popoverRef.current)
-      return;
-    // 获取其距离父元素左侧的距离
-    const aParentNodeLeft = (aRef.current.parentNode as HTMLElement).offsetLeft;
-    const aParentNodeWidth = (aRef.current.parentNode as HTMLElement)
-      .offsetWidth;
-    const aLift = aRef.current.offsetLeft - aParentNodeLeft;
-    const aWidth = getStringWidth(aRef.current.innerText, { fontSize: 16 });
-    const popoverWidth =
-      getStringWidth(popoverRef.current.innerText, { fontSize: 16 }) + 20;
-    if (popoverWidth > aParentNodeWidth) {
-      // 以下分支的前提是popover的中心在a元素的中心
-      // popover的宽度大于父元素的宽度, 设置popover的宽度为父元素的宽度
-      popoverRef.current.style.width = aParentNodeWidth - 20 + 'px';
-    } else if (aLift + aWidth / 2 + popoverWidth / 2 > aParentNodeWidth) {
-      //  popover右侧超出父元素右侧, 设置popover右侧与父元素右侧对齐
-      popoverRef.current.style.left =
-        -(aLift + popoverWidth - aParentNodeWidth) + 'px';
-    } else if (aLift > (popoverWidth - aWidth) / 2) {
-      // popover两侧均未超出父元素, 设置popover中心与a元素中心对齐
-      popoverRef.current.style.left = aWidth / 2 - popoverWidth / 2 + 'px';
-    } else {
-      // popover左侧超出父元素左侧, 设置popover左侧与父元素左侧对齐
-      popoverRef.current.style.left = 'auto';
-    }
-  }, []);
 
   const isHover = useRef(false);
   const isFocus = useRef(false);
 
-  const setVisible = (visible = false) => {
-    if (visible || isHover.current || isFocus.current) {
-      if (!popoverRef.current) return;
-      clearTimeout(timeout.current);
-      popoverRef.current.style.display = 'block';
-      requestAnimationFrame(() => {
-        if (!popoverRef.current) return;
-        (() => popoverRef.current.offsetHeight)();
-        popoverRef.current.classList.add('a-popover-show');
-      });
-    } else {
-      if (!popoverRef.current) return;
-      popoverRef.current.classList.remove('a-popover-show');
-      timeout.current = setTimeout(() => {
-        if (!popoverRef.current) return;
-        popoverRef.current.style.display = 'none';
-      }, 300);
-    }
+  const [isVisible, setIsVis] = useState(false);
+
+  const updateVisible = () => {
+    setIsVis(isHover.current || isFocus.current);
   };
 
   return (
-    <a
-      ref={aRef}
-      className={`${className} a-link`}
-      href={href}
-      onMouseEnter={() => {
-        isHover.current = true;
-        setVisible(true);
-      }}
-      onMouseLeave={() => {
-        isHover.current = false;
-        setVisible(false);
-      }}
-      onFocus={() => {
-        isFocus.current = true;
-        setVisible(true);
-      }}
-      onBlur={() => {
-        isFocus.current = false;
-        setVisible(false);
-      }}
-    >
-      {children}
-      <Icon name="link" className="a-popover-icon" />
-
-      <span ref={popoverRef} className="a-popover">
-        <XScroll>{decodeURI(href)}</XScroll>
-      </span>
-    </a>
+    <>
+      <Tooltip
+        title={decodeURI(href)}
+        backgroundColor="black"
+        color="white"
+        hideAfter={0}
+        visible={isVisible}
+      />
+      <a
+        ref={aRef}
+        className={`${className} a-link`}
+        href={href}
+        onMouseEnter={() => {
+          isHover.current = true;
+          updateVisible();
+        }}
+        onMouseLeave={() => {
+          isHover.current = false;
+          updateVisible();
+        }}
+        onFocus={() => {
+          isFocus.current = true;
+          updateVisible();
+        }}
+        onBlur={() => {
+          isFocus.current = false;
+          updateVisible();
+        }}
+      >
+        {children}
+        <Icon name="link" className="a-link-icon" />
+      </a>
+    </>
   );
 };
 
