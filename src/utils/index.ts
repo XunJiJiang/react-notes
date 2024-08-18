@@ -17,3 +17,6 @@ export { default as AnyMap } from './modules/anyMap.ts';
 export { default as useLoaderDataWithType } from './modules/useLoaderDataWithType.ts';
 
 export { default as flatChildren } from './modules/flatChildren.ts';
+
+export { default as hasValue } from './modules/hasValue.ts';
+
