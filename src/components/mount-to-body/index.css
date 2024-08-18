@@ -1,0 +1,8 @@
+.mount-in-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 0;
+  z-index: 9999;
+}

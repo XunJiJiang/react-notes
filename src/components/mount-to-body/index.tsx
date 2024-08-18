@@ -1,3 +1,4 @@
+import './index.css';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -10,19 +11,18 @@ export interface MountToBodyProps {
 const MountToBody = ({ children, rootClass, style = {} }: MountToBodyProps) => {
   const div = document.createElement('div');
 
-  div.className = rootClass || '';
+  div.className = (rootClass + ' ' || '') + 'mount-in-body';
 
   const [container] = useState(div);
 
   useEffect(() => {
     document.body.appendChild(container);
-    Object.assign(container.style, style);
     return () => {
       document.body.removeChild(container);
     };
-  }, [container, style]);
+  }, [container]);
 
-  return createPortal(children, container);
+  return createPortal(<div style={style}>{children}</div>, container);
 };
 
 export default MountToBody;
