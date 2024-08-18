@@ -227,6 +227,17 @@ class TimeoutTaskQueue {
   public get remainingTimes(): number {
     return this._queuedNumber;
   }
+
+  /**
+   * 清空任务队列, 停止未执行任务
+   */
+  public clear() {
+    this._taskQueue = [];
+    this._queuedNumber = 0;
+    this._state = 'complete';
+    this._isRunning = false;
+    this._promise = [null, null];
+  }
 }
 
 export default TimeoutTaskQueue;
