@@ -90,7 +90,8 @@ export default [
                   '@utils': path.resolve(__dirname, 'src/utils'),
                   '@pages': path.resolve(__dirname, 'src/pages'),
                   '@img': path.resolve(__dirname, 'src/assets/images'),
-                  '@type': path.resolve(__dirname, 'src/types')
+                  '@type': path.resolve(__dirname, 'src/types'),
+                  '@setting': path.resolve(__dirname, 'src/setting.ts')
                 }
               }
             }

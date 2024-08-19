@@ -9,8 +9,6 @@ import type { Components } from 'react-markdown';
 import './index.css';
 import { forwardRef, useImperativeHandle, useEffect, useRef } from 'react';
 import Markdown from 'react-markdown';
-// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-// import { prism as StyleHighlighter } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 import Code from './components/code/index.tsx';
 import Anchor from './components/a/index.tsx';

@@ -39,7 +39,8 @@ const alias = {
   '@pages': path.resolve(__dirname, 'src/pages'),
   '@img': path.resolve(__dirname, 'src/assets/images'),
   '@type': path.resolve(__dirname, 'src/types'),
-  '@router': path.resolve(__dirname, 'src/router')
+  '@router': path.resolve(__dirname, 'src/router'),
+  '@setting': path.resolve(__dirname, 'src/setting.ts')
 };
 
 // https://vitejs.dev/config/
