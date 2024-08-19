@@ -200,19 +200,21 @@ const _BasePopover = <
   const _child = (
     <>
       {child}
-      <MountToBody
-        key="popover"
-        style={{
-          ...popRootStyle,
-          position: 'absolute',
-          ...computedStyle,
-          display: visible ? 'block' : 'none',
-          zIndex: 100
-        }}
-        rootClass={popRootCls}
-      >
-        {popEle}
-      </MountToBody>
+      {visible && (
+        <MountToBody
+          key="popover"
+          style={{
+            ...popRootStyle,
+            position: 'absolute',
+            ...computedStyle,
+            display: 'visible',
+            zIndex: 100
+          }}
+          rootClass={popRootCls}
+        >
+          {popEle}
+        </MountToBody>
+      )}
     </>
   );
 
