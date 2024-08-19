@@ -1,7 +1,16 @@
 {
   "name": "react-reference-vite",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.5.0",
+  "homepage": "https://github.com/XunJiJiang/react-notes",
+  "license": "MIT",
+  "author": "XunJiJiang",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XunJiJiang/react-notes"
+  },
+  "bugs": {
+    "url": "https://github.com/XunJiJiang/react-notes/issues"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
