@@ -2,6 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 9999;
 }
 
 .mount-in-body {
@@ -10,5 +11,4 @@
   left: 0;
   width: auto;
   height: 0;
-  z-index: 9999;
 }
