@@ -1,3 +1,9 @@
+.mount-in-body-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
 .mount-in-body {
   position: absolute;
   top: 0;

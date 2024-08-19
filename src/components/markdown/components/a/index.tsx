@@ -40,7 +40,7 @@ const AnchorPopover = ({
         showAfter={300}
         hideAfter={0}
         visible={isVisible}
-      ></Tooltip>{' '}
+      ></Tooltip>
       <Link
         ref={aRef}
         className={`${className} a-link`}

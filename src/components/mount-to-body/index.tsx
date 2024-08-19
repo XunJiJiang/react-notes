@@ -8,6 +8,10 @@ export interface MountToBodyProps {
   style?: React.CSSProperties;
 }
 
+const root = document.createElement('div');
+root.className = 'mount-in-body-root';
+document.body.appendChild(root);
+
 const MountToBody = ({ children, rootClass, style = {} }: MountToBodyProps) => {
   const div = document.createElement('div');
 
@@ -16,9 +20,9 @@ const MountToBody = ({ children, rootClass, style = {} }: MountToBodyProps) => {
   const [container] = useState(div);
 
   useEffect(() => {
-    document.body.appendChild(container);
+    root.appendChild(container);
     return () => {
-      document.body.removeChild(container);
+      root.removeChild(container);
     };
   }, [container]);
 
