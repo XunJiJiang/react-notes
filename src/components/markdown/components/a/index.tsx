@@ -1,15 +1,19 @@
 import type { AnchorPopoverProps } from '@type/modules/comp-markdown-comp-a.d.ts';
 
 import './index.css';
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Icon from '@components/icon/index.tsx';
 import Tooltip from '@/components/tooltip/index.tsx';
+import { AppContext } from '@/contexts/index.ts';
 
 const AnchorPopover = ({
   className = '',
   children,
   href = ''
 }: AnchorPopoverProps) => {
+  const { origin } = useContext(AppContext).setting.url;
+
   const aRef = useRef<HTMLAnchorElement>(null);
 
   const isHover = useRef(false);
@@ -21,6 +25,10 @@ const AnchorPopover = ({
     setIsVis(isHover.current || isFocus.current);
   };
 
+  // const { origin: hrefOrigin, pathname, search, hash } = new URL(href);
+
+  const isFromThisSite = href.startsWith(origin);
+
   return (
     <>
       <Tooltip
@@ -30,10 +38,11 @@ const AnchorPopover = ({
         hideAfter={0}
         visible={isVisible}
       />
-      <a
+      <Link
         ref={aRef}
         className={`${className} a-link`}
-        href={href}
+        to={href}
+        reloadDocument={!isFromThisSite}
         onMouseEnter={() => {
           isHover.current = true;
           updateVisible();
@@ -53,7 +62,7 @@ const AnchorPopover = ({
       >
         {children}
         <Icon name="link" className="a-link-icon" />
-      </a>
+      </Link>
     </>
   );
 };
