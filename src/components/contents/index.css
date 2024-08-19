@@ -11,7 +11,7 @@
   justify-content: left;
   background-color: #ffffff;
   box-sizing: border-box;
-  padding: 20px 12px 0 0;
+  padding: 20px 0 0 0;
   font-size: 12px;
   overflow-y: scroll;
 }
@@ -46,7 +46,7 @@
   transform: translateY(calc(var(--indicates) * 34px));
   transition: all 0.45s;
   height: 34px;
-  width: calc(var(--leaveWidthBlank) - 21px);
+  width: var(--leaveWidthBlank);
   background-color: #e6f7ff;
   opacity: var(--indicates-opacity);
 }

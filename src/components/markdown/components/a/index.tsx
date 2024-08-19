@@ -35,6 +35,7 @@ const AnchorPopover = ({
         title={decodeURI(href)}
         backgroundColor="black"
         color="white"
+        showAfter={300}
         hideAfter={0}
         visible={isVisible}
       />
