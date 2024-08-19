@@ -43,13 +43,14 @@ export interface BasePopoverRef {
   popoverRef: HTMLElement | null;
 }
 
-const getRealEle = (ele?: React.ReactElement) => {
-  if (!ele) return ele;
-  if (typeof ele.type === 'string') {
-    return ele;
-  }
-  return getRealEle(ele.props.children);
-};
+// const getRealEle = (ele?: React.ReactElement) => {
+//   if (!ele) return ele;
+//   if (Array.isArray(ele) || typeof ele.type === 'string') {
+//     return ele;
+//   }
+//   console.log(ele);
+//   return getRealEle(ele.props.children);
+// };
 
 const _BasePopover = <
   T extends React.ReactElement | undefined = React.ReactElement
@@ -76,7 +77,7 @@ const _BasePopover = <
 
   const popoverRef = useRef<HTMLElement | null>(null);
 
-  const _children = getRealEle(children);
+  const _children = children; // getRealEle(children);
 
   const newProps = useInheritProperty(_children, {
     ref: (node: HTMLElement | null) => {

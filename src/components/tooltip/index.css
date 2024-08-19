@@ -1,4 +1,5 @@
 .tooltip-box {
+  --show-transform: 0;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   font-size: 12px;
@@ -20,8 +21,12 @@
     Arial,
     sans-serif;
   line-height: 20px;
-  opacity: 0;
-  transition: opacity 0.3s;
+  opacity: var(--show-transform);
+  transform: scale(calc(var(--show-transform) * 0.05 + 0.95));
+  transform-origin: top left;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 }
 
 .tooltip-box .tooltip-content {
@@ -31,7 +36,7 @@
   background-color: #333;
   color: #fff;
   border-radius: 4px;
-  max-width: 800px;
+  max-width: 600px;
   word-wrap: break-word;
   z-index: 1;
 }

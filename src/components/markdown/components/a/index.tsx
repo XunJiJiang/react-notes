@@ -35,10 +35,12 @@ const AnchorPopover = ({
         title={decodeURI(href)}
         backgroundColor="black"
         color="white"
+        placement="bottom-right"
+        // enterable
         showAfter={300}
         hideAfter={0}
         visible={isVisible}
-      />
+      ></Tooltip>{' '}
       <Link
         ref={aRef}
         className={`${className} a-link`}
@@ -61,8 +63,10 @@ const AnchorPopover = ({
           updateVisible();
         }}
       >
-        {children}
-        <Icon name="link" className="a-link-icon" />
+        <span className="a-link-content">
+          {children}
+          <Icon name="link" className="a-link-icon" />
+        </span>
       </Link>
     </>
   );
