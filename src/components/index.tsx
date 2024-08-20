@@ -23,6 +23,8 @@ const Components = () => {
 
   const location = useLocation();
 
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+
   /**
    * 组件切换事件处理
    * @param {ContentsChangeHandlerType} context
@@ -36,7 +38,14 @@ const Components = () => {
   };
 
   return (
-    <div className="body">
+    <div
+      ref={(node) => {
+        if (!node) return;
+        bodyRef.current = node;
+        node.style.setProperty('--contentWidth', contentsWidth.current + 'px');
+      }}
+      className="body"
+    >
       <div className="contents-box">
         <Contents
           title="React 笔记"
