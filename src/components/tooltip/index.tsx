@@ -1,5 +1,5 @@
 import './index.css';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import BasePopover from '@components/base-popover/index.tsx';
 import {
   useWindowMouseEvent,
@@ -80,10 +80,10 @@ const calculatePosition: CalculatePosition = (placement, hasChild) => {
   // 当第一位为方向, 第二位为位置时, 为有children时的popover位置
   // 当都为方向时, 为没有children时的popover位置
   // 返回内容包括以下:
-  // 函数: 参数为{ x: number; y: number; } 或 DOMRect, DOMRect, 返回值为{ top: string; left: string; }
   // transform-origin: 用于设置popover .tooltip-box的transform-origin
   // arrow: 用于设置arrow的位置 { top: string; left: string; }
   const result = {} as ReturnType<CalculatePosition>;
+  // 有children时的popover位置
   if (directions.includes(first) && positions.includes(second)) {
     const _first =
       first === 'top'
@@ -236,7 +236,10 @@ const Tooltip = ({
       );
   })();
 
-  const place = calculatePosition(placement, hasValue(children));
+  const place = useMemo(
+    () => calculatePosition(placement, hasValue(children)),
+    [children, placement]
+  );
 
   const mousePos = useRef({ x: -1000, y: -1000 });
 
@@ -339,6 +342,28 @@ const Tooltip = ({
     }
   }, [visible, disabled, changeShow]);
 
+  const _onPopup = useCallback(
+    (rect: DOMRect | undefined, popRect: DOMRect) => {
+      if (!rect) {
+        const _place = place.position(mousePos.current, popRect);
+        return {
+          top: popX ?? _place.top,
+          left: popY ?? _place.left
+        };
+      }
+      const _place = place.position(rect, popRect);
+      setArrowPos({
+        top: _place.arrowTop ?? '0',
+        left: _place.arrowLeft ?? '0'
+      });
+      return {
+        top: popX ?? _place.top,
+        left: popY ?? _place.left
+      };
+    },
+    [place, popX, popY]
+  );
+
   return (
     <BasePopover<typeof children>
       ref={(nodes) => {
@@ -389,21 +414,7 @@ const Tooltip = ({
           )}
         </div>
       }
-      onPopup={(rect, popRect) => {
-        if (!rect) {
-          // TODO: 此处需要修改
-          const _place = place.position(mousePos.current, popRect);
-          return {
-            top: _place.top,
-            left: _place.left
-          };
-        }
-        const _place = place.position(rect, popRect);
-        return {
-          top: _place.top,
-          left: _place.left
-        };
-      }}
+      onPopup={_onPopup}
       onMouseEnter={
         children && trigger === 'hover' ? () => changeShow(true) : undefined
       }

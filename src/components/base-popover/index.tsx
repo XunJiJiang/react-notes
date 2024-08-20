@@ -137,39 +137,60 @@ const _BasePopover = <
 
   const popEle = cloneElement(popoverEle, newPopoverProps);
 
+  const _isRun = useRef(false);
+  const _rect = useRef<DOMRect | null>(null);
+  const _popoverRect = useRef<DOMRect | null>(null);
+
   useEffect(() => {
     const isVisible = visible;
     if (!isVisible) return;
-    let _isRun = true;
-    let _rect: DOMRect | null = null;
-    let _popoverRect: DOMRect | null = null;
+    _isRun.current = true;
     const isRectChange = () => {
       const _newRect = childRef.current?.getBoundingClientRect();
       const _newPopoverRect = popoverRef.current?.getBoundingClientRect();
-      if (!_rect && !_popoverRect && !_newRect && _newPopoverRect) return true;
-      if ((!_rect || !_popoverRect) && _newRect && _newPopoverRect) {
-        _rect = _newRect;
-        _popoverRect = _newPopoverRect;
+      // children为空, popover 位置由外部控制, 于是直接返回true允许每次渲染时刻都重新计算
+      if (
+        !_rect.current &&
+        !_popoverRect.current &&
+        !_newRect &&
+        _newPopoverRect
+      )
+        return true;
+      // children不为空, 当前为初次渲染, 直接赋值
+      if (
+        (!_rect.current || !_popoverRect.current) &&
+        _newRect &&
+        _newPopoverRect
+      ) {
+        _rect.current = _newRect;
+        _popoverRect.current = _newPopoverRect;
         return true;
       }
-      if (!_rect || !_popoverRect || !_newRect || !_newPopoverRect)
-        return false;
+      // 都为空, 无法计算, 返回false
       if (
-        !isSame(_rect, _newRect, {
+        !_rect.current ||
+        !_popoverRect.current ||
+        !_newRect ||
+        !_newPopoverRect
+      )
+        return false;
+      // 比较两个rect是否相同, 不相同则返回true
+      if (
+        !isSame(_rect.current, _newRect, {
           deep: true
         }) ||
-        !isSame(_popoverRect, _newPopoverRect, {
+        !isSame(_popoverRect.current, _newPopoverRect, {
           deep: true
         })
       ) {
-        _rect = _newRect;
-        _popoverRect = _newPopoverRect;
+        _rect.current = _newRect;
+        _popoverRect.current = _newPopoverRect;
         return true;
       }
       return false;
     };
     const run = () => {
-      if (!_isRun) return;
+      if (!_isRun.current) return;
       if (!popoverRef.current) return;
       if (!isRectChange()) {
         requestAnimationFrame(run);
@@ -186,7 +207,7 @@ const _BasePopover = <
     };
     requestAnimationFrame(run);
     return () => {
-      _isRun = false;
+      _isRun.current = false;
     };
   }, [visible, popoverEle, popRootCls, onPopup]);
 
