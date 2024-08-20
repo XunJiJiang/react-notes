@@ -36,13 +36,18 @@ type CalculatePosition = (
   placement: Placement,
   hasChild: boolean
 ) => {
-  transformOrigin: string;
-  arrow: { top: string; left: string } | null;
   position: (
     rect: DOMRect | { x: number; y: number },
     popRect: DOMRect
-  ) => { top: string; left: string };
+  ) => {
+    top: string;
+    left: string;
+    arrowTop?: string;
+    arrowLeft?: string;
+  };
 };
+
+type Trigger = 'hover' | 'click' | 'focus' | 'contextmenu';
 
 export interface TooltipProps {
   children?: React.ReactElement;
@@ -56,13 +61,23 @@ export interface TooltipProps {
   hideAfter?: number; // 隐藏延迟
   popRootCls?: string;
   enterable?: boolean; // 鼠标是否可进入popover中
-  trigger?: 'hover' | 'click' | 'focus' | 'contextmenu';
+  trigger?: Trigger | Trigger[]; // 触发方式
   disabled?: boolean;
+  popX?: number; // 没有children时, popover的x坐标
+  popY?: number; // 没有children时, popover的y坐标
 }
 
 const directions = ['top', 'bottom', 'left', 'right'];
 
 const positions = ['start', 'end', 'center'];
+
+// 默认与窗口横边缘的最小距离
+const minDistance = {
+  top: 15,
+  bottom: 15,
+  left: 15,
+  right: 15
+};
 
 const calculatePosition: CalculatePosition = (placement, hasChild) => {
   const place = placement.split('-');
@@ -85,93 +100,240 @@ const calculatePosition: CalculatePosition = (placement, hasChild) => {
   const result = {} as ReturnType<CalculatePosition>;
   // 有children时的popover位置
   if (directions.includes(first) && positions.includes(second)) {
-    const _first =
-      first === 'top'
-        ? 'bottom'
-        : first === 'bottom'
-          ? 'top'
-          : first === 'left'
-            ? 'right'
-            : 'left';
-    const _second = 'center';
-    result.transformOrigin = `${_first} ${_second}`;
-
-    result.arrow = {
-      top: first === 'top' ? '100%' : first === 'bottom' ? '0' : '50%',
-      left: first === 'left' ? '100%' : first === 'right' ? '0' : '50%'
-    };
-
     result.position = (rect, popRect) => {
       if (rect instanceof DOMRect === false)
         throw new TypeError('Tooltip: 有children时, rect 需要为 DOMRect');
       const { top, left, width, height } = rect;
       const { width: popWidth, height: popHeight } = popRect;
       if (typeof top === 'undefined') throw new Error('top is undefined');
+
       if (first === 'top') {
-        return {
-          top: `${top - popHeight - 10}px`,
-          left:
-            second === 'start'
-              ? `${left}px`
-              : second === 'end'
-                ? `${left + width - popWidth}px`
-                : `${left + width / 2 - popWidth / 2}px`
-        };
-      }
-      if (first === 'bottom') {
-        return {
-          top: `${top + height + 10}px`,
-          left:
-            second === 'start'
-              ? `${left}px`
-              : second === 'end'
-                ? `${left + width - popWidth}px`
-                : `${left + width / 2 - popWidth / 2}px`
-        };
-      }
-      if (first === 'left') {
-        return {
-          top:
-            second === 'start'
-              ? `${top}px`
-              : second === 'end'
-                ? `${top + height - popHeight}px`
-                : `${top + height / 2 - popHeight / 2}px`,
-          left: `${left - popWidth - 10}px`
-        };
-      }
-      return {
-        top:
+        let _top = top - popHeight - 10;
+        let _left =
           second === 'start'
-            ? `${top}px`
+            ? left
             : second === 'end'
-              ? `${top + height - popHeight}px`
-              : `${top + height / 2 - popHeight / 2}px`,
-        left: `${left + width + 10}px`
-      };
+              ? left + width - popWidth
+              : left + width / 2 - popWidth / 2;
+        let _arrowTop = 100;
+        let _arrowLeft = 50;
+        if (_top < minDistance.top) {
+          _top = top + height + 10;
+          _arrowTop = 0;
+        }
+        if (_left < minDistance.left) {
+          if (minDistance.left > left + width - 16) {
+            _left = left + width - 16; // arrow的宽度为14.1421, 为预留指向源组件的位置, 减去16
+          } else {
+            _left = minDistance.left;
+          }
+        } else if (_left + popWidth > window.innerWidth - minDistance.right) {
+          if (
+            window.innerWidth - popWidth - minDistance.right <
+            left - popWidth + 16
+          ) {
+            _left = left - popWidth + 16;
+          } else {
+            _left = window.innerWidth - popWidth - minDistance.right;
+          }
+        }
+        const right = left + width;
+        const _right = _left + popWidth;
+        if (_left < left || _right > right) {
+          const arrowLeft = (left + width / 2 - _left) / popWidth;
+          _arrowLeft = arrowLeft * 100;
+          const leftDiff = Math.abs(left - _right);
+          const rightDiff = Math.abs(right - _left);
+          if (leftDiff < rightDiff) {
+            _arrowLeft = _arrowLeft =
+              100 -
+              ((leftDiff * popWidth) / (width + popWidth) / popWidth) * 100;
+          } else {
+            _arrowLeft =
+              ((rightDiff * popWidth) / (width + popWidth) / popWidth) * 100;
+          }
+        }
+        return {
+          top: `${_top}px`,
+          left: `${_left}px`,
+          arrowTop: `${_arrowTop}%`,
+          arrowLeft: `${_arrowLeft}%`
+        };
+      }
+
+      if (first === 'bottom') {
+        let _top = top + height + 10;
+        let _left =
+          second === 'start'
+            ? left
+            : second === 'end'
+              ? left + width - popWidth
+              : left + width / 2 - popWidth / 2;
+        let _arrowTop = 0;
+        let _arrowLeft = 50;
+        if (_top + popHeight > window.innerHeight - minDistance.bottom) {
+          _top = top - popHeight - 10;
+          _arrowTop = 100;
+        }
+        if (_left < minDistance.left) {
+          if (minDistance.left > left + width - 16) {
+            _left = left + width - 16; // arrow的宽度为14.1421, 为预留指向源组件的位置, 减去16
+          } else {
+            _left = minDistance.left;
+          }
+        } else if (_left + popWidth > window.innerWidth - minDistance.right) {
+          if (
+            window.innerWidth - popWidth - minDistance.right <
+            left - popWidth + 16
+          ) {
+            _left = left - popWidth + 16;
+          } else {
+            _left = window.innerWidth - popWidth - minDistance.right;
+          }
+        }
+        const right = left + width;
+        const _right = _left + popWidth;
+        if (_left < left || _right > right) {
+          const arrowLeft = (left + width / 2 - _left) / popWidth;
+          _arrowLeft = arrowLeft * 100;
+          const leftDiff = Math.abs(left - _right);
+          const rightDiff = Math.abs(right - _left);
+          if (leftDiff < rightDiff) {
+            _arrowLeft =
+              100 -
+              ((leftDiff * popWidth) / (width + popWidth) / popWidth) * 100;
+          } else {
+            _arrowLeft =
+              ((rightDiff * popWidth) / (width + popWidth) / popWidth) * 100;
+          }
+        }
+        return {
+          top: `${_top}px`,
+          left: `${_left}px`,
+          arrowTop: `${_arrowTop}%`,
+          arrowLeft: `${_arrowLeft}%`
+        };
+      }
+
+      if (first === 'left') {
+        let _left = left - popWidth - 10;
+        let _top =
+          second === 'start'
+            ? top
+            : second === 'end'
+              ? top + height - popHeight
+              : top + height / 2 - popHeight / 2;
+        let _arrowTop = 50;
+        let _arrowLeft = 100;
+        if (_left < minDistance.left) {
+          _left = left + width + 10;
+          _arrowLeft = 0;
+        }
+        if (_top < minDistance.top) {
+          if (minDistance.top > top + height - 16) {
+            _top = top + height - 16;
+          } else {
+            _top = minDistance.top;
+          }
+        } else if (_top + popHeight > window.innerHeight - minDistance.bottom) {
+          if (
+            window.innerHeight - popHeight - minDistance.bottom <
+            top - popHeight + 16
+          ) {
+            _top = top - popHeight + 16;
+          } else {
+            _top = window.innerHeight - popHeight - minDistance.bottom;
+          }
+        }
+        const bottom = top + height;
+        const _bottom = _top + popHeight;
+        if (_top < top || _bottom > bottom) {
+          const arrowTop = (top + height / 2 - _top) / popHeight;
+          _arrowTop = arrowTop * 100;
+          const topDiff = Math.abs(top - _bottom);
+          const bottomDiff = Math.abs(bottom - _top);
+          if (topDiff < bottomDiff) {
+            _arrowTop =
+              100 -
+              ((topDiff * popHeight) / (height + popHeight) / popHeight) * 100;
+          } else {
+            _arrowTop =
+              ((bottomDiff * popHeight) / (height + popHeight) / popHeight) *
+              100;
+          }
+        }
+        return {
+          top: `${_top}px`,
+          left: `${_left}px`,
+          arrowTop: `${_arrowTop}%`,
+          arrowLeft: `${_arrowLeft}%`
+        };
+      }
+
+      if (first === 'right') {
+        let _left = left + width + 10;
+        let _top =
+          second === 'start'
+            ? top
+            : second === 'end'
+              ? top + height - popHeight
+              : top + height / 2 - popHeight / 2;
+        let _arrowTop = 50;
+        let _arrowLeft = 0;
+        if (_left + popWidth > window.innerWidth - minDistance.left) {
+          _left = left - popWidth - 10;
+          _arrowLeft = 100;
+        }
+        if (_top < minDistance.top) {
+          if (minDistance.top > top + height - 16) {
+            _top = top + height - 16;
+          } else {
+            _top = minDistance.top;
+          }
+        } else if (_top + popHeight > window.innerHeight - minDistance.bottom) {
+          if (
+            window.innerHeight - popHeight - minDistance.bottom <
+            top - popHeight + 16
+          ) {
+            _top = top - popHeight + 16;
+          } else {
+            _top = window.innerHeight - popHeight - minDistance.bottom;
+          }
+        }
+        const bottom = top + height;
+        const _bottom = _top + popHeight;
+        if (_top < top || _bottom > bottom) {
+          const arrowTop = (top + height / 2 - _top) / popHeight;
+          _arrowTop = arrowTop * 100;
+          const topDiff = Math.abs(top - _bottom);
+          const bottomDiff = Math.abs(bottom - _top);
+          if (topDiff < bottomDiff) {
+            _arrowTop =
+              100 -
+              ((topDiff * popHeight) / (height + popHeight) / popHeight) * 100;
+          } else {
+            _arrowTop =
+              ((bottomDiff * popHeight) / (height + popHeight) / popHeight) *
+              100;
+          }
+        }
+        return {
+          top: `${_top}px`,
+          left: `${_left}px`,
+          arrowTop: `${_arrowTop}%`,
+          arrowLeft: `${_arrowLeft}%`
+        };
+      }
+
+      throw new Error('Tooltip: 无效的 placement');
     };
 
     return result;
-  } else if (directions.includes(first) && directions.includes(second)) {
-    const _y =
-      first === 'top'
-        ? 'bottom'
-        : first === 'bottom'
-          ? 'top'
-          : second === 'top'
-            ? 'bottom'
-            : 'top';
-    const _x =
-      first === 'left'
-        ? 'right'
-        : first === 'right'
-          ? 'left'
-          : second === 'left'
-            ? 'right'
-            : 'left';
-    result.transformOrigin = `${_y} ${_x}`;
-
-    result.arrow = null;
+  }
+  // 没有children时的popover位置
+  else if (directions.includes(first) && directions.includes(second)) {
+    const isTop = first === 'top' || second === 'top';
+    const isLeft = first === 'left' || second === 'left';
 
     result.position = (pos, popover) => {
       if ('top' in pos)
@@ -181,25 +343,36 @@ const calculatePosition: CalculatePosition = (placement, hasChild) => {
       const { x, y } = pos;
       const { width, height } = popover;
 
-      if (first === 'top' || second === 'top') {
+      if (isTop) {
+        let _top = y - height - 5;
+        let _left = isLeft ? x - width - 5 : x + 10;
+        if (_top < minDistance.top) _top = minDistance.top;
+        if (isLeft) {
+          if (_left < minDistance.left) _left = minDistance.left;
+        } else {
+          if (_left + width > window.innerWidth - minDistance.right)
+            _left = window.innerWidth - width - minDistance.right;
+        }
         return {
-          top: `${y - height - 5}px`,
-          left:
-            first === 'left' || second === 'left'
-              ? `${x - width - 5}px`
-              : `${x + 10}px`
+          top: `${_top}px`,
+          left: `${_left}px`
         };
-      } else if (first === 'bottom' || second === 'bottom') {
+      } else {
+        let _top = y + 10;
+        let _left = isLeft ? x - width - 5 : x + 10;
+        if (_top + height > window.innerHeight - minDistance.bottom)
+          _top = window.innerHeight - height - minDistance.bottom;
+        if (isLeft) {
+          if (_left < minDistance.left) _left = minDistance.left;
+        } else {
+          if (_left + width > window.innerWidth - minDistance.right)
+            _left = window.innerWidth - width - minDistance.right;
+        }
         return {
-          top: `${y + 10}px`,
-          left:
-            first === 'left' || second === 'left'
-              ? `${x - width - 5}px`
-              : `${x + 10}px`
+          top: `${_top}px`,
+          left: `${_left}px`
         };
       }
-
-      throw new Error('Tooltip: 无效的 placement');
     };
     return result;
   }
@@ -220,26 +393,36 @@ const Tooltip = ({
   popRootCls = 'tooltip-root',
   enterable = false,
   trigger = 'hover',
-  disabled = false
+  disabled = false,
+  popX,
+  popY
 }: TooltipProps) => {
   if (!children && typeof visible !== 'boolean')
     throw new Error('当 tooltip 没有 children 时, 必须传入 visible 以控制展示');
 
+  const _trigger = useMemo(() => {
+    if (typeof trigger === 'string') return [trigger];
+    return trigger;
+  }, [trigger]);
+
   /*@__PURE__*/ (() => {
     if (typeof visible === 'boolean' && disabled)
       console.warn('Tooltip: 当传入 visible 时, disabled 会被忽略');
-    if (enterable && trigger !== 'hover')
-      console.warn('Tooltip: 当 trigger 不为 hover 时, enterable 会被忽略');
     if (enterable && hideAfter <= 30)
       console.warn(
         'Tooltip: 当 enterable 为 true 时, 过低的hideAfter可能会导致闪动'
       );
   })();
 
+  // 当前触发方式
+  const nowTrigger = useRef<Trigger | ''>('');
+
   const place = useMemo(
     () => calculatePosition(placement, hasValue(children)),
     [children, placement]
   );
+
+  const [arrowPos, setArrowPos] = useState({ top: '0', left: '0' });
 
   const mousePos = useRef({ x: -1000, y: -1000 });
 
@@ -259,8 +442,8 @@ const Tooltip = ({
       ? (e) => (mousePos.current = { x: e.clientX, y: e.clientY })
       : undefined,
     click:
-      trigger === 'click' || trigger === 'contextmenu'
-        ? () => changeShow(false)
+      _trigger.includes('click') || _trigger.includes('contextmenu')
+        ? () => changeShow(false, '')
         : undefined
   });
 
@@ -316,16 +499,25 @@ const Tooltip = ({
   );
 
   const changeShow = useCallback(
-    (show: boolean) => {
+    (show: boolean, trigger: Trigger | '') => {
+      // if (nowTrigger.current === '') nowTrigger.current = trigger;
+      // else if (nowTrigger.current !== trigger) return;
+
+      // visible 为 boolean 时, 由外部控制
       if (typeof visible === 'boolean') {
         if (showState.current === visible) return;
         showState.current = visible;
-      } else if (disabled) {
+      }
+      // disabled 时, 不显示
+      else if (disabled) {
         if (showState.current === false) return;
         showState.current = false;
-      } else {
+      }
+      // 最后由内部支持的状态控制
+      else {
         if (showState.current === show) return;
         showState.current = show;
+        nowTrigger.current = trigger;
       }
       setTaskQueue(showState.current);
     },
@@ -336,9 +528,9 @@ const Tooltip = ({
 
   useEffect(() => {
     if (typeof visible === 'boolean') {
-      changeShow(visible);
+      changeShow(visible, '');
     } else if (disabled) {
-      changeShow(false);
+      changeShow(false, '');
     }
   }, [visible, disabled, changeShow]);
 
@@ -382,16 +574,27 @@ const Tooltip = ({
               border: !showArrow ? '1px solid #e9e9e9' : 'none'
             }}
             onMouseEnter={
-              enterable && trigger === 'hover'
+              enterable ? () => changeShow(true, 'hover') : undefined
+            }
+            onMouseLeave={
+              enterable
                 ? () => {
-                    changeShow(true);
+                    if (nowTrigger.current === 'hover') changeShow(false, '');
                   }
                 : undefined
             }
-            onMouseLeave={
-              enterable && trigger === 'hover'
+            onMouseDown={
+              enterable
                 ? () => {
-                    changeShow(false);
+                    // 目标: 不论最开始由任何方式触发, 在点击过popover后都不会隐藏, 而是在鼠标离开时隐藏
+                    // 原理:
+                    // 鼠标按下时, 不隐藏, 会先触发其他触发方式的隐藏
+                    // 此处延迟触发hover出现
+                    // 于是不论最开始由任何方式触发, 都会在鼠标按下时, 触发方式变为hover
+                    // 意味着上面的 onMouseLeave 会在离开时触发隐藏
+                    setTimeout(() => {
+                      changeShow(true, 'hover');
+                    }, hideAfter);
                   }
                 : undefined
             }
@@ -405,8 +608,8 @@ const Tooltip = ({
                 arrowRef.current = node;
               }}
               style={{
-                top: place.arrow?.top,
-                left: place.arrow?.left,
+                top: arrowPos.top,
+                left: arrowPos.left,
                 backgroundColor: backgroundColor ?? 'white'
               }}
               className="tooltip-arrow"
@@ -416,25 +619,34 @@ const Tooltip = ({
       }
       onPopup={_onPopup}
       onMouseEnter={
-        children && trigger === 'hover' ? () => changeShow(true) : undefined
+        children && _trigger.includes('hover')
+          ? () => changeShow(true, 'hover')
+          : undefined
       }
       onMouseLeave={
-        children && trigger === 'hover' ? () => changeShow(false) : undefined
+        children && _trigger.includes('hover')
+          ? () => changeShow(false, '')
+          : undefined
       }
       onClick={
-        children && trigger === 'click'
-          ? () => changeShow(!showState.current)
+        children && _trigger.includes('click')
+          ? () =>
+              changeShow(!showState.current, !showState.current ? 'click' : '')
           : undefined
       }
       onFocus={
-        children && trigger === 'focus' ? () => changeShow(true) : undefined
+        children && _trigger.includes('focus')
+          ? () => changeShow(true, 'focus')
+          : undefined
       }
       onBlur={
-        children && trigger === 'focus' ? () => changeShow(false) : undefined
+        children && _trigger.includes('focus')
+          ? () => changeShow(false, '')
+          : undefined
       }
       onContextMenu={
-        children && trigger === 'contextmenu'
-          ? () => changeShow(true)
+        children && _trigger.includes('contextmenu')
+          ? () => changeShow(true, 'contextmenu')
           : undefined
       }
       visible={show}
