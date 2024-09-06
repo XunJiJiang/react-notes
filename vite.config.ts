@@ -50,6 +50,7 @@ export default defineConfig({
     alias
   },
   server: {
+    host: true,
     port: 3000
   },
   build: {
