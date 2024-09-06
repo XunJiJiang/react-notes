@@ -606,6 +606,16 @@ const Tooltip = ({
                   }
                 : undefined
             }
+            onMouseUp={
+              enterable
+                ? () => {
+                    // 目标: 不论最开始由任何方式触发, 在点击过popover后都不会隐藏, 而是在鼠标离开时隐藏
+                    setTimeout(() => {
+                      changeShow(true, 'hover');
+                    }, hideAfter);
+                  }
+                : undefined
+            }
           >
             {title}
           </span>
