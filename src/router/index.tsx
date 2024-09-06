@@ -1,6 +1,7 @@
 import type { ContentsType, ContentType } from '@type/modules/contents.d.ts';
 import type { LoaderData } from '@type/modules/comp-page-template-comp-pager.d.ts';
-import { type RouteObject, createBrowserRouter } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import Root from '@/App.tsx';
 import ErrorPage from './error/error-page.tsx';
 import Index from './modules/indexRoute/index.tsx';

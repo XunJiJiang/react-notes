@@ -473,6 +473,10 @@ const Tooltip = ({
             callback: () => {
               if (!taskQueueMap.current.has(taskQueue)) return;
               popoverRef.current?.style.setProperty('--show-transform', '1');
+              popoverRef.current?.style.setProperty(
+                '--cubic-bezier',
+                'cubic-bezier(0.4, 0.52, 0, 1.5)'
+              );
             },
             delay: 10
           });
@@ -482,6 +486,10 @@ const Tooltip = ({
             callback: () => {
               if (!taskQueueMap.current.has(taskQueue)) return;
               popoverRef.current?.style.setProperty('--show-transform', '0');
+              popoverRef.current?.style.setProperty(
+                '--cubic-bezier',
+                'cubic-bezier(0.42, 0, 0.58, 1)'
+              );
             },
             delay: hideAfter
           })
