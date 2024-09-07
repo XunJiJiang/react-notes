@@ -40,7 +40,7 @@ const AnchorPopover = ({
         enterable
         trigger={['hover', 'focus']}
         showAfter={300}
-        hideAfter={50}
+        hideAfter={100}
       >
         <Link
           ref={aRef}

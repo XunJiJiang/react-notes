@@ -24,6 +24,7 @@
   line-height: 20px;
   opacity: var(--show-transform);
   transform: scale(calc(var(--show-transform) * 0.1 + 0.9));
+  /* TODO: bug: 启用hover时, 在鼠标移入提示出现时, 滚动滚轮使鼠标移出, 会导致缩小偏向左侧 */
   transform-origin: 0% 0%;
   transition:
     opacity 0.3s,

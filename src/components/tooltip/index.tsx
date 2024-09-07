@@ -410,7 +410,7 @@ const Tooltip = ({
       console.warn('Tooltip: 当传入 visible 时, disabled 会被忽略');
     if (enterable && hideAfter <= 30)
       console.warn(
-        'Tooltip: 当 enterable 为 true 时, 过低的hideAfter可能会导致闪动'
+        'Tooltip: 当 enterable 为 true 时, 过低的hideAfter可能会导致移入前就消失'
       );
   })();
 
@@ -447,6 +447,12 @@ const Tooltip = ({
         : undefined
   });
 
+  // 可见性，在开始显示或开始消失时更新
+  const isShow = useRef(false);
+
+  // 可见性，在开始显示或完全消失时更新
+  const [show, setShow] = useState(false);
+
   const showTaskQueue = useRef<TimeoutTaskQueue | null>(null);
 
   const taskQueueMap = useRef(new AnyMap());
@@ -472,6 +478,7 @@ const Tooltip = ({
           .addTask({
             callback: () => {
               if (!taskQueueMap.current.has(taskQueue)) return;
+              isShow.current = true;
               popoverRef.current?.style.setProperty('--show-transform', '1');
               popoverRef.current?.style.setProperty(
                 '--cubic-bezier',
@@ -485,6 +492,7 @@ const Tooltip = ({
           .addTask({
             callback: () => {
               if (!taskQueueMap.current.has(taskQueue)) return;
+              isShow.current = false;
               popoverRef.current?.style.setProperty('--show-transform', '0');
               popoverRef.current?.style.setProperty(
                 '--cubic-bezier',
@@ -531,8 +539,6 @@ const Tooltip = ({
     },
     [disabled, setTaskQueue, visible]
   );
-
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (typeof visible === 'boolean') {
@@ -582,7 +588,9 @@ const Tooltip = ({
               border: !showArrow ? '1px solid #e9e9e9' : 'none'
             }}
             onMouseEnter={
-              enterable ? () => changeShow(true, 'hover') : undefined
+              enterable && isShow.current
+                ? () => changeShow(true, 'hover')
+                : undefined
             }
             onMouseLeave={
               enterable

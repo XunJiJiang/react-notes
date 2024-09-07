@@ -8,7 +8,8 @@ import {
   useMemo
 } from 'react';
 import MountToBody from '@components/mount-to-body/index.tsx';
-import useInheritProperty from './hooks/useInheritProperty';
+import useInheritProperty from './hooks/useInheritProperty.ts';
+import useScrollEvent from './hooks/useScrollEvent.ts';
 import { hasValue, isNumber, isSame } from '@utils/index.ts';
 
 type PopPosition = {
@@ -141,6 +142,27 @@ const _BasePopover = <
   const _rect = useRef<DOMRect | null>(null);
   const _popoverRect = useRef<DOMRect | null>(null);
 
+  const isScroll = useRef(false);
+
+  useScrollEvent(childRef, {
+    onScroll: () => {
+      if (!popoverRef.current) return;
+      const _rect =
+        childRef.current?.getBoundingClientRect() as T extends React.ReactElement
+          ? DOMRect
+          : undefined;
+      const _popoverRect = popoverRef.current.getBoundingClientRect();
+      const _popPosition = onPopup(_rect, _popoverRect);
+      setPopPosition(_popPosition);
+    },
+    onScrollStart: () => {
+      isScroll.current = true;
+    },
+    onScrollEnd: () => {
+      isScroll.current = false;
+    }
+  });
+
   useEffect(() => {
     const isVisible = visible;
     if (!isVisible) return;
@@ -192,7 +214,7 @@ const _BasePopover = <
     const run = () => {
       if (!_isRun.current) return;
       if (!popoverRef.current) return;
-      if (!isRectChange()) {
+      if (isScroll.current || !isRectChange()) {
         requestAnimationFrame(run);
         return;
       }
