@@ -122,17 +122,17 @@ const calculatePosition: CalculatePosition = (placement, hasChild) => {
           _arrowTop = 0;
         }
         if (_left < minDistance.left) {
-          if (minDistance.left > left + width - 16) {
-            _left = left + width - 16; // arrow的宽度为14.1421, 为预留指向源组件的位置, 减去16
+          if (minDistance.left > left + width - 18) {
+            _left = left + width - 18; // arrow的宽度为14.1421, 为预留指向源组件的位置, 减去18
           } else {
             _left = minDistance.left;
           }
         } else if (_left + popWidth > window.innerWidth - minDistance.right) {
           if (
             window.innerWidth - popWidth - minDistance.right <
-            left - popWidth + 16
+            left - popWidth + 18
           ) {
-            _left = left - popWidth + 16;
+            _left = left - popWidth + 18;
           } else {
             _left = window.innerWidth - popWidth - minDistance.right;
           }
@@ -176,17 +176,17 @@ const calculatePosition: CalculatePosition = (placement, hasChild) => {
           _arrowTop = 100;
         }
         if (_left < minDistance.left) {
-          if (minDistance.left > left + width - 16) {
-            _left = left + width - 16; // arrow的宽度为14.1421, 为预留指向源组件的位置, 减去16
+          if (minDistance.left > left + width - 18) {
+            _left = left + width - 18; // arrow的宽度为14.1421, 为预留指向源组件的位置, 减去18
           } else {
             _left = minDistance.left;
           }
         } else if (_left + popWidth > window.innerWidth - minDistance.right) {
           if (
             window.innerWidth - popWidth - minDistance.right <
-            left - popWidth + 16
+            left - popWidth + 18
           ) {
-            _left = left - popWidth + 16;
+            _left = left - popWidth + 18;
           } else {
             _left = window.innerWidth - popWidth - minDistance.right;
           }
@@ -230,17 +230,17 @@ const calculatePosition: CalculatePosition = (placement, hasChild) => {
           _arrowLeft = 0;
         }
         if (_top < minDistance.top) {
-          if (minDistance.top > top + height - 16) {
-            _top = top + height - 16;
+          if (minDistance.top > top + height - 18) {
+            _top = top + height - 18;
           } else {
             _top = minDistance.top;
           }
         } else if (_top + popHeight > window.innerHeight - minDistance.bottom) {
           if (
             window.innerHeight - popHeight - minDistance.bottom <
-            top - popHeight + 16
+            top - popHeight + 18
           ) {
-            _top = top - popHeight + 16;
+            _top = top - popHeight + 18;
           } else {
             _top = window.innerHeight - popHeight - minDistance.bottom;
           }
@@ -285,17 +285,17 @@ const calculatePosition: CalculatePosition = (placement, hasChild) => {
           _arrowLeft = 100;
         }
         if (_top < minDistance.top) {
-          if (minDistance.top > top + height - 16) {
-            _top = top + height - 16;
+          if (minDistance.top > top + height - 18) {
+            _top = top + height - 18;
           } else {
             _top = minDistance.top;
           }
         } else if (_top + popHeight > window.innerHeight - minDistance.bottom) {
           if (
             window.innerHeight - popHeight - minDistance.bottom <
-            top - popHeight + 16
+            top - popHeight + 18
           ) {
-            _top = top - popHeight + 16;
+            _top = top - popHeight + 18;
           } else {
             _top = window.innerHeight - popHeight - minDistance.bottom;
           }
