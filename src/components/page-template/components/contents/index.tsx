@@ -6,7 +6,13 @@ import type {
 } from '@type/modules/comp-page-template-comp-contents.d.ts';
 
 import './index.css';
-import { useRef, forwardRef, useImperativeHandle, useEffect } from 'react';
+import {
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+  useCallback
+} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useForceReRendering } from '@utils/index.ts';
 
@@ -59,32 +65,36 @@ const _ContentsINPage = (
 
   const lastFocusLi = useRef<HTMLElement | null>(null);
 
-  const changeLocation: ChangeLocationFunc = (content) => {
-    if (!content || content.level === 1) {
-      ulRef.current?.classList.add('contents-in-page-hidden');
-      ulRef.current?.style.setProperty('--side-indicates', '0');
+  const changeLocation: ChangeLocationFunc = useCallback(
+    (content) => {
+      if (!content || content.level === 1) {
+        ulRef.current?.classList.add('contents-in-page-hidden');
+        ulRef.current?.style.setProperty('--side-indicates', '0');
+        lastFocusLi.current?.setAttribute('data-active', `${false}`);
+        lastFocusLi.current = null;
+        return;
+      }
+
+      const index = contentsWithoutLevel1.findIndex((item) => {
+        return item.label === content.label;
+      });
+      if (index === -1) {
+        ulRef.current?.classList.add('contents-in-page-hidden');
+        ulRef.current?.style.setProperty('--side-indicates', '0');
+        return;
+      }
+
+      ulRef.current?.classList.remove('contents-in-page-hidden');
+      ulRef.current?.style.setProperty('--side-indicates', index + '');
+      const liNode =
+        document.getElementById(`contents-in-page-${content.id}`) ??
+        content.node;
       lastFocusLi.current?.setAttribute('data-active', `${false}`);
-      lastFocusLi.current = null;
-      return;
-    }
-
-    const index = contentsWithoutLevel1.findIndex((item) => {
-      return item.label === content.label;
-    });
-    if (index === -1) {
-      ulRef.current?.classList.add('contents-in-page-hidden');
-      ulRef.current?.style.setProperty('--side-indicates', '0');
-      return;
-    }
-
-    ulRef.current?.classList.remove('contents-in-page-hidden');
-    ulRef.current?.style.setProperty('--side-indicates', index + '');
-    const liNode =
-      document.getElementById(`contents-in-page-${content.id}`) ?? content.node;
-    lastFocusLi.current?.setAttribute('data-active', `${false}`);
-    liNode.setAttribute('data-active', `${true}`);
-    lastFocusLi.current = liNode;
-  };
+      liNode.setAttribute('data-active', `${true}`);
+      lastFocusLi.current = liNode;
+    },
+    [contentsWithoutLevel1]
+  );
 
   useImperativeHandle(ref, () => ({
     changeLocation

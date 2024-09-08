@@ -2,11 +2,12 @@ import type { PageTemplateProps } from '@type/modules/comp-page-template.d.ts';
 import type { ContentsINPageRef } from '@type/modules/comp-page-template-comp-contents.d.ts';
 import type {
   ContentsType,
+  ContentType,
   MarkdownComponentRef
 } from '@type/modules/comp-markdown.d.ts';
 
 import './index.css';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import MarkdownComponent from '../markdown/index.tsx';
 import Contents from './components/contents/index.tsx';
 import Pager from './components/pager/index.tsx';
@@ -29,38 +30,45 @@ const PageTemplate = ({
   /**
    * 滚动事件处理
    */
-  const scrollHandler = () => {
+  const scrollHandler = useCallback(() => {
     if (
       markdownContentsRef.current &&
       markdownContentsRef.current.changeLocation
     ) {
       const viewHeight = window.innerHeight;
       const inView: ContentsType = [];
+      // 从下至上遍历的情况下的第一个位于视图外侧上方的元素
+      let firstOutView: ContentType | null = null;
       for (let i = markdownContents.length - 1; i >= 0; i--) {
         if (!scrollRef.current) return;
         const content = markdownContents[i];
         if (
           content.offsetTop <= scrollRef.current.scrollTop + viewHeight / 2 &&
-          content.offsetTop >= scrollRef.current.scrollTop - 16
+          content.offsetTop >= scrollRef.current.scrollTop
         ) {
           inView.push(content);
         }
-        if (content.offsetTop < scrollRef.current.scrollTop - 16) {
-          if (inView.length === 0) {
-            markdownContentsRef.current.changeLocation(content);
-          } else {
-            const lastInView = inView.pop();
-            if (lastInView) {
-              markdownContentsRef.current.changeLocation(lastInView);
-            }
-          }
+        if (content.offsetTop < scrollRef.current.scrollTop) {
+          firstOutView = content;
           break;
-        } else {
-          markdownContentsRef.current.changeLocation(content);
         }
       }
+      if (
+        inView[0] &&
+        scrollRef.current?.scrollTop &&
+        inView[0].offsetTop < scrollRef.current.scrollTop + viewHeight / 2
+      ) {
+        const lastInView = inView.pop();
+        if (lastInView) {
+          markdownContentsRef.current.changeLocation(lastInView);
+        }
+      } else {
+        markdownContentsRef.current.changeLocation(
+          firstOutView || inView.pop() || null
+        );
+      }
     }
-  };
+  }, [markdownContents]);
 
   const scrollHandlerDebounce = debounce(scrollHandler, 100);
 
