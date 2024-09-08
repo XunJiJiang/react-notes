@@ -1,6 +1,6 @@
 export interface Setting {
   url: {
-    hose: string;
+    host: string;
     origin: string;
     pathname: string;
   };
@@ -14,12 +14,18 @@ export interface Setting {
   };
 }
 
+const getUrl = (pathname: string) => {
+  const url = window.location;
+  console.log(url);
+  return {
+    host: url.host,
+    origin: url.origin + pathname,
+    pathname
+  };
+};
+
 const setting: Setting = {
-  url: {
-    hose: 'http://localhost:3000',
-    origin: 'http://localhost:3000/reactnotes/',
-    pathname: '/reactnotes/'
-  },
+  url: getUrl('/reactnotes/'),
   github: {
     url: 'https://github.com/XunJiJiang/react-notes'
   },
