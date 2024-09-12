@@ -1,7 +1,7 @@
 {
   "name": "react-reference-vite",
   "version": "0.5.0",
-  "homepage": "https://github.com/XunJiJiang/react-notes",
+  "homepage": "https://xunjijiang.github.io/reactnotes/",
   "license": "MIT",
   "author": "XunJiJiang",
   "repository": {
@@ -19,7 +19,8 @@
     "create:node": "node cli/index.js",
     "lint": "eslint --cache .",
     "format": "prettier --write .",
-    "format-check": "prettier --check ."
+    "format-check": "prettier --check .",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "highlight.js": "^11.9.0",
@@ -50,6 +51,7 @@
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "gh-pages": "^6.1.1",
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",

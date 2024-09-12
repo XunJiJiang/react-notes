@@ -54,7 +54,13 @@ export default defineConfig({
     port: 3000
   },
   build: {
-    assetsInlineLimit: 0
+    assetsInlineLimit: 0,
+    rollupOptions: {
+      input: {
+        index: path.resolve(__dirname, 'index.html'),
+        404: path.resolve(__dirname, '404.html')
+      }
+    }
   },
   // Github Pages
   base: '/reactnotes/'
