@@ -26,6 +26,11 @@
   border-left: 3px solid #ec9b9b;
 }
 
+.markdown-blockquote.markdown-blockquote-tip {
+  background-color: #c089ff1c;
+  border-left: 3px solid #ddb4ff;
+}
+
 .markdown-blockquote.markdown-blockquote-info {
   /* background-color: #f6f7f9; */
   background-color: #99a1b309;
@@ -56,6 +61,10 @@
 .markdown-blockquote
   .markdown-blockquote-title.markdown-blockquote-title-danger {
   color: #dd5959;
+}
+
+.markdown-blockquote .markdown-blockquote-title.markdown-blockquote-title-tip {
+  color: #a95dff;
 }
 
 .markdown-blockquote .markdown-blockquote-title.markdown-blockquote-title-info {

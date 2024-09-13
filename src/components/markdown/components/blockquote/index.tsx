@@ -9,7 +9,7 @@ import './index.css';
 
 import Icon from '@components/icon';
 
-const styleKeyList = ['success', 'warn', 'danger', 'info'];
+const styleKeyList = ['success', 'warn', 'danger', 'tip', 'info'];
 
 const createChildren: CreateChildrenFunc = (
   children,
