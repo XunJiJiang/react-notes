@@ -1,0 +1,42 @@
+name: Static page deployment
+
+# 当推送值此分支时运行
+on:
+  push:
+    branches:
+      - master
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.14.0" # Node.js版本
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build # 假设有一个build命令
+
+      - name: Clean up repository
+        run: git clean -fdx
+
+      - name: List files
+        run: ls -R dist # 列出dist文件夹内容，以便调试
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # 部署到gh-pages分支
+          folder: dist # 你的构建产物所在的文件夹
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_PAT }} # GitHub自动提供的token
