@@ -2,7 +2,7 @@
 
 > 这仅仅是个测试
 
-[这是一个很长很长的链接](http://localhost:3000/reactnotes/reference/react@18.2.0/Hook/useCallback#从记忆化回调中更新)
+[这是一个很长很长的链接](http://localhost:3000/react-notes/reference/react@18.2.0/Hook/useCallback#从记忆化回调中更新)
 
 twitter twitter twitter twitter twitter twitter twitter twitter twitter [`a`](test.com)
 
