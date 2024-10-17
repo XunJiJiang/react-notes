@@ -14,6 +14,9 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -40,5 +43,5 @@ jobs:
         with:
           branch: gh-pages # 部署到gh-pages分支
           folder: dist # 你的构建产物所在的文件夹
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub自动提供的token>>>>>>> master
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
