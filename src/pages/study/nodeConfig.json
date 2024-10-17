@@ -1,0 +1,13 @@
+{
+  "label": null,
+  "path": "/",
+  "entryFilePath": null,
+  "icon": null,
+  "tag": null,
+  "component": null,
+  "type": "root",
+  "childrenSort": {
+    "react": 0,
+    "rust": 1
+  }
+}

@@ -19,7 +19,11 @@ csl.title('Create Note');
 
 const rootPageDirectoryPath = path.resolve(__dirname, './src/pages/study');
 
-/** 创建和处理选择文件夹的选项 */
+/**
+ * 创建和处理选择文件夹的选项
+ * @param {string} message
+ * @param {string} [directoryPath='./src/pages/study']
+ */
 async function logSelect(message, directoryPath = './src/pages/study') {
   while (true) {
     // 获取 ../src/pages/study 目录下的所有文件夹

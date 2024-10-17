@@ -1,7 +1,7 @@
 import './App.css';
 import { useContext } from 'react';
-import Components from '@components/index.tsx';
 import { AppContext } from './contexts/index.ts';
+import Base from '@layout/base/index.tsx';
 
 const App = () => {
   const context = useContext(AppContext);
@@ -9,7 +9,7 @@ const App = () => {
   return (
     <div className="App">
       <AppContext.Provider value={context}>
-        <Components />
+        <Base />
       </AppContext.Provider>
     </div>
   );

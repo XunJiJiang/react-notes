@@ -1,0 +1,13 @@
+{
+  "label": "Youtube",
+  "path": "/Youtube",
+  "entryFilePath": "/pages/study/react/learn/Youtube/index.tsx",
+  "icon": "Youtube",
+  "tag": {
+    "type": "icon",
+    "value": "Youtube-fill"
+  },
+  "component": "() => <Youtube />",
+  "type": "node",
+  "childrenSort": {}
+}

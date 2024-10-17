@@ -1,0 +1,10 @@
+{
+  "label": "rust",
+  "path": "/rust",
+  "entryFilePath": "/pages/study/rust/index.tsx",
+  "icon": null,
+  "tag": null,
+  "component": "() => <Rust />",
+  "type": "node",
+  "childrenSort": {}
+}

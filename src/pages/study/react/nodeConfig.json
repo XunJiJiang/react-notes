@@ -1,0 +1,14 @@
+{
+  "label": "react",
+  "path": "/react",
+  "entryFilePath": "/pages/study/react/index.tsx",
+  "icon": null,
+  "tag": null,
+  "component": "() => <React />",
+  "type": "node",
+  "childrenSort": {
+    "learn": 0,
+    "reference": 1,
+    "router": 2
+  }
+}

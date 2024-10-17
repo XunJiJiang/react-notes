@@ -1,0 +1,10 @@
+{
+  "label": "google",
+  "path": "/google",
+  "entryFilePath": "/pages/study/react/learn/google/index.tsx",
+  "icon": "google",
+  "tag": null,
+  "component": "() => <Google />",
+  "type": "node",
+  "childrenSort": {}
+}

@@ -91,6 +91,7 @@ export default [
                   '@pages': path.resolve(__dirname, 'src/pages'),
                   '@img': path.resolve(__dirname, 'src/assets/images'),
                   '@type': path.resolve(__dirname, 'src/types'),
+                  '@layout': path.resolve(__dirname, 'src/layout'),
                   '@setting': path.resolve(__dirname, 'src/setting.ts')
                 }
               }

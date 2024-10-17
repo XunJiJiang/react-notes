@@ -1,0 +1,23 @@
+import type { LoaderData } from '@type/modules/comp-page-template-comp-pager.d.ts';
+
+import PageTemplate from '@components/page-template/index.tsx';
+import markdown from './rust.md?raw';
+import { Suspense } from 'react';
+import { Await } from 'react-router-dom';
+import { useLoaderDataWithType } from '@utils/index.ts';
+import Loading from '@components/loading/index.tsx';
+
+const Component = () => {
+  const loaderData = useLoaderDataWithType<{
+    data: LoaderData;
+  }>();
+  return (
+    <Suspense fallback={<Loading size={0.9} />}>
+      <Await resolve={loaderData.data}>
+        <PageTemplate markdown={markdown} />
+      </Await>
+    </Suspense>
+  );
+};
+
+export default Component;

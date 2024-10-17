@@ -1,0 +1,10 @@
+{
+  "label": "windows",
+  "path": "/windows",
+  "entryFilePath": "/pages/study/react/learn/windows/index.tsx",
+  "icon": "windows-fill",
+  "tag": null,
+  "component": "() => <Windows />",
+  "type": "node",
+  "childrenSort": {}
+}

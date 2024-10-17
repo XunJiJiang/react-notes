@@ -1,0 +1,13 @@
+{
+  "label": "apple",
+  "path": "/apple",
+  "entryFilePath": "/pages/study/react/learn/apple/index.tsx",
+  "icon": "apple-fill",
+  "tag": {
+    "type": "icon",
+    "value": "apple-fill"
+  },
+  "component": "() => <Apple />",
+  "type": "node",
+  "childrenSort": {}
+}

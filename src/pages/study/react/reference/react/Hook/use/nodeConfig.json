@@ -1,0 +1,13 @@
+{
+  "label": "use",
+  "path": "/use",
+  "entryFilePath": "/pages/study/react/reference/react/Hook/use/index.tsx",
+  "icon": null,
+  "tag": {
+    "type": "icon",
+    "value": "experiment"
+  },
+  "component": "() => <Use />",
+  "type": "node",
+  "childrenSort": {}
+}

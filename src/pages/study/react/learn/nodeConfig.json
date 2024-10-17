@@ -1,0 +1,18 @@
+{
+  "label": "react learn",
+  "path": "/learn",
+  "entryFilePath": "/pages/study/react/learn/index.tsx",
+  "icon": null,
+  "tag": null,
+  "component": "() => <Learn />",
+  "type": "node",
+  "childrenSort": {
+    "twitter": 0,
+    "Youtube": 1,
+    "windows": 2,
+    "apple": 3,
+    "chrome": 4,
+    "HTML": 5,
+    "google": 6
+  }
+}

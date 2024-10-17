@@ -27,6 +27,7 @@
       "@img/*": ["assets/images/*"],
       "@type/*": ["types/*"],
       "@router/*": ["router/*"],
+      "@layout/*": ["layout/*"],
       "@setting": ["setting.ts"]
     }
   },

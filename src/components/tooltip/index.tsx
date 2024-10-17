@@ -5,7 +5,8 @@ import {
   useWindowMouseEvent,
   TimeoutTaskQueue,
   AnyMap,
-  hasValue
+  hasValue,
+  isMobile
 } from '@/utils/index.ts';
 
 type Placement =
@@ -569,7 +570,7 @@ const Tooltip = ({
     },
     [place, popX, popY]
   );
-
+  if (isMobile()) return children;
   return (
     <BasePopover<typeof children>
       ref={(nodes) => {

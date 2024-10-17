@@ -1,0 +1,13 @@
+{
+  "label": "twitter",
+  "path": "/twitter",
+  "entryFilePath": "/pages/study/react/learn/twitter/index.tsx",
+  "icon": "twitter",
+  "tag": {
+    "type": "icon",
+    "value": "twitter"
+  },
+  "component": "() => <Twitter />",
+  "type": "node",
+  "childrenSort": {}
+}

@@ -34,8 +34,8 @@ const AnchorPopover = ({
     <>
       <Tooltip
         title={decodeURI(fullPath)}
-        backgroundColor="black"
-        color="white"
+        backgroundColor="white"
+        color="black"
         placement="top"
         enterable
         trigger={['hover', 'focus']}

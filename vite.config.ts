@@ -40,6 +40,7 @@ const alias = {
   '@img': path.resolve(__dirname, 'src/assets/images'),
   '@type': path.resolve(__dirname, 'src/types'),
   '@router': path.resolve(__dirname, 'src/router'),
+  '@layout': path.resolve(__dirname, 'src/layout'),
   '@setting': path.resolve(__dirname, 'src/setting.ts')
 };
 

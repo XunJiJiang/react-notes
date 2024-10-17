@@ -7,6 +7,7 @@ import type {
 import './index.css';
 import { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import Icon from '@components/icon/index';
+// import Tooltip from '@/components/tooltip';
 
 const _Button = (
   {
@@ -90,38 +91,55 @@ const _Button = (
       clientHeight: buttonRef.current?.clientHeight ?? null
     };
   });
-
+  // TODO: Tooltip写着玩的
   return (
-    <button
-      ref={buttonRef}
-      title={title}
-      className={`content-button ${isBranch ? 'bold-button' : ''}`}
-      tabIndex={visible ? 0 : -1}
-    >
-      <Icon
-        name={
-          isBranch
-            ? state.isExpand
-              ? 'folder-open'
-              : 'folder'
-            : 'file-markdown'
+    <>
+      {/* <Tooltip
+        title={
+          <span
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}
+          >
+            {title}
+          </span>
         }
-        className="contents-button-left-icon"
-      />
-      <span className="contents-button-left-icon-right-margin" />
+        placement="right"
+      > */}
+      <button
+        ref={buttonRef}
+        title={title}
+        className={`content-button ${isBranch ? 'bold-button' : ''}`}
+        tabIndex={visible ? 0 : -1}
+      >
+        <Icon
+          name={
+            isBranch
+              ? state.isExpand
+                ? 'folder-open'
+                : 'folder'
+              : 'file-markdown'
+          }
+          className="contents-button-left-icon"
+        />
+        <span className="contents-button-left-icon-right-margin" />
 
-      <span className="contents-button-main">
-        {title}
-        {/* <wbr /> */}
-        {_tag}
-      </span>
+        <span className="contents-button-main">
+          {title}
+          {/* <wbr /> */}
+          {_tag}
+        </span>
 
-      {icon && (
-        <>
-          <Icon name={icon} className="contents-button-right-icon" />
-        </>
-      )}
-    </button>
+        {icon && (
+          <>
+            <Icon name={icon} className="contents-button-right-icon" />
+          </>
+        )}
+      </button>
+      {/* </Tooltip> */}
+    </>
   );
 };
 

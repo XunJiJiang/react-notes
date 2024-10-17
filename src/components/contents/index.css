@@ -1,29 +1,15 @@
-.contents-box {
-  position: fixed;
-  z-index: 1;
-  transition: all 0.3s;
-}
-
 .contents {
   /* max-width: 250px; */
-  height: 100vh;
+  /* TODO: 响应式需要修改此处高度 */
+  height: calc(100vh - 64px);
   color: #000000;
   justify-content: left;
   background-color: #ffffff;
   box-sizing: border-box;
-  padding: 20px 0 0 0;
+  padding: 0 0 0 0;
   font-size: 12px;
   overflow-y: scroll;
   overflow-x: hidden;
-}
-
-.contents h1 {
-  margin: 0;
-  padding: 0 0 20px 20px;
-  font-size: 24px;
-  color: #000000;
-  font-family: Inter, 'Helvetica Neue', Helvetica, 'PingFang SC',
-    'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, Arial, sans-serif;
 }
 
 .contents nav.contents-body {
@@ -58,7 +44,8 @@
 }
 
 .contents::-webkit-scrollbar {
-  width: 4px;
+  width: 0px;
+  height: 0px;
 }
 
 .contents::-webkit-scrollbar-thumb {

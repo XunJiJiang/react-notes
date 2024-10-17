@@ -16,7 +16,6 @@ export interface Setting {
 
 const getUrl = (pathname: string) => {
   const url = window.location;
-  console.log(url);
   return {
     host: url.host,
     origin: url.origin + pathname,

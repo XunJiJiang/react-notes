@@ -70,7 +70,6 @@ interface OnChangeFunc {
 }
 
 interface ContentsProps {
-  title: string;
   contents: ContentsType;
   path?: string;
   onChange: OnChangeFunc;

@@ -17,8 +17,34 @@ const __dirname = get__dirname();
  * @returns
  */
 // TODO: 将组件名Use改为基于title的组件名
-const createCodeTemplate = (title, lineEnding = '\r\n') => {
-  return `import PageTemplate from '@components/page-template/index.tsx';${lineEnding}import markdown from './${title}.md?raw';${lineEnding}${lineEnding}const Component = () => {${lineEnding}  return (${lineEnding}    <>${lineEnding}      <PageTemplate markdown={markdown} />${lineEnding}    </>${lineEnding}  );${lineEnding}};\n\nexport default Component;\n`;
+// TODO: 由于引入Suspense和Await组件异步加载，旧的node模板无法使用，需要修改
+const createCodeTemplate = (title, lineEnding = '\n') => {
+  return (
+    `import type { LoaderData } from '@type/modules/comp-page-template-comp-pager.d.ts';${lineEnding}` +
+    `${lineEnding}` +
+    `import PageTemplate from '@components/page-template/index.tsx';${lineEnding}` +
+    `import markdown from './${title}.md?raw';${lineEnding}` +
+    `import { Suspense } from 'react';${lineEnding}` +
+    `import { Await } from 'react-router-dom';${lineEnding}` +
+    `import { useLoaderDataWithType } from '@utils/index.ts';${lineEnding}` +
+    `import Loading from '@components/loading/index.tsx';${lineEnding}` +
+    `${lineEnding}` +
+    `const Component = () => {${lineEnding}` +
+    `  const loaderData = useLoaderDataWithType<{${lineEnding}` +
+    `    data: LoaderData;${lineEnding}` +
+    `  }>();${lineEnding}` +
+    `  return (${lineEnding}` +
+    `    <Suspense fallback={<Loading size={0.9} />}>${lineEnding}` +
+    `      <Await resolve={loaderData.data}>${lineEnding}` +
+    `        <PageTemplate markdown={markdown} />${lineEnding}` +
+    `      </Await>${lineEnding}` +
+    `    </Suspense>${lineEnding}` +
+    `  );${lineEnding}` +
+    `};${lineEnding}` +
+    `${lineEnding}` +
+    `export default Component;${lineEnding}` +
+    ``
+  );
 };
 
 // const CONTENTS_OBJECT = path.resolve(__dirname, './src/contents/index.tsx');

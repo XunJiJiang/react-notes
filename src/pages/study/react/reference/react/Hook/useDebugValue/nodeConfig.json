@@ -1,0 +1,10 @@
+{
+  "label": "useDebugValue",
+  "path": "/useDebugValue",
+  "entryFilePath": "/pages/study/react/reference/react/Hook/useDebugValue/index.tsx",
+  "icon": null,
+  "tag": null,
+  "component": "() => <UseDebugValue />",
+  "type": "node",
+  "childrenSort": {}
+}

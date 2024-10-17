@@ -1,0 +1,10 @@
+{
+  "label": "HTML",
+  "path": "/HTML",
+  "entryFilePath": "/pages/study/react/learn/HTML/index.tsx",
+  "icon": "HTML-fill",
+  "tag": null,
+  "component": "() => <HTML />",
+  "type": "node",
+  "childrenSort": {}
+}

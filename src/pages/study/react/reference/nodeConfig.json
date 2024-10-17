@@ -1,0 +1,12 @@
+{
+  "label": "react reference",
+  "path": "/reference",
+  "entryFilePath": "/pages/study/react/reference/index.tsx",
+  "icon": null,
+  "tag": null,
+  "component": "() => <Reference />",
+  "type": "node",
+  "childrenSort": {
+    "react": 0
+  }
+}

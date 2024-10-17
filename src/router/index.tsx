@@ -1,11 +1,13 @@
 import type { ContentsType, ContentType } from '@type/modules/contents.d.ts';
 import type { LoaderData } from '@type/modules/comp-page-template-comp-pager.d.ts';
-import type { RouteObject } from 'react-router-dom';
+import { RouteObject, defer } from 'react-router-dom';
 import { createBrowserRouter } from 'react-router-dom';
 import Root from '@/App.tsx';
 import ErrorPage from './error/error-page.tsx';
 import Index from './modules/indexRoute/index.tsx';
 import contents from '@/contents/index.tsx';
+import Home from '@layout/home/index.tsx';
+import Doc from '@layout/doc/index.tsx';
 
 type flattenReturns = Array<{
   content: ContentType;
@@ -57,18 +59,18 @@ const flattening = (
   };
 };
 
-const createCatchRoute = (layer = 0) => {
-  const catchRoutes: RouteObject[] = [];
-  for (let i = 1; i <= layer; i++) {
-    catchRoutes.push({
-      path: Array(i).fill(`/:unknow-path`).join(''),
-      element: <ErrorPage type="NOT_FOUND" />
-    });
-  }
-  return catchRoutes;
-};
+// const createCatchRoute = (layer = 0) => {
+//   const catchRoutes: RouteObject[] = [];
+//   for (let i = 1; i <= layer; i++) {
+//     catchRoutes.push({
+//       path: Array(i).fill(`/:unknow-path`).join(''),
+//       element: <ErrorPage type="NOT_FOUND" />
+//     });
+//   }
+//   return catchRoutes;
+// };
 
-const { flattedContents, layer } = flattening(contents);
+const { flattedContents /*, layer */ } = flattening(contents);
 
 const router = createBrowserRouter(
   [
@@ -77,35 +79,57 @@ const router = createBrowserRouter(
       element: <Root />,
       errorElement: <ErrorPage />,
       children: [
+        { index: true, element: <Home /> },
         {
           errorElement: <ErrorPage />,
+          element: <Doc />,
+          path: '/doc',
+          loader: () => {
+            return defer({
+              data: new Promise((res) => {
+                setTimeout(() => {
+                  res({ contents });
+                }, 0);
+              })
+            });
+          },
           children: [
             { index: true, element: <Index /> },
-            ...flattedContents.map((item, index) => {
-              const { route } = item;
-              const prev = flattedContents[index - 1] ?? {};
-              const next = flattedContents[index + 1] ?? {};
-              route.loader = (): Promise<LoaderData> => {
-                return new Promise((res) => {
-                  setTimeout(() => {
-                    res({
-                      pages: {
-                        prev: {
-                          path: prev.route?.path,
-                          label: prev.content?.label
-                        },
-                        next: {
-                          path: next.route?.path,
-                          label: next.content?.label
-                        }
-                      }
+            {
+              errorElement: <ErrorPage />,
+              children: [
+                ...flattedContents.map((item, index) => {
+                  const { route } = item;
+                  const prev = flattedContents[index - 1] ?? {};
+                  const next = flattedContents[index + 1] ?? {};
+                  route.loader = () => {
+                    const res = new Promise<LoaderData>((res) => {
+                      setTimeout(() => {
+                        // Promise.resolve().then(() => {});
+                        res({
+                          pages: {
+                            prev: {
+                              path: prev.route?.path,
+                              label: prev.content?.label
+                            },
+                            next: {
+                              path: next.route?.path,
+                              label: next.content?.label
+                            }
+                          }
+                        });
+                        // 延迟过低会导致左侧目录过渡动画卡顿(过渡时常0.3s, 其他运算100-200ms)
+                      }, 600);
                     });
-                  }, 300);
-                });
-              };
-              return route;
-            }),
-            ...createCatchRoute(layer)
+                    return defer({
+                      data: res
+                    });
+                  };
+                  return route;
+                })
+              ]
+            }
+            // ...createCatchRoute(layer)
           ]
         }
       ]

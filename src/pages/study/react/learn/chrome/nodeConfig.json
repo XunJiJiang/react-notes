@@ -1,0 +1,10 @@
+{
+  "label": "chrome",
+  "path": "/chrome",
+  "entryFilePath": "/pages/study/react/learn/chrome/index.tsx",
+  "icon": "chrome-fill",
+  "tag": null,
+  "component": "() => <Chrome />",
+  "type": "node",
+  "childrenSort": {}
+}

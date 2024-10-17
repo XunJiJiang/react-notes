@@ -1,0 +1,12 @@
+{
+  "label": "react@18.2.0",
+  "path": "/react@18.2.0",
+  "entryFilePath": "/pages/study/react/reference/react/index.tsx",
+  "icon": null,
+  "tag": null,
+  "component": "() => <React />",
+  "type": "node",
+  "childrenSort": {
+    "Hook": 0
+  }
+}

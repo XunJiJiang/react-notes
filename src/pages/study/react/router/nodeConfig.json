@@ -1,0 +1,10 @@
+{
+  "label": "react router",
+  "path": "/router",
+  "entryFilePath": "/pages/study/react/router/index.tsx",
+  "icon": null,
+  "tag": null,
+  "component": "() => <Router />",
+  "type": "node",
+  "childrenSort": {}
+}

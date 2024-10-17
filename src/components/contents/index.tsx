@@ -110,7 +110,6 @@ const changeEventMap: ChangeEventMapType = {
 };
 
 const Contents = ({
-  title = '目录',
   contents = [],
   path = '',
   onChange = () => {},
@@ -170,7 +169,6 @@ const Contents = ({
         return node;
       }}
     >
-      <h1>{title}</h1>
       <nav className="contents-body">
         <ul
           className="contents-body"

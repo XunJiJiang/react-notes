@@ -1,6 +1,7 @@
 .page-box {
   width: 100%;
-  height: 100vh;
+  /* TODO: 响应式需要修改此处高度 */
+  height: calc(100vh - 64px);
   scroll-behavior: smooth;
   background-color: #ffffff;
   overflow-x: scroll;
