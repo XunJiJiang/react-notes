@@ -17,17 +17,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          node-version: "20"
-  
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: '20'
 
       - name: Install dependencies
-      # 暂时忽略依赖冲突
-        run: npm install --legacy-peer-deps
+        # 暂时忽略依赖冲突 --legacy-peer-deps
+        run: npm install
 
       - name: Build project
         run: npm run build

@@ -24,9 +24,9 @@ const getUrl = (pathname: string) => {
 };
 
 const setting: Setting = {
-  url: getUrl(import.meta.env.BASE_ROUTE_URL),
+  url: getUrl(import.meta.env.BASE_URL),
   github: {
-    url: 'https://github.com/XunJiJiang/react-notes'
+    url: 'https://github.com/XunJiJiang' + import.meta.env.BASE_URL
   },
   default: {
     contents: {
@@ -35,5 +35,7 @@ const setting: Setting = {
     }
   }
 };
+
+console.log(import.meta.env.BASE_ROUTE_URL);
 
 export default setting;
