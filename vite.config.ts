@@ -64,7 +64,7 @@ export default defineConfig({
     }
   },
   // Github Pages
-  base: '/reactnotes/'
+  base: '/react-notes/'
 });
 
 export const viteConfig = {

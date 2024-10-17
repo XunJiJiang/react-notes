@@ -24,7 +24,7 @@ const getUrl = (pathname: string) => {
 };
 
 const setting: Setting = {
-  url: getUrl('/reactnotes/'),
+  url: getUrl(import.meta.env.BASE_ROUTE_URL),
   github: {
     url: 'https://github.com/XunJiJiang/react-notes'
   },

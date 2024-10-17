@@ -136,7 +136,7 @@ const router = createBrowserRouter(
     }
   ],
   {
-    basename: '/reactnotes/'
+    basename: import.meta.env.BASE_ROUTE_URL
   }
 );
 
