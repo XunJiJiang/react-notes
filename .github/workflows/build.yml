@@ -24,8 +24,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        # 暂时忽略依赖冲突 --legacy-peer-deps
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build project
         run: npm run build
